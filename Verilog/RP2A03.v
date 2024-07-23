@@ -533,7 +533,6 @@ reg [14:0]LFSR1;
 reg [14:0]SOUT;
 reg MODE5;
 reg IRQDIS;
-reg EDG_DET;
 reg CLEAR_FF;
 reg CLEAR_LATCH;
 reg MODE_LATCH;
