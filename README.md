@@ -4,4 +4,5 @@ All information about the internal structure can be found here: https://github.c
 
 This core is multi-regional, switching between NTSC and PAL regions is available, with changes in the corresponding operating timings.
 All PLAs are packaged in m4k (m9k) blocks with mif initialization files.
+
 Video on YouTube https://www.youtube.com/watch?v=xtj7G8qB2oU
