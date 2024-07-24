@@ -30,30 +30,30 @@
  ===============================================================================================
 */
 
-// Модуль 2A03(7)
+// Module 2A03(7)
 module RP2A03(
-   // Такты
-   input Clk,               // Тактовый сигнал              
-   // Входы
-   input PAL,               // Режим PAL 	
-	input nNMI,              // Вход немаскируемого прерывания	
-	input nIRQ_EXT,          // Вход маскируемого прерывания
-	input nRES,              // Сигнал сброса
-	// Выходы
-	inout  [7:0]DB,          // Шина данных 
-	output [15:0]ADDR_BUS,   // Шина Адреса
-   output RnW,              // Внешний пин Чтение/Запись
-	output M2_out,           // Фаза M2 процессора (внешний пин)
-   output [3:0]SQA, 	       // Выход прямоугольного канала 1
-   output [3:0]SQB, 	       // Выход прямоугольного канала 2
-	output [3:0]RND, 	       // Выход шумового канала
-	output [3:0]TRIA, 	    // Выход треугольного канала
-	output [6:0]DMC, 	       // Выход канала дельта-модуляции
-	output [5:0]SOUT, 	    // Выход суммы каналов SQA + SQB + RND + TRIA 
-   output [2:0]OUT, 	       // Выход для портов периферии
-   output [1:0]nIN 	       // Выход для портов периферии
+   // Clocks
+   input Clk,               // Clock             
+   // Inputs
+   input PAL,               // PAL mode 	
+	input nNMI,              // Non-maskable interrupt input	
+	input nIRQ_EXT,          // Interrupt request input
+	input nRES,              // Reset signal
+	// Outputs
+	inout  [7:0]DB,          // Data bus
+	output [15:0]ADDR_BUS,   // Address Bus
+   output RnW,              // External pin Read/Write
+	output M2_out,           // CPU phase M2 (external pin)
+   output [3:0]SQA, 	       // Square Channel A Output
+   output [3:0]SQB, 	       // Square Channel B Output
+	output [3:0]RND, 	       // Noise channel output
+	output [3:0]TRIA, 	    // Triangular channel output
+	output [6:0]DMC, 	       // Delta Modulation Channel Output
+	output [5:0]SOUT, 	    // Channel sum output SQA + SQB + RND + TRIA 
+   output [2:0]OUT, 	       // Peripheral port output
+   output [1:0]nIN 	       // Peripheral port output
 );
-// Связи модулей
+// Module connections
 wire PHI0;           
 wire PHI1;           
 wire PHI2;            
@@ -110,24 +110,24 @@ wire nDMC_AB;
 wire RDY;             
 wire DMCRDY;         
 wire RUNDMC;         
-// Переменные
+// Variables
 reg [2:0]OUTR;       //
 reg [2:0]OUTR1;      //
-// Комбинаторика
+// Combinatorics
 assign Reset = ~nRES;
 assign M2_out = nRES ? M2 : 1'hZ;
 assign ADDR_BUS[15:0] = nRES ? ADR[15:0] : 16'hZZZZ;
 assign OUT[2:0]  = nRES ? OUTR[2:0] : 3'hZ;
 assign nIN[1:0]  = nRES ? { nR4017, nR4016 } : 2'hZ;
-assign DBIN[7:0] = ~nR4015 ? { R4015DB[7:6], DB[5], R4015DB[4:0] } : DB[7:0]; // Чтение регистра R4015
+assign DBIN[7:0] = ~nR4015 ? { R4015DB[7:6], DB[5], R4015DB[4:0] } : DB[7:0]; // Read register R4015
 assign SOUT[5:0] = (SQA[3:0] + SQB[3:0]) + (RND[3:0] + TRIA[3:0]);
-// Логика
+// Logics
 always @(posedge Clk) begin
          if ( W4016 )   OUTR1[2:0] <= DB[2:0];
 			if ( ~nACLK2 ) OUTR[2:0]  <= OUTR1[2:0];
                       end
 							 
-// Вложенные модули
+// Internal modules
 CDIV MOD_CDIV(
   Clk,			          
   Reset,		          
@@ -383,38 +383,38 @@ LENGTH_COUNTER LENGTH_COUNTER_RND(
   R4015DB[3]  
 );
 
-// Конец модуля 2A03(7)
+// End of module 2A03(7)
 endmodule
 
 //===============================================================================================
-// Модуль делителя клока
+// Clock divider module
 //===============================================================================================
 module CDIV(
-// Такты
-input	Clk,			          // Тактовый сигнал
-//Входы	
-input	Reset,		          // Общий сброс  
-input PAL,                  // Режим PAL
-input PHI2,                 // Фаза PHI2 CPU 
-// Выходы
-output ACLK1,               // Выход фазы  1 APU
-output nACLK2,              // Выход фазы /2 APU
-output PHI0,                // Фаза PHI0 CPU 
-output M2                   // Выход M2
+  // Clocks
+  input	Clk,			          // Clock
+  //Inputs	
+  input	Reset,		          // Reset signal  
+  input PAL,                   // PAL mode
+  input PHI2,                  // Phase PHI2 CPU
+  // Outputs
+  output ACLK1,                // Phase  1 APU output
+  output nACLK2,               // Phase /2 APU output
+  output PHI0,                 // Phase PHI0 CPU 
+  output M2                    // Output M2
 );
-// Переменные
+// Variables
 reg DIV0,DIV1,DIV2,DIV3;
 reg DIV4,DIV5,DIV6,DIV7;
 reg DIVACLK1, DIVACLK2;
 reg DIVM2;
-// Комбинаторика
+// Combinatorics
 wire LOCK;
 assign LOCK   = DIV1 | ~DIV0;
 assign PHI0   = ~DIV0;
 assign ACLK1  = ~( DIVACLK2 | PHI2 );
 assign nACLK2 = ~( Reset | DIVACLK2 ) | PHI2 ;
 assign M2   = PHI2 | ~DIVM2;
-// Логика
+// Logics
 always @(posedge Clk) begin
        DIV0  <= DIV1;
 		 DIV1  <= DIV2 & LOCK;
@@ -430,53 +430,53 @@ always @(posedge Clk) begin
 always @(negedge Clk) begin
        DIVM2 <= DIV2 & LOCK;
                       end								  
-// Конец модуля делителя клока 
+// End of the clock divider module 
 endmodule 
  
 //===============================================================================================
-// Модуль декодера регистровых операций
+// Register Operations Decoder Module
 //===============================================================================================
 module REG_SEL(
-// Такты
-input	PHI1,			   // Фаза PHI1 CPU 
-//Входы
-input	RES,			   // Общий сброс
-input	RW,            // чтение/запись CPU
-input [4:0]ADR,      // Адресное пространство APU 
-input [15:5]CPU_A,   // Адресное пространство CPU
-// Выходы
-output W4000,        // Порт $W4000
-output W4001,        // Порт $W4001
-output W4002,        // Порт $W4002
-output W4003,        // Порт $W4003
-output W4004,        // Порт $W4004
-output W4005,        // Порт $W4005
-output W4006,        // Порт $W4006
-output W4007,        // Порт $W4007
-output W4008,        // Порт $W4008
-output W400A,        // Порт $W400A
-output W400B,        // Порт $W400B
-output W400C,        // Порт $W400C
-output W400E,        // Порт $W400E
-output W400F,        // Порт $W400F
-output W4010,        // Порт $W4010
-output W4011,        // Порт $W4011
-output W4012,        // Порт $W4012
-output W4013,        // Порт $W4013
-output W4014,        // Порт $W4014
-output W4015,        // Порт $W4015
-output W4016,        // Порт $W4016
-output W4017,        // Порт $W4017
-output nR4015,       // Порт $nR4015
-output nR4016,       // Порт $nR4016
-output nR4017        // Порт $nR4017
+  // Clocks
+  input	PHI1,			  // Phase PHI1 CPU 
+  //Inputs
+  input	RES,			  // Reset signal
+  input	RW,           // CPU read/write
+  input [4:0]ADR,      // APU address space
+  input [15:5]CPU_A,   // CPU address space
+  // Outputs
+  output W4000,        // Port $W4000
+  output W4001,        // Port $W4001
+  output W4002,        // Port $W4002
+  output W4003,        // Port $W4003
+  output W4004,        // Port $W4004
+  output W4005,        // Port $W4005
+  output W4006,        // Port $W4006
+  output W4007,        // Port $W4007
+  output W4008,        // Port $W4008
+  output W400A,        // Port $W400A
+  output W400B,        // Port $W400B
+  output W400C,        // Port $W400C
+  output W400E,        // Port $W400E
+  output W400F,        // Port $W400F
+  output W4010,        // Port $W4010
+  output W4011,        // Port $W4011
+  output W4012,        // Port $W4012
+  output W4013,        // Port $W4013
+  output W4014,        // Port $W4014
+  output W4015,        // Port $W4015
+  output W4016,        // Port $W4016
+  output W4017,        // Port $W4017
+  output nR4015,       // Port $nR4015
+  output nR4016,       // Port $nR4016
+  output nR4017        // Port $nR4017
 );
-// Комбинаторика
+// Combinatorics
 wire REGRD;
 wire REGWR;
 assign REGRD = ~RW | CPU_A[5] | CPU_A[6] | CPU_A[7] | CPU_A[8] | CPU_A[9] | CPU_A[10] | CPU_A[11] | CPU_A[12] | CPU_A[13] | ~CPU_A[14] | CPU_A[15];
 assign REGWR =  RW | CPU_A[5] | CPU_A[6] | CPU_A[7] | CPU_A[8] | CPU_A[9] | CPU_A[10] | CPU_A[11] | CPU_A[12] | CPU_A[13] | ~CPU_A[14] | CPU_A[15];
-//Декодер портов записи
+//write port decoder
 assign  W4000 = ~( PHI1 | ( REGWR |  ADR[0] |  ADR[1] |  ADR[2] |  ADR[3] |  ADR[4]));
 assign  W4001 = ~( PHI1 | ( REGWR | ~ADR[0] |  ADR[1] |  ADR[2] |  ADR[3] |  ADR[4]));	
 assign  W4002 = ~( PHI1 | ( REGWR |  ADR[0] | ~ADR[1] |  ADR[2] |  ADR[3] |  ADR[4]));
@@ -499,36 +499,36 @@ assign  W4014 = ~( PHI1 | ( REGWR |  ADR[0] |  ADR[1] | ~ADR[2] |  ADR[3] | ~ADR
 assign  W4015 = ~( PHI1 | ( REGWR | ~ADR[0] |  ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4]));
 assign  W4016 = ~( PHI1 | ( REGWR |  ADR[0] | ~ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4]));
 assign  W4017 = ~( PHI1 | ( REGWR | ~ADR[0] | ~ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4]));
-//Декодер портов чтения
+//read port decoder
 assign nR4015 =   REGRD | ~ADR[0] |  ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4] ;
 assign nR4016 =   REGRD |  ADR[0] | ~ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4] ;
 assign nR4017 =   REGRD | ~ADR[0] | ~ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4] ;
-// Конец модуля декодера регистровых операций
+// End of register decoder module
 endmodule	
 
 //===============================================================================================
-// Модуль низкочастотного осциллятора (LFO)
+// Low Frequency Oscillator module (LFO)
 //===============================================================================================
 module LFO(
-// Такты
-input	Clk,			  // Тактовый сигнал
-input PHI1,         // Фаза PHI1 CPU    
-input	ACLK1,	     // Фаза  1 APU
-input	nACLK2,       // Фаза /2 APU
-//Входы 
-input [7:0]DB,      // Шина данных
-input W4017,        // Порт $W4017
-input	Reset,		  // Общий сброс
-input nR4015,       // Порт $nR4015
-input DMC_INT,      // Прерывание канала DMC
-input PAL,		     // Режим PAL
-// Выходы 
-output nLFO1,       // Выход низкочастотного осциллятора /LFO1
-output nLFO2,       // Выход низкочастотного осциллятора /LFO2
-output INT,         // Выход прерывания APU
-output DB_OUT       // Выход данных флага прерывания LFO       
+  // Clocks
+  input	Clk,			 // Clock
+  input PHI1,         // Phase PHI1 CPU    
+  input	ACLK1,	    // Phase  1 APU
+  input	nACLK2,      // Phase /2 APU
+  //Inputs 
+  input [7:0]DB,      // Data bus
+  input W4017,        // Port $W4017
+  input	Reset,		 // Reset signal
+  input nR4015,       // Port $nR4015
+  input DMC_INT,      // DMC Channel Interrupt
+  input PAL,		    // PAL mode
+  // Outputs
+  output nLFO1,       // Low Frequency Oscillator output /LFO1
+  output nLFO2,       // Low Frequency Oscillator output /LFO2
+  output INT,         // APU interrupt output
+  output DB_OUT       // LFO Interrupt Flag Data Output       
 );
-// Переменные
+// Variables
 reg [14:0]LFSR1;
 reg [14:0]SOUT;
 reg MODE5;
@@ -538,8 +538,8 @@ reg CLEAR_LATCH;
 reg MODE_LATCH;
 reg INT_FLAG_FF;
 reg INT_LATCH;
-// Комбинаторика
-//Управление LFSR
+// Combinatorics
+//LFSR Control
 wire LFSR_IN;
 assign LFSR_IN = ~(( SOUT[13] & SOUT[14] ) | ~( SOUT[13] | SOUT[14] | PLA[5] )); //
 wire LFSTEP;
@@ -550,9 +550,9 @@ assign LFRELOAD = ~( nACLK2 | ~( PLA[4] | PLA[3] | ~CLEAR_LATCH ));
 wire [5:0]PLA;
 wire [4:0]PAL_PLA;
 wire [4:0]NTSC_PLA;
-// Мультиплексор режимов PLA
+// PLA mode multiplexer
 assign PLA[4:0] = PAL ? PAL_PLA[4:0] : NTSC_PLA[4:0];    
-assign PLA[5] = ~( | SOUT[14:0]) ;                       // NOR от всех выходов LFSR, защита от опустошения LFSR
+assign PLA[5] = ~( | SOUT[14:0]) ;                       // NOR from all LFSR outputs, LFSR null protection
 // NTSC PLA 
 assign NTSC_PLA[4] = ~(~SOUT[0]|  SOUT[1]| ~SOUT[2]|  SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]| ~SOUT[7]| ~SOUT[8]|  SOUT[9]|  SOUT[10]|  SOUT[11]| ~SOUT[12]| ~SOUT[13]| ~SOUT[14]);
 assign NTSC_PLA[3] = ~(~SOUT[0]| ~SOUT[1]| ~SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]| ~MODE_LATCH );
@@ -567,12 +567,12 @@ assign  PAL_PLA[1] = ~( SOUT[0]|  SOUT[1]|  SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5
 assign  PAL_PLA[0] = ~( SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]| ~SOUT[4]|  SOUT[5]| ~SOUT[6]| ~SOUT[7]| ~SOUT[8]| ~SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]);
 wire Z2;
 assign Z2 = ~( MODE_LATCH | CLEAR_LATCH ); 
-//Выход LFO
+//LFO Output
 assign nLFO1 = nACLK2 | ~( PLA[4] | PLA[3] | PLA[2] | PLA[1] | PLA[0] | Z2 );
 assign nLFO2 = nACLK2 | ~( PLA[4] | PLA[3] | PLA[1] | Z2 );
 assign INT = DMC_INT | INT_FLAG_FF;
 assign DB_OUT = INT_LATCH;
-// Логика
+// Logics
 always @(posedge Clk) begin
        if ( W4017 | Reset )            CLEAR_FF <= 1'b1;
   else if ( ~( nACLK2 | CLEAR_LATCH )) CLEAR_FF <= 1'b0;
@@ -588,48 +588,48 @@ always @(posedge Clk) begin
        INT_LATCH   <= INT_FLAG_FF;
 		              end
                       end
-// Конец модуля низкочастотного осциллятора
+// Low Frequency Oscillator module End
 endmodule
 
 //===============================================================================================
-// Модуль прямоугольного канала
+// Square channel module
 //===============================================================================================
 module SQUARE_CHANNEL(
-// Такты
-input	Clk,			  // Тактовый сигнал
-input	ACLK1,	     // Фаза  1 APU
-input	nACLK2,       // Фаза /2 APU
-//Входы 		
-input	Reset,		  // Общий сброс
-input nLFO1,        // Низкочастотный осциллятор /LFO1
-input nLFO2,        // Низкочастотный осциллятор /LFO2
-input [7:0]DB,		  // Шина данных
-input	W4002_6,		  // Порт $W4002(6)
-input	W4003_7,		  // Порт $W4003(7)
-input	W4001_5,		  // Порт $W4001(5)
-input NOSQx,        // Вход приостановки из счетчика длительности канала
-input	W4000_4,		  // Порт $W4000(4)
-input	MODE,		     // Режим входного переноса сумматора
-// Выходы 
-output SQ_n_LC,     // Выход HALT (флага запрета счетчика длительности канала)
-output [3:0]SQ_OUT  // Выход канала
+  // Clocks
+  input	Clk,			  // Clock
+  input	ACLK1,	     // Phase  1 APU
+  input	nACLK2,       // Phase /2 APU
+  //Inputs 		
+  input	Reset,		  // Reset signal
+  input nLFO1,         // Low Frequency Oscillator /LFO1
+  input nLFO2,         // Low Frequency Oscillator /LFO2
+  input [7:0]DB,		  // Data bus
+  input	W4002_6,		  // Port $W4002(6)
+  input	W4003_7,		  // Port $W4003(7)
+  input	W4001_5,		  // Port $W4001(5)
+  input NOSQx,         // Suspend input from channel length counter
+  input	W4000_4,		  // Port $W4000(4)
+  input	MODE,		     // Adder input carry mode
+  // Outputs 
+  output SQ_n_LC,      // HALT output (channel length counter disable flag)
+  output [3:0]SQ_OUT   // Channel output
 );
-// Переменные
-reg [10:0]F;        // Регистр установки частоты младшие биты
-reg [10:0]SUMR;     // Регистр выходного значения сумматора
-reg [7:0]SWEEP_CTR; // Регистр управления SWEEP
-reg [1:0]DT;        // Регистр скважности
-reg SWRELOAD_FF;    // Триггер перезагрузки счетчика SWEEP
-reg SWRELOAD_LATCH; // Латч    перезагрузки счетчика SWEEP
-reg FCO, SCO;       // Латчи переполнения счетчиков частоты и периода SWEEP
-reg [10:0]FQCNT;    // Счетчик частоты
-reg [10:0]FQCNT2;   // Счетчик частоты
-reg [2:0]DUCNT;     // Счетчик скважности
-reg [2:0]DUCNT2;    // Счетчик скважности
-reg [2:0]SWCNT;     // Счетчик периода SWEEP
-reg [2:0]SWCNT2;    // Счетчик периода SWEEP
+// Variables
+reg [10:0]F;        // Frequency setting register
+reg [10:0]SUMR;     // Adder output value latch
+reg [7:0]SWEEP_CTR; // SWEEP control register
+reg [1:0]DT;        // Duty register
+reg SWRELOAD_FF;    // SWEEP counter reload trigger
+reg SWRELOAD_LATCH; // SWEEP counter reload latch
+reg FCO, SCO;       // Frequency and period counter overflow latches SWEEP
+reg [10:0]FQCNT;    // Frequency counter
+reg [10:0]FQCNT2;   // Frequency counter
+reg [2:0]DUCNT;     // Duty counter
+reg [2:0]DUCNT2;    // Duty counter
+reg [2:0]SWCNT;     // Period counter SWEEP
+reg [2:0]SWCNT2;    // Period counter SWEEP
 reg SQR;            // Промежуточный латч выхода 
-// Комбинаторика
+// Combinatorics
 wire [2:0]SR;
 assign SR[2:0] = SWEEP_CTR[2:0];
 wire DEC;
@@ -639,27 +639,27 @@ assign P[2:0] = SWEEP_CTR[6:4];
 wire SWDIS;
 assign SWDIS = SWEEP_CTR[7];
 // BARREL SHIFTER
-wire [10:0]BS;      // Вход  BARREL SHIFTER
-wire [10:0]S;       // Выход BARREL SHIFTER
+wire [10:0]BS;      // Input  BARREL SHIFTER
+wire [10:0]S;       // Output BARREL SHIFTER
 assign BS[10:0] = DEC ?  ~F[10:0] : F[10:0];
-wire [10:0]ST1,ST2; // Две промежуточные 11-ти битные шины шифтера
-//Первая стадия шифтера
+wire [10:0]ST1,ST2; // Two intermediate 11-bit shifter buses
+//First stage of the shifter
 assign ST1  = SR[0] ? {DEC,BS[10:1]} : BS;
-//Вторая стадия шифтера  
+//Second stage of the shifter  
 assign ST2  = SR[1] ? {DEC,DEC,ST1[10:2]} : ST1;
-//Третья стадия шифтера 
+//The third stage of the shifter 
 assign   S  = SR[2] ? {DEC,DEC,DEC,DEC,ST2[10:4]} : ST2;
-// Сумматор
+// Adder
 wire [10:0]SUM;
 assign SUM[10:0] = ( F[10:0] ^ S[10:0] ) ^ { ADDCARRY[9:0], ADD_CINP };
-wire [10:0]ADDCARRY;                                                                                             // Шина переносов сумматора
+wire [10:0]ADDCARRY;                                                                                             // Adder carry bus
 assign ADDCARRY[10:0] = ( F[10:0] & S[10:0] ) | (( F[10:0] ^ S[10:0] ) & { ADDCARRY[9:0], ADD_CINP } );
 wire ADD_CINP; 
-assign ADD_CINP = MODE ? 1'b0 : DEC; // Мультиплексор режима входного переноса сумматора SWEEP
+assign ADD_CINP = MODE ? 1'b0 : DEC; // SWEEP Adder Input Carry Mode Multiplexer
 // SWEEP
 wire DO_SWEEP;
-assign DO_SWEEP = ~( ~SCO | NOSQx | nLFO2 | ~( | SR[2:0] ) | ~SWDIS | ~( | F[10:2] ) | ( ~DEC & ADDCARRY[10] ));  // Проверка условия активации SWEEP режима
-//Управление скважностью 
+assign DO_SWEEP = ~( ~SCO | NOSQx | nLFO2 | ~( | SR[2:0] ) | ~SWDIS | ~( | F[10:2] ) | ( ~DEC & ADDCARRY[10] ));  // Checking the conditions for SWEEP mode activation
+//Duty control 
 wire [3:0]DUTY;
 assign DUTY[0] = ~( ~DUCNT[0] | ~( DUCNT[1] & DUCNT[2] ));
 assign DUTY[1] =     DUCNT[1] &   DUCNT[2];
@@ -667,7 +667,7 @@ assign DUTY[2] =     DUCNT[2];
 assign DUTY[3] = ~(  DUCNT[1] &   DUCNT[2] );
 wire DUTY_MUX;
 assign DUTY_MUX = ( DUTY[0] & ~DT[0] & ~DT[1] )|( DUTY[1] & DT[0] & ~DT[1] )|( DUTY[2] & ~DT[0] & DT[1] )|( DUTY[3] & DT[0] & DT[1] );
-// Управление счетчиками частоты и периода SWEEP
+// Managing frequency and period counters SWEEP
 wire FQSTEP;
 wire FQLOAD;
 wire SWSTEP;
@@ -676,21 +676,21 @@ assign FQSTEP = ~( nACLK2 |  FCO );
 assign FQLOAD = ~( nACLK2 | ~FCO );
 assign SWSTEP = ~( nLFO2  |  ( SCO | ~SWRELOAD_LATCH ));
 assign SWLOAD = ~( nLFO2  | ~( SCO | ~SWRELOAD_LATCH ));
-wire [10:0]FQCout;                                                           // Шина переполнения счетчика частоты
+wire [10:0]FQCout;                                                           // Frequency counter overflow bus
 assign FQCout[10:0] = ~FQCNT[10:0] & { FQCout[9:0], 1'b1 };
-wire [2:0]DUCout;                                                            // Шина переполнения счетчика скважности
+wire [2:0]DUCout;                                                            // Duty Counter Overflow Bus
 assign DUCout[2:0]  = ~DUCNT[2:0]  & { DUCout[1:0], FQCout[10] };
-wire [2:0]SWCout;                                                            // Шина переполнения счетчика длительности SWEEP
+wire [2:0]SWCout;                                                            // Length counter overflow bus SWEEP
 assign SWCout[2:0]  = ~SWCNT[2:0]  & { SWCout[1:0], 1'b1 };
-//Вложенный модуль генератора огибающей
+//Internal envelope generator module
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W4000_4, ~SQR , W4003_7, nLFO1, SQ_n_LC, SQ_OUT[3:0] ); 
-// Логика
+// Logics
 always @(posedge Clk) begin
        if ( ~( nLFO2 | SWRELOAD_LATCH )) SWRELOAD_FF <= 1'b0;
   else if ( W4001_5 )                    SWRELOAD_FF <= 1'b1;
 		 if ( ACLK1 ) begin
-		 FCO <= FQCout[10];               // Латч переполнения счетчика частоты
-		 SCO <= SWCout[2];                // Латч переполнения счетчика длительности SWEEP
+		 FCO <= FQCout[10];               // Frequency counter overflow latch
+		 SCO <= SWCout[2];                // SWEEP length counter overflow latch
 		 SWRELOAD_LATCH <= ~SWRELOAD_FF;
 		 SUMR[10:0]     <= SUM[10:0];
 		 SQR            <= ~( ~DUTY_MUX | ( ~DEC & ADDCARRY[10] ) | NOSQx | ~( | F[10:2] ));
@@ -707,44 +707,44 @@ always @(posedge Clk) begin
   else if ( FQLOAD ) DUCNT[2:0] <= DUCNT2[2:0];
        if ( SWSTEP | SWLOAD | Reset )  SWCNT[2:0] <= ( Reset ? 3'h0 : SWLOAD ? P[2:0] : SWCNT2[2:0] );
                       end
-// Конец модуля прямоугольного канала
+// End of square channel module
 endmodule
 
 //===============================================================================================
-// Модуль треугольного канала
+// Triangular channel module
 //===============================================================================================
 module TRIANGLE_CHANNEL(
-// Такты
-input	Clk,			  // Тактовый сигнал
-input	PHI1,         // Фаза PHI1 CPU 
-input	ACLK1,	     // Фаза  1 APU
-//Входы 		
-input	Reset,		  // Общий сброс
-input [7:0]DB,		  // Шина данных
-input	W400A,		  // Порт $W400A
-input	W400B,		  // Порт $W400B
-input	W4008,		  // Порт $W4008
-input nLFO1,        // Низкочастотный осциллятор /LFO1
-input	NOTRI,		  // Вход приостановки из счетчика длительности канала
-// Выходы 
-output [3:0]TRIA,   // Выход канала
-output TRI_n_LC     // Выход HALT (флага запрета счетчика длительности канала)
+  // Clocks
+  input	Clk,			  // Clock
+  input	PHI1,         // Phase PHI1 CPU 
+  input	ACLK1,	     // Phase 1 APU
+  //Inputs 		
+  input	Reset,		  // Reset signal
+  input [7:0]DB,		  // Data bus
+  input	W400A,		  // Port $W400A
+  input	W400B,		  // Port $W400B
+  input	W4008,		  // Port $W4008
+  input nLFO1,         // Low Frequency Oscillator /LFO1
+  input	NOTRI,		  // Suspend input from channel length counter
+  // Outputs 
+  output [3:0]TRIA,    // Channel output
+  output TRI_n_LC      // HALT output (channel length counter disable flag)
 );
-// Переменные
-reg [10:0]FR;       // Регистр установки частоты 
-reg [7:0]LIN;       // Регистр управления линейным счетчиком           
-reg FCOLATCH;       // Защелка схемы переполнения счетчика частоты
-reg TCOLATCH;       // Защелка схемы переполнения линейного счетчика 
-reg RELOAD;         // Защелка схемы перезагрузки линейного счетчика
-reg RELOAD_FF;      // Триггер перезагрузки линейного счетчика
-reg [10:0]TFCNT;    // Счетчик частоты
-reg [10:0]TFCNT2;   // Счетчик частоты
-reg [6:0]TLCNT;     // Линейный счетчик
-reg [6:0]TLCNT2;    // Линейный счетчик
-reg [4:0]TTCNT;     // Выходной счетчик
-reg [4:0]TTCNT2;    // Выходной счетчик
-// Комбинаторика
-// Управление счетчиками
+// Variables
+reg [10:0]FR;       // Frequency setting register 
+reg [7:0]LIN;       // Linear Counter Control Register           
+reg FCOLATCH;       // Frequency counter overflow circuit latch
+reg TCOLATCH;       // Linear counter overflow circuit latch
+reg RELOAD;         // Linear counter reload circuit latch
+reg RELOAD_FF;      // Linear Counter Reload Trigger
+reg [10:0]TFCNT;    // Frequency counter
+reg [10:0]TFCNT2;   // Frequency counter
+reg [6:0]TLCNT;     // Linear counter
+reg [6:0]TLCNT2;    // Linear counter
+reg [4:0]TTCNT;     // Output counter
+reg [4:0]TTCNT2;    // Output counter
+// Combinatorics
+// Counter management
 wire TFSTEP;
 wire TFLOAD;
 assign TFSTEP = ~( PHI1 |  FCOLATCH );
@@ -761,10 +761,10 @@ wire [6:0]TLCout;
 assign TLCout[6:0]  = ~TLCNT[6:0]  & { TLCout[5:0], 1'b1 }; 
 wire [4:0]TTCout;
 assign TTCout[4:0]  =  TTCNT[4:0]  & { TTCout[3:0], 1'b1 };
-// Выход
+// Output
 assign TRIA[3:0] = ~( TTCNT[3:0] ^ { 4 { TTCNT[4] }});
 assign TRI_n_LC = ~LIN[7]; 
-// Логика
+// Logics
 always @(posedge Clk) begin
        if ( ~( nLFO1 | LIN[7] | ~RELOAD )) RELOAD_FF <= 1'b0;
   else if ( W400B ) RELOAD_FF <= 1'b1;
@@ -785,61 +785,61 @@ always @(posedge Clk) begin
 		 TLCNT2[6:0] <= TLCNT[6:0] ^ { TLCout[5:0], 1'b1 };
                     end		 
                       end
-// Конец модуля треугольного канала
+// End of triangular channel module
 endmodule
 
 //===============================================================================================
-// Модуль шумового канала
+// Noise channel module
 //===============================================================================================
 module NOISE_CHANNEL(
-// Такты
-input	Clk,			  // Тактовый сигнал
-input	ACLK1,        // Фаза  1 APU
-input	nACLK2,	     // Фаза /2 APU
-//Входы
-input PAL,          // Режим PAL 		
-input	Reset,		  // Общий сброс
-input [7:0]DB,		  // Шина данных
-input	W400C,		  // Порт $W400C
-input	W400E,		  // Порт $W400E
-input	W400F,		  // Порт $W400F
-input	NORND,		  // Вход приостановки из счетчика длительности канала 
-input nLFO1,        // Низкочастотный осциллятор /LFO1
-// Выходы
-output RND_n_LC,    // Выход HALT (флага запрета счетчика длительности канала)
-output [3:0]RND     // Выход канала
+  // Clocks
+  input	Clk,			  // Clock
+  input	ACLK1,        // Phase  1 APU
+  input	nACLK2,	     // Phase /2 APU
+  //Inputs
+  input PAL,           // PAL mode 		
+  input	Reset,		  // Reset signal
+  input [7:0]DB,		  // Data bus
+  input	W400C,		  // Port $W400C
+  input	W400E,		  // Port $W400E
+  input	W400F,		  // Port $W400F
+  input	NORND,		  // Suspend input from channel length counter
+  input nLFO1,         // Low Frequency Oscillator /LFO1
+  // Outputs
+  output RND_n_LC,     // HALT output (channel length counter disable flag)
+  output [3:0]RND      // Channel output
 );
-// Переменные
-reg [4:0]N_CONTROL;  // Управляющий регистр
+// Variables
+reg [4:0]N_CONTROL;  // Control register
 reg [10:0]SOUT;      // FREQ LFSR
 reg [10:0]NLFSR1;    // FREQ LFSR
 reg [14:0]RSOUT;     // RANDOM LFSR
 reg [14:0]RLFSR1;    // RANDOM LFSR
-// Комбинаторика
-// Управление FREQ LFSR
+// Combinatorics
+// FREQ LFSR Control 
 wire NPLAZ;
-assign NPLAZ    = ~( | SOUT[10:0] );                   // NOR от всех выходов LFSR (защита от опустошения LFSR)
+assign NPLAZ    = ~( | SOUT[10:0] );                   // NOR from all LFSR outputs (LFSR null protection)
 wire NPLALS;
-assign NPLALS   =  ( | SOUT[9:0] | ~SOUT[10] );        // OR от всех выходов LFSR c ~10
+assign NPLALS   =  ( | SOUT[9:0] | ~SOUT[10] );        // OR from all LFSR outputs c ~10
 wire NLFSR_IN;
 assign NLFSR_IN = ~( Reset | ( SOUT[8] & SOUT[10] ) | ~( NPLAZ | SOUT[8] | SOUT[10] ));
 wire   NFSTEP;
 assign NFSTEP   = ~( ~nACLK2 | ~( Reset | NPLALS ));
 wire   NFLOAD;
 assign NFLOAD   = ~( ~nACLK2 |  ( Reset | NPLALS ));
-// Управление RANDOM LFSR
+// RANDOM LFSR Control 
 wire RLFSR_IN;
 assign RLFSR_IN = ~(( RMODE_MUX & RSOUT[14] ) | ~( NRPLA | RMODE_MUX | RSOUT[14] ));
 wire NRPLA;
-assign NRPLA = ~( | RSOUT[14:0] );                       // NOR от всех выходов RANDOM LFSR
-wire RMODE_MUX;                                          // Мультиплексор режима работы Рандом ЛФСР (периодический непериодический шум)
+assign NRPLA = ~( | RSOUT[14:0] );                       // NOR from all RANDOM LFSR outputs
+wire RMODE_MUX;                                          // Multiplexer operating mode Random LFSR (periodic non-periodic noise)
 assign RMODE_MUX = N_CONTROL[4] ? RSOUT[8] : RSOUT[13];
-//Вложенный модуль NOISE_TABLE
+//Internal module NOISE_TABLE
 wire [10:0]NNF;
 NOISE_TABLE MOD_NOISE_TABLE ( { PAL, N_CONTROL[3:0] }, Clk, NNF[10:0] );
-//Вложенный модуль ENVELOPE_GEN
+//Internal module ENVELOPE_GEN
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W400C, ( NORND | RSOUT[14] ), W400F, nLFO1, RND_n_LC, RND[3:0] );
-// Логика
+// Logics
 always @(posedge Clk) begin
        if ( Reset ) N_CONTROL[4:0] <= 4'h0 ; 
   else if ( W400E ) N_CONTROL[4:0] <= { DB[7], DB[3:0] };		 
@@ -851,93 +851,93 @@ always @(posedge Clk) begin
   else if ( NFSTEP ) NLFSR1[10:0] <= { SOUT[9:0], NLFSR_IN};
 		 if ( NFLOAD ) RLFSR1[14:0] <= { RSOUT[13:0], RLFSR_IN };			
                        end
-// Конец модуля шумового канала
+// End of noise channel module
 endmodule
 
 //===============================================================================================
-// Модуль канала дельта-модуляции
+// Delta modulation channel module
 //===============================================================================================
 module DPCM_CHANNEL(
-// Такты
-input	Clk,			      // Тактовый сигнал
-input PHI1,             // Фаза PHI1 CPU 
-input	ACLK1,            // Фаза  1 APU
-input	nACLK2,	         // Фаза /2 APU
-//Входы
-input	Reset,		      // Общий сброс
-input PAL,              // Режим PAL 		
-input	W4010,		      // Порт $W4010
-input	W4011,		      // Порт $W4011
-input	W4012,		      // Порт $W4012
-input	W4013,		      // Порт $W4013
-input	W4015,		      // Порт $W4015
-input [7:0]DB,		      // Шина данных    
-input RW,               // Чтение/Запись процессора
-// Выходы
-output [6:0]DMC,        // Выход канала DMC
-output DMC_INT,         // Выход прерывания DMC
-output reg nDMC_AB,     // Захват адресной шины со стороны DMC
-output DMCRDY,          // Останов процессора схемой DMC
-output reg RUNDMC,      // Приостановка работы спрайтовой ДМА
-output OUT_4015DB4,     // Выход флага состояния работы DMC
-output OUT_4015DB7,     // Выход флага состояния прерывания DMC
-output reg [14:0]DMC_A  // Выход адресной шины DMC
+  // Clocks
+  input	Clk,			      // Clock
+  input PHI1,              // Phase PHI1 CPU 
+  input	ACLK1,            // Phase  1 APU
+  input	nACLK2,	         // Phase /2 APU
+  //Inputs
+  input	Reset,		      // Reset signal
+  input PAL,               // PAL mode 		
+  input	W4010,		      // Port $W4010
+  input	W4011,		      // Port $W4011
+  input	W4012,		      // Port $W4012
+  input	W4013,		      // Port $W4013
+  input	W4015,		      // Port $W4015
+  input [7:0]DB,		      // Data bus    
+  input RW,                // CPU Read/Write
+  // Outputs
+  output [6:0]DMC,         // DMC channel output
+  output DMC_INT,          // DMC interrupt output
+  output reg nDMC_AB,      // Capture of the address bus from the DMC side
+  output DMCRDY,           // Stopping the processor with the DMC circuit
+  output reg RUNDMC,       // Pause sprite DMA
+  output OUT_4015DB4,      // DMC running status flag output
+  output OUT_4015DB7,      // DMC interrupt status flag output
+  output reg [14:0]DMC_A   // DMC address bus output
 );
-// Переменные
-reg [3:0]FS;             // Регистр управления частотой сэмплирования
-reg LOOP;                // Флаг зацикленного воспроизведения DPCM
-reg ENIRQ;               // Флаг разрешения прерывания от DPCM 
-reg DMC_0;               // Регистр громкости
-reg [7:0]DMC_ADR;        // Регистр данных DMC
-reg [7:0]DMC_LEN;        // Регистр длинны сэмпла
-reg [7:0]SAMPLE;         // Буффер сэмпла
-reg [7:0]SHIFT_REG;      // Латч сдвигового регистра сэмпла
-reg [6:0]SHIFT_REG1;     // Латч сдвигового регистра сэмпла
-reg DMC_EN;              // Регистр активации канала
-reg DMC_INT_FF;          // Флаг прерывания
-reg EN_LATCH1;           // Промежуточный латч схемы предварительной загрузки
-reg EN_LATCH2;           // Промежуточный латч схемы предварительной загрузки
-reg EN_LATCH3;           // Промежуточный латч схемы предварительной загрузки
-reg DMC_PCM_FF;          // Флаг PCM
-reg DMC_PCM_LATCH;       // Промежуточный латч флага PCM
-reg DMC_STOP_FF;         // Флаг STOP
-reg DMC_STOP_LATCH;      // Промежуточный латч флага STOP
-reg DMC_STEP_FF;         // Флаг STEP
-reg DMC_DSTEP_LATCH;     // Промежуточный латч флага STEP
-reg DMC_START_FF;        // Флаг START
-reg RUN_LATCH;           // Промежуточный латч флага START
-reg NOUT_LATCH;          // Латч перполнения счетчика бит сэмпла
-reg SOUT_LATCH;          // Латч перполнения счетчика байт сэмпла
-reg DOUT_LATCH;          // Латч перполнения выходного реверсивного счетчика
+// Variables
+reg [3:0]FS;             // Sampling Rate Control Register
+reg LOOP;                // DPCM Loop Flag
+reg ENIRQ;               // DPCM interrupt enable flag
+reg DMC_0;               // Volume register
+reg [7:0]DMC_ADR;        // DMC data register
+reg [7:0]DMC_LEN;        // Sample length register
+reg [7:0]SAMPLE;         // Sample Buffer
+reg [7:0]SHIFT_REG;      // Sample Shift Register Latch
+reg [6:0]SHIFT_REG1;     // Sample Shift Register Latch
+reg DMC_EN;              // Channel Activation Register
+reg DMC_INT_FF;          // Interrupt flag
+reg EN_LATCH1;           // Intermediate latch of the preload circuit
+reg EN_LATCH2;           // Intermediate latch of the preload circuit
+reg EN_LATCH3;           // Intermediate latch of the preload circuit
+reg DMC_PCM_FF;          // PCM flag
+reg DMC_PCM_LATCH;       // PCM flag intermediate latch
+reg DMC_STOP_FF;         // STOP flag
+reg DMC_STOP_LATCH;      // Intermediate STOP flag latch
+reg DMC_STEP_FF;         // STEP flag
+reg DMC_DSTEP_LATCH;     // Intermediate STEP flag latch
+reg DMC_START_FF;        // START flag
+reg RUN_LATCH;           // Intermediate latch for START flag
+reg NOUT_LATCH;          // Sample bit counter overflow latch
+reg SOUT_LATCH;          // Sample byte counter overflow latch
+reg DOUT_LATCH;          // Output reversible counter overflow latch
 reg [8:0]DLFSROUT;       // LFSR
 reg [8:0]DLFSR1;         // LFSR
-reg [2:0]DMCSBCNT;       // Счетчик бит сэмпла
-reg [2:0]DMCSBCNT1;      // Счетчик бит сэмпла
-reg [11:0]DMCSLCNT;      // Счетчик байт сэмпла
-reg [11:0]DMCSLCNT1;     // Счетчик байт сэмпла
-reg [14:0]DMC_A1;        // Счетчик адреса байт сэмпла
-reg [5:0]DMC_OUT;        // Выходной реверсивный счетчик
-reg [5:0]DMC_OUT1;       // Выходной реверсивный счетчик
-// Комбинаторика   
+reg [2:0]DMCSBCNT;       // Sample bit counter
+reg [2:0]DMCSBCNT1;      // Sample bit counter
+reg [11:0]DMCSLCNT;      // Sample byte counter
+reg [11:0]DMCSLCNT1;     // Sample byte counter
+reg [14:0]DMC_A1;        // Sample byte address counter
+reg [5:0]DMC_OUT;        // Output up/down counter
+reg [5:0]DMC_OUT1;       // Output up/down counter
+// Combinatorics   
 wire ED1;
 assign ED1 = ~( ~PCMDONE | ~SOUT_LATCH | LOOP );
 wire PCMDONE;
 assign PCMDONE = ~( nACLK2 | DMC_PCM_LATCH );
-// Управление DMC FREQUENCY LSFR
+// Control DMC FREQUENCY LSFR
 wire DFPLAZ;
-assign DFPLAZ = ~( | DLFSROUT[8:0] );               // NOR от всех выходов FREQUENCY LFSR (защита от опустошения LFSR)
+assign DFPLAZ = ~( | DLFSROUT[8:0] );               // NOR from all FREQUENCY LFSR outputs (LFSR null protection)
 wire DFPLAF;
-assign DFPLAF =  ( | DLFSROUT[7:0] | ~DLFSROUT[8]); // OR от выходов (старший инверсный) FREQUENCY LFSR 
+assign DFPLAF =  ( | DLFSROUT[7:0] | ~DLFSROUT[8]); // OR from outputs (MSB inverse) FREQUENCY LFSR 
 wire DLFSR_IN;
 assign DLFSR_IN = ~( Reset | ( DLFSROUT[4] & DLFSROUT[8] ) | ~( DFPLAZ | DLFSROUT[4] | DLFSROUT[8] ));
 wire   DFSTEP;
 assign DFSTEP  = ~( nACLK2 | ~( Reset | DFPLAF )); 
 wire   DFLOAD;
 assign DFLOAD  = ~( nACLK2 |  ( Reset | DFPLAF ));
-//Управление SAMPLE BIT COUNTER
+//Control SAMPLE BIT COUNTER
 wire [2:0]DMCSBCout;
 assign DMCSBCout[2:0]  = { DMCSBCout[1:0],  1'b1 } &  DMCSBCNT[2:0];
-//Управление ADDRESS COUNTER, SAMPLE LENGTH DOWN COUNTER
+//Control ADDRESS COUNTER, SAMPLE LENGTH DOWN COUNTER
 wire DMCDELAY;
 assign DMCDELAY = ~( nACLK2 | ~EN_LATCH1 | EN_LATCH3 );
 wire DSSTEP;
@@ -948,29 +948,29 @@ wire [11:0]DMCSLCout;
 assign DMCSLCout[11:0] = { DMCSLCout[10:0], 1'b1 } & ~DMCSLCNT[11:0];
 wire [14:0]DMCACout;
 assign DMCACout[14:0]  = { DMCACout[13:0],  1'b1 } &  DMC_A[14:0];
-//Управление выходным реверсивным счетчиком
+//Output up/down counter control
 wire DSTEP;
 assign DSTEP = ~( ~DFLOAD | DOUT_LATCH | DMC_DSTEP_LATCH );
 wire [5:0]DMCOCout;
 assign DMCOCout[5:0] = { DMCOCout[4:0], 1'b1 } & ( DMC_OUT[5:0] ^ { 6 { ~SHIFT_REG[0] }});     // BOUT = ~SHIFT_REG[0]
-//Управление сдвиговым регистром сэмплов DMC_SHIFT_REG и буфером чтения сэмплов DMC_SAMPLE
-wire PCM;    // Строб загрузки сэмпла из шины данных 
+//Controlling the sample shift register DMC_SHIFT_REG and the sample read buffer DMC_SAMPLE
+wire PCM;    // Strobe loading sample from data bus 
 assign PCM = ~( PHI1 | nDMC_AB ); 
 wire BLOAD;
 wire BSTEP;
 assign BLOAD = ~( ~NOUT_LATCH | ~DFLOAD | ~DMC_STOP_LATCH );
 assign BSTEP = ~(  NOUT_LATCH | ~DFLOAD );
-//Управление прерыванием DMC
+//DMC Interrupt Control
 assign OUT_4015DB7 = DMC_INT_FF;
 assign DMC_INT = ~( ~DMC_INT_FF | ~ENIRQ );
-//Вложенный модуль DPCM_TABLE
+//Internal module DPCM_TABLE
 DPCM_TABLE MOD_DPCM_TABLE({ PAL, FS[3:0]}, Clk, LP);
 wire [8:0]LP;
-//Выход
+//Output
 assign DMCRDY  = ~( ~nDMC_AB | DMC_START_FF );
 assign OUT_4015DB4 = DMC_EN;
 assign DMC[6:0] = { DMC_OUT[5:0], DMC_0 };
-// Логика
+// Logics
 always @(posedge Clk) begin
        if ( W4015 | ~ENIRQ | Reset ) DMC_INT_FF <= 1'b0;
   else if ( ED1 ) DMC_INT_FF <= 1'b1;
@@ -1008,12 +1008,12 @@ always @(posedge Clk) begin
 		 RUNDMC          <= RUN_LATCH;
        DLFSROUT[8:0]   <= DLFSR1[8:0];
 		 DMCSBCNT1[2:0]  <= DMCSBCNT[2:0]  ^ { DMCSBCout[1:0], 1'b1 };       
-		 NOUT_LATCH      <= DMCSBCout[2];                                // Латч переполнения счетчика бит сэмпла   
+		 NOUT_LATCH      <= DMCSBCout[2];                                // Sample bit counter overflow latch  
 		 DMCSLCNT1[11:0] <= DMCSLCNT[11:0] ^ { DMCSLCout[10:0], 1'b1 }; 
-		 SOUT_LATCH      <= DMCSLCout[11];                               // Латч переполнения счетчика длины сэмпла
+		 SOUT_LATCH      <= DMCSLCout[11];                               // Sample length counter overflow latch
 		 DMC_A1[14:0]    <= DMC_A[14:0]    ^ { DMCACout[13:0], 1'b1 } ; 
 		 DMC_OUT1[5:0]   <= DMC_OUT[5:0]   ^ { DMCOCout[4:0], 1'b1 };  
-		 DOUT_LATCH      <= DMCOCout[5];                                 // Латч переполнения выходного счетчика
+		 DOUT_LATCH      <= DMCOCout[5];                                 // Output counter overflow latch
 		 SHIFT_REG1[6:0] <= SHIFT_REG[7:1];             
                     end
        if ( ~nACLK2 ) begin 
@@ -1021,60 +1021,60 @@ always @(posedge Clk) begin
 		 RUN_LATCH  <= DMC_START_FF;
 		                end						  
                     end
-// Конец модуля канала дельта-модуляции
+// End of Delta Modulation Channel module
 endmodule
 
 //===============================================================================================
-// Модуль спрайтовой DMA 
+// Sprite DMA module
 //===============================================================================================
 module SPRITE_DMA(
-// Такты
-input	Clk,			      // Тактовый сигнал
-input PHI1,             // Фаза PHI1 CPU 
-input PHI2,             // Фаза PHI2 CPU 
-input	ACLK1,            // Фаза  1 APU
-input	nACLK2,	         // Фаза /2 APU
-//Входы		
-input	Reset,		      // Общий сброс
-input	W4014,		      // Порт $W4014
-input	RW,		         // Чтение/Запись процессора
-inout [7:0]DB,		      // Шина данных
-input	DMCRDY,		      // Останов процессора схемой DMC
-input	RUNDMC,		      // Приостановка работы спрайтовой DMA 
-input nDMC_AB,          // Захват адресной шины DMC
-input [15:0]CPU_A,      // Шина адреса процессора
-input [14:0]DMC_A,      // Шина адреса канала дельта-модуляции
-// Выходы
-output RDY,             // Сигнал приостановки процессора 
-output [15:0]ADR,       // Внешняя шина адреса APU
-output RnW              // Внешний пин Чтение/Запись
+  // Clocks
+  input	Clk,			      // Clock
+  input PHI1,              // Phase PHI1 CPU 
+  input PHI2,              // Phase PHI2 CPU 
+  input	ACLK1,            // Phase  1 APU
+  input	nACLK2,	         // Phase /2 APU
+  //Inputs		
+  input	Reset,		      // Reset signal
+  input	W4014,		      // Port $W4014
+  input	RW,		         // CPU Read/Write
+  inout [7:0]DB,		      // Data bus
+  input	DMCRDY,		      // Stopping the processor with the DMC circuit
+  input	RUNDMC,		      // Pause sprite DMA 
+  input nDMC_AB,           // DMC address bus capture
+  input [15:0]CPU_A,       // CPU address bus
+  input [14:0]DMC_A,       // Delta modulation channel address bus
+  // Outputs
+  output RDY,              // CPU suspend signal 
+  output [15:0]ADR,        // External APU address bus
+  output RnW               // External pin Read/Write
 );
-// Переменные
-reg DIR_TOGGLE_FF;      // Триггер направления работы DMA
-reg [7:0]SPRBUF;        // Буфер спрайтовой DMA
-reg [7:0]SPRA;          // Счетчик адреса спрайта (младшие 8 бит)
-reg [7:0]SPRA1;         // Счетчик адреса спрайта (младшие 8 бит)
-reg [7:0]SPR_AD;        // Регистр адреса спрайта (старшие 8 бит)
-reg START_DMA_FF;       // Триггер СТАРТ DMA
-reg STOP_DMA_FF;        // Триггер СТОП  DMA
-reg SPRE;               // Латч переполнения счетчика спрайтовой DMA
-reg NO_SPR;             // Промежуточный латч схемы управления DMA
-reg DO_SPR;             // Промежуточный латч схемы управления DMA
-// Комбинаторика
+// Variables
+reg DIR_TOGGLE_FF;      // DMA direction trigger
+reg [7:0]SPRBUF;        // Sprite DMA buffer
+reg [7:0]SPRA;          // Sprite address counter (low 8 bits)
+reg [7:0]SPRA1;         // Sprite address counter (low 8 bits)
+reg [7:0]SPR_AD;        // Sprite address register (high 8 bits)
+reg START_DMA_FF;       // Trigger START DMA
+reg STOP_DMA_FF;        // Trigger STOP  DMA
+reg SPRE;               // Sprite DMA counter overflow latch
+reg NO_SPR;             // Intermediate Latch DMA Control Circuit
+reg DO_SPR;             // Intermediate Latch DMA Control Circuit
+// Combinatorics
 wire [7:0]SPRACout;
 assign SPRACout[7:0] = SPRA[7:0] & { SPRACout[6:0], 1'b1 };
-assign RDY = DMCRDY & ~( START_DMA_FF | NO_SPR );         // Сигнал приостановки процессора
-assign RnW = ~( ~RW | SPR_PPU );                          // Управление внешним пином RnW
+assign RDY = DMCRDY & ~( START_DMA_FF | NO_SPR );         // CPU suspend signal
+assign RnW = ~( ~RW | SPR_PPU );                          // Controlling external RnW pin
 wire SPRS;
 wire SPR_CPU;
 wire SPR_PPU;
-assign SPRS =    ~(  nACLK2        | RUNDMC | ~NO_SPR );  // Инкремент счетчика DMA
-assign SPR_CPU = ~( ~DIR_TOGGLE_FF | RUNDMC | ~NO_SPR );  // Направление работы DMA (данные из WRAM)
-assign SPR_PPU = ~(  DIR_TOGGLE_FF | RUNDMC | ~NO_SPR );  // Направление работы DMA (данные на PPU)
+assign SPRS =    ~(  nACLK2        | RUNDMC | ~NO_SPR );  // DMA counter increment
+assign SPR_CPU = ~( ~DIR_TOGGLE_FF | RUNDMC | ~NO_SPR );  // Direction of operation DMA (data from WRAM)
+assign SPR_PPU = ~(  DIR_TOGGLE_FF | RUNDMC | ~NO_SPR );  // DMA operating direction (data on PPU)
 assign DB[7:0] =  SPR_PPU ? SPRBUF[7:0] : 8'hZZ;
-// Мультиплексор внешней шины адреса APU
+// APU external address bus multiplexer
 assign ADR[15:0] = ~nDMC_AB ? {1'b1, DMC_A[14:0]} : SPR_PPU ? 16'h2004 : SPR_CPU ? { SPR_AD[7:0], SPRA[7:0] } : CPU_A[15:0];
-// Логика
+// Logics
 always @(posedge Clk) begin
           if (   ACLK1 ) DIR_TOGGLE_FF <= 1'b1;     
 	  else if ( ~nACLK2 ) DIR_TOGGLE_FF <= 1'b0;      
@@ -1092,30 +1092,30 @@ always @(posedge Clk) begin
 		 SPRA1[7:0] <= SPRA[7:0] ^ { SPRACout[6:0], 1'b1 };
                     end
                        end
-// Конец модуля спрайтовой DMA 
+// End of sprite DMA module 
 endmodule
 
 //===============================================================================================
-// Модуль счетчика длительности
+// Length counter module
 //===============================================================================================
 module LENGTH_COUNTER (
-   // Такты
-   input Clk,               // Тактовый сигнал
-   input ACLK1,             // Фаза  1 APU
-   input nACLK2,	          // Фаза /2 APU
-	// Входы	
-	input HALT,              // Вход флага запрета счетчика длительности	
-	input nLFO2,             // Низкочастотный осциллятор /LFO2
-	input	Reset,             // Общий сброс
-	input [7:0]LC,           // Шина данных таблицы длительности
-	input W400x,             // Порт активации счетика
-	input DB_IN,             // Вход шины данных      
-	input	W4015,             // Порт W4015
-	// Выходы
-	output NOxxx,            // Выход запрета канала
-	output DB_OUT            // Выход флага статуса на шину данных
+   // Clocks
+   input Clk,               // Clock
+   input ACLK1,             // Phase  1 APU
+   input nACLK2,	          // Phase /2 APU
+	// Inputs	
+	input HALT,              // Length counter disable flag input	
+	input nLFO2,             // Low Frequency Oscillator /LFO2
+	input	Reset,             // Reset signal
+	input [7:0]LC,           // Table data bus length
+	input W400x,             // Counter activation port
+	input DB_IN,             // Data bus      
+	input	W4015,             // Port W4015
+	// Outputs
+	output NOxxx,            // Channel disable output
+	output DB_OUT            // Status flag output to data bus
 );
-// Переменные
+// Variables
 reg [7:0]LCNT1;             // 
 reg [7:0]LCNT2;             // 
 reg ENABLE_FF;              //
@@ -1123,14 +1123,14 @@ reg ENABLE_REG1;            //
 reg ENABLE_REG2;            //
 reg CARRY_LATCH;            //
 reg STEP_LATCH;             //             
-// Комбинаторика
+// Combinatorics
 wire LCSTEP;
 assign LCSTEP = ~( nLFO2 | STEP_LATCH );
 assign NOxxx = ~ENABLE_FF;
 assign DB_OUT = ENABLE_FF;
 wire [7:0]LCCout;
 assign LCCout[7:0] = ~LCNT1[7:0] & { LCCout[6:0], HALT };                                            
-// Логика
+// Logics
 always @(posedge Clk) begin
        if ( Reset | ( ~nACLK2 & ENABLE_REG2 ) | ( LCSTEP & CARRY_LATCH )) ENABLE_FF <= 1'b0;
   else if ( W400x )  ENABLE_FF <= 1'b1;		 
@@ -1143,38 +1143,38 @@ always @(posedge Clk) begin
 		 if ( W4015 | Reset  )         ENABLE_REG1 <= (Reset) ? 1'b0  : DB_IN;                       
 		 if ( W400x | LCSTEP | Reset ) LCNT1[7:0]  <= (Reset) ? 8'h00 : (W400x) ? LC[7:0] : LCNT2[7:0]; 
                       end
-// Конец модуля счетчика длительности
+// End of length counter module
 endmodule
 
 //===============================================================================================
-// Модуль генератора огибающей
+// Envelope generator module
 //===============================================================================================
 module ENVELOPE_GEN( 
-   // Такты
-   input Clk,               // Тактовый сигнал
-   input ACLK1,             // Фаза  1 APU
-	// Входы	
-	input	Reset,             // Общий сброс
-	input [7:0]DB,           // Шина данных
-	input W400x,             // Порт активации
-	input CH_IN,             // Вход данных канала
-	input W400xx,            // Порт активации 2	
-	input nLFO1,             // Низкочастотный осциллятор /LFO1
-	// Выходы
-	output CH_n_LC,          // Выход флага запрета счетчика длительности
-	output [3:0]V            // Шина данных громкости канала 
+   // Clocks
+   input Clk,               // Clock
+   input ACLK1,             // Phase 1 APU
+	// Inputs	
+	input	Reset,             // Reset signal
+	input [7:0]DB,           // Data bus
+	input W400x,             // Activation port
+	input CH_IN,             // Channel data input
+	input W400xx,            // Activation port 2	
+	input nLFO1,             // Low Frequency Oscillator /LFO1
+	// Outputs
+	output CH_n_LC,          // Length counter disable flag output
+	output [3:0]V            // Channel Volume Data Bus 
 );
-// Переменные
+// Variables
 reg [3:0]DDCNT;
 reg [3:0]DDCNT2;
 reg [3:0]ENV;
 reg [3:0]ENV2;
-reg [5:0]IN_REG;            // Регистр управления
+reg [5:0]IN_REG;            // Control register
 reg ECO_LATCH;
 reg RELOAD_LATCH;        
 reg RCO_LATCH;
-reg ENV_RELOAD_FF;          // Триггер перезагрузки ENV счетчика
-// Комбинаторика
+reg ENV_RELOAD_FF;          // ENV counter reset trigger
+// Combinatorics
 wire EIN;
 assign EIN = ~( CH_n_LC & ECO_LATCH );
 wire ERES;
@@ -1191,7 +1191,7 @@ wire [3:0]ENCout;
 assign ENCout[3:0] =  ~ENV[3:0] & { ENCout[2:0], 1'b1 };
 assign V[3:0] = ~( { 4 { CH_IN }}  | ~( IN_REG[4] ? IN_REG[3:0] : ENV[3:0] ));
 assign CH_n_LC = ~IN_REG[5];
-// Логика
+// Logics
 always @(posedge Clk) begin
        if ( ~( nLFO1 | ~RELOAD_LATCH )) ENV_RELOAD_FF <= 1'b0;
   else if ( W400xx ) ENV_RELOAD_FF <= 1'b1;
@@ -1206,5 +1206,5 @@ always @(posedge Clk) begin
 		 if ( RLOAD | RSTEP | Reset ) DDCNT[3:0] <= Reset ? 4'h0 : RLOAD ? IN_REG[3:0] : DDCNT2[3:0];								  
 		 if ( ERES  | ESTEP | Reset )   ENV[3:0] <= Reset ? 4'h0 : ERES ? { 4 { EIN }} : ENV2[3:0];
                       end
-// Конец модуля генератора огибающей
+// End of the envelope generator module
 endmodule							 
