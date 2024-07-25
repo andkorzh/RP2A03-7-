@@ -1575,7 +1575,7 @@ assign DBT[7:0]  = ( ~{8{AC_DB}} | ACC[7:0] ) & ( ~{8{P_DB}} | FLAG[7:0] ) & ( ~
 // SBT bus multiplexer
 assign SBT[7:0]  = ( ~{8{X_SB}} | X_REG[7:0] ) & ( ~{8{Y_SB}} | Y_REG[7:0] ) & ( ~{8{S_SB}} | S_REG[7:0] ) & ( ~{8{AC_SB}} | ACC[7:0] ) & { ~ADD_SB7 | ADD[7], ~{7{ADD_SB06}} | ADD[6:0]}; 
 // ADHT bus multiplexer
-assign ADHT[7:0] = ( ~{8{PCH_ADH}} | PCH[7:0] ) & ( ~{8{DL_ADH}} | DL[7:0] ) & { ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH0 };
+assign ADHT[7:0] = ( ~{8{PCH_ADH}} | PCH[7:0] ) & ( ~{8{DL_ADH}} | DL[7:0] ) & { {7{ ~Z_ADH17 }}, ~Z_ADH0 };
 // SBH bus multiplexer
 assign SBH[7:0]  =  SB_ADH ? ( ADHT[7:0] & SBT[7:0] ) : SBT[7:0];
 // DB bus multiplexer
