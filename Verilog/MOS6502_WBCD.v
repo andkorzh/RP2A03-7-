@@ -1,6 +1,6 @@
 /*
  ===============================================================================================
- *                           Copyright (C) 2023  EMU-RUSSIA.COM
+ *                           Copyright (C) 2023-2024 andkorzh 
  *
  *
  *                This program is free software; you can redistribute it and/or
@@ -34,121 +34,121 @@
 
 // MOS6502
 module MOS6502_WBCD (
-   // Такты
+   // Clocks                // Clock
    input Clk,               
-   input PHI0,              // Такт PHI0
-   // Входы	
-	input SO,                // Вход сихронизации		
-	input nNMI,              // Вход немаскируемого прерывания	
-	input nIRQ,              // Вход маскируемого прерывания
-	input nRES,              // Сигнал сброса
- 	input RDY,               // Сигнал готовности процессора	
-	input [7:0]DIN,          // Шина данных (вход)
-	// Выходы
-	output PHI1,             // Такт PHI1 (выход)
-	output PHI2,             // Такт PHI2 (выход)	
-	output RW,               // Сигнал записи процессора
-	output [7:0]DOUT,        // Шина данных (выход)
-	output [15:0]A,          // Шина Адреса 
-   output SYNC	             // Выход синхронизации (Т1) 
+   input PHI0,              // phase PHI0
+   // Inputs	
+	input SO,                // Sync input		
+	input nNMI,              // Non-maskable interrupt input	
+	input nIRQ,              // Maskable interrupt input
+	input nRES,              // Reset signal
+ 	input RDY,               // Processor ready signal	
+	input [7:0]DIN,          // Data bus (input)
+	// Outputs
+	output PHI1,             // phase PHI1 (output)
+	output PHI2,             // phase PHI2 (output)	
+	output RW,               // Processor write signal
+	output [7:0]DOUT,        // Data bus (output)
+	output [15:0]A,          // Address Bus
+   output SYNC	             // Sync output (Т1) 
 );
-// Связи модулей
-wire [128:0]X;              // Выходы декодера инструкций
-wire [7:0]DB;               // Шина DB
-wire [7:0]SB;               // Шина SB
-wire [7:0]DL;               // Шина Input DатаLatch
-wire [7:0]ADL;              // Шина ADL
-wire [7:0]ADH;              // Шина ADH
-wire [7:0]ADD;              // Шина ADD (выход АЛУ)
-wire [7:0]ACC;              // Шина ADD (выход аккумулятора)
-wire [7:0]FLAG;             // Шина данных флагов
-wire [7:0]PCL;              // Шина младших разрядов PC
-wire [7:0]PCH;              // Шина старших разрядов PC
-wire [7:0]IR;               // Шина регистра инструкций
+// Module connections
+wire [128:0]X;              // Instruction decoder outputs
+wire [7:0]DB;               // DB Bus
+wire [7:0]SB;               // SB Bus
+wire [7:0]DL;               // Input DатаLatch Bus
+wire [7:0]ADL;              // ADL Bus
+wire [7:0]ADH;              // ADH Bus
+wire [7:0]ADD;              // ADD Bus (output ALU)
+wire [7:0]ACC;              // ADD Bus (accumulator output)
+wire [7:0]FLAG;             // Flag data bus
+wire [7:0]PCL;              // LSB bus PC
+wire [7:0]PCH;              // MSB bus PC
+wire [7:0]IR;               // Instruction register bus
 wire RESP;                                //
 wire nPRDY;                               //
 wire nTWOCYCLE;                           //
 wire IMPLIED;                             //
-wire nREADY;                              // Сигнал "Процессор не готов"                
+wire nREADY;                              // "Processor not ready" signal                
 wire TRES2;                               //
-wire nT0, nT1X, T1, nT2, nT3, nT4, nT5;   // Циклы процессора
+wire nT0, nT1X, T1, nT2, nT3, nT4, nT5;   // CPU cycles
 wire AVR, ACR;                            //
-wire Z_ADH0;                // Обнулить бит 0 шины ADH	
-wire Z_ADH17;               // Обнулить биты 1-7 шины ADH
-wire SB_AC;                 // Шину SB на аккумулятор
-wire ADL_ABL;               // Шину ADL на регистр адресной шины ABL	
-wire AC_SB;                 // Значение аккумулятора на шину SB
-wire SB_DB;                 // Проброс данных между шинами DB <-> SB	
-wire AC_DB;                 // Аккумулятор на шину DB
-wire SB_ADH;                // Проброс данных между шинами SB <-> ADH	 
-wire DL_ADH;                // Значение защелки DL на шину ADH
-wire DL_ADL;                // Значение защелки DL на шину ADL
-wire ADH_ABH;               // Шину ADH на регистр адресной шины ABH
-wire DL_DB;                 // Значение защелки DL на шину DB	
-wire Y_SB;                  // Регистр Y на шину SB	
-wire X_SB;                  // Регистр X на шину SB
-wire S_SB;                  // Регистр S на шину SB	
-wire SB_Y;                  // Шина SB на регистр Y	
-wire SB_X;                  // Шина SB на регистр X
-wire SB_S;                  // Шина SB на регистр S	
-wire S_S;                   // Хранение значение в регистре S
-wire S_ADL;                 // Регистр S на шину ADL	
-wire Z_ADL0;                // Сигнал управления генератором констант бит 0
-wire Z_ADL1;                // Сигнал управления генератором констант бит 1	
-wire Z_ADL2;                // Сигнал управления генератором констант бит 2	
-wire WRPHI1;                // Сигнал записи процессора PHI1	
-wire Z_IR;                  // Инжекция BRK последовательности
-wire FETCH;                 // Выборка опкода 
-wire P_DB;                  // Данные флагов на шину DB	
-wire PCL_DB;                // Данные PCL на шину DB
-wire PCH_DB;                // Данные PCH на шину DB		
-wire PCL_ADL;               // Данные PCL на шину ADL	
-wire PCH_ADH;               // Данные PCH на шину ADH	
-wire PCL_PCL;               // Режим хранения данных в разрядах счетчика PCL
-wire ADL_PCL;               // Загрузка данных из шины ADL	
-wire ADH_PCH;               // Загрузка данных из шины ADH	
-wire PCH_PCH;               // Режим хранения данных в разрядах счетчика PCH	
-wire NDB_ADD;               // Шину ~DB на вход АЛУ	
-wire DB_ADD;                // Шину DB на вход АЛУ	
-wire Z_ADD;                 // Обнулить вход А АЛУ
-wire SB_ADD;                // Шину SB на вход АЛУ
-wire ADL_ADD;               // Шину ADL на вход АЛУ
-wire ANDS;                  // Логическое И
-wire EORS;                  // Исключающее ИЛИ
-wire ORS;                   // Логическое ИЛИ	
-wire nACIN;                 // Входной перенос АЛУ	
-wire SRS;                   // Сдвиг вправо
-wire SUMS;                  // Сумма А + В		
-wire nDAA;                  // Выполнить коррекцию после сложения
-wire ADD_SB7;               // Бит    7 на шину SB	
-wire ADD_SB06;              // Биты 0-6 на шину SB	
-wire ADD_ADL;               // Выход АЛУ на шину ADL
-wire nDSA;                  // Выполнить коррекцию после вычитания	
-wire n1_PC;                 // Входной перенос PC
+wire Z_ADH0;                // Clear bit 0 of the  ADH bus	
+wire Z_ADH17;               // Clear bit 1-7 of the  ADH bus
+wire SB_AC;                 // SB Bus to accumulator
+wire ADL_ABL;               // ADL Bus to address bus register ABL	
+wire AC_SB;                 // Accumulator to SB Bus
+wire SB_DB;                 // Forwarding data between buses DB <-> SB	
+wire AC_DB;                 // Accumulator to DB Bus
+wire SB_ADH;                // Forwarding data between buses SB <-> ADH	 
+wire DL_ADH;                // DL latch value per ADH Bus
+wire DL_ADL;                // DL latch value per ADL Bus
+wire ADH_ABH;               // ADH Bus to address bus register ABH
+wire DL_DB;                 // DL latch value per DB Bus	
+wire Y_SB;                  // Y register to SB Bus	
+wire X_SB;                  // X register to SB Bus
+wire S_SB;                  // S register to SB Bus	
+wire SB_Y;                  // SB Bus to register Y	
+wire SB_X;                  // SB Bus to register X
+wire SB_S;                  // SB Bus to register S	
+wire S_S;                   // Storing a value in a register S
+wire S_ADL;                 // Register S to ADL Bus	
+wire Z_ADL0;                // Constant generator control signal bit 0
+wire Z_ADL1;                // Constant generator control signal bit 1	
+wire Z_ADL2;                // Constant generator control signal bit 2	
+wire WRPHI1;                // Processor write signal (phase PHI1)	
+wire Z_IR;                  // BRK sequence injection
+wire FETCH;                 // Opcode fetch 
+wire P_DB;                  // Flag data to DB Bus	
+wire PCL_DB;                // PCL to DB
+wire PCH_DB;                // PCH to  DB  Bus			
+wire PCL_ADL;               // PCL to  ADL Bus		
+wire PCH_ADH;               // PCH to  ADH Bus		
+wire PCL_PCL;               // Data storage mode in counter bits PCL
+wire ADL_PCL;               // Loading data from the ADL Bus	
+wire ADH_PCH;               // Loading data from the ADH Bus	
+wire PCH_PCH;               // Data storage mode in counter bits PCH	
+wire NDB_ADD;               // ~DB to ALU input	
+wire DB_ADD;                //  DB to ALU input	
+wire Z_ADD;                 // Reset input A of ALU
+wire SB_ADD;                // SB bus to ALU input
+wire ADL_ADD;               // ADL bus to ALU input
+wire ANDS;                  // Logical AND
+wire EORS;                  // Exclusive OR
+wire ORS;                   // Logical OR	
+wire nACIN;                 // ALU input carry	
+wire SRS;                   // Shift right	
+wire SUMS;                  // the result of the sum A+B		
+wire nDAA;                  // Perform correction after addition
+wire ADD_SB7;               // ALU output bit 7 to SB bus	
+wire ADD_SB06;              // ALU output bits 0-6 per SB bus
+wire ADD_ADL;               // ALU output to ADL bus
+wire nDSA;                  // Perform correction after subtraction	
+wire n1_PC;                 // PC input carry
 
-// Переменные
+// Variables
 reg nNMIP, nIRQPR1, nIRQP, RESPR1, RESPR2;            //
 reg nPRDYR1, nPRDYR2;                                 //
 reg [7:0]DL_LATCH;                                    // INPUT DATA LATCH
 reg [7:0]DOR_LATCH;                                   //
 reg [7:0]ABL_LATCH;                                   //
 reg [7:0]ABH_LATCH;                                   //
-reg [7:0]X_REG;                                       // Регистр X
-reg [7:0]Y_REG;                                       // Регистр Y
-reg [7:0]S_REG_LATCH1;                                // Входная защелка указателя стэка
-reg [7:0]S_REG;                                       // Указатель стэка
-// Комбинаторика
+reg [7:0]X_REG;                                       // register X
+reg [7:0]Y_REG;                                       // register Y
+reg [7:0]S_REG_LATCH1;                                // Stack pointer input latch
+reg [7:0]S_REG;                                       // Stack pointer
+// Combinatorics
 assign PHI1  = ~PHI0;                                 //
 assign PHI2  =  PHI0;                                 //
 assign RESP  = ~RESPR2;
 assign nPRDY = ~nPRDYR2;
 assign A[15:0] = { ABH_LATCH[7:0], ABL_LATCH[7:0] };  //
-//Выход данных из входной защелки
+//Data output from input latch
 assign DL[7:0] = DL_LATCH[7:0] & { 8 { PHI1 }} ; 
 assign SYNC = T1;
-assign RW = ~WRPHI1;                                  // Управляющий сигнал для вывода наружу шины данных
-assign DOUT[7:0] = ~RW ? DOR_LATCH[7:0] : 8'hZZ; // Управление выходом шины данных
-// Логика
+assign RW = ~WRPHI1;                                  // Control signal for outputting the data bus externally
+assign DOUT[7:0] = ~( RW | PHI1) ? DOR_LATCH[7:0] : 8'hZZ;      // Data bus output control
+// Logics
 always @(posedge Clk) begin 
        if (PHI1) begin
        nIRQP    <= nIRQPR1;
@@ -171,7 +171,7 @@ always @(posedge Clk) begin
 		 if ( SB_Y ) Y_REG[7:0] <= SB[7:0];					  
 		                end		 
 				 
-// Вложенные модули
+// Internal modules
 PREDECODE_IR MOD_PREDECODE_IR(
    Clk,               
    PHI1,
@@ -363,68 +363,67 @@ BUS_MUX MOD_BUS_MUX(
 	PCL[7:0],          
 	PCH[7:0]            
 );			 						 
-// Конец модуля MOS6502
+// End of module MOS6502
 endmodule
 
 //===============================================================================================
-// Модуль предварительного декодирования инструкций и регистра инструкций
+// Instruction pre-decoding and instruction register module
 //===============================================================================================
 module PREDECODE_IR(
-   // Такты
+   // Clocks
    input Clk,               
    input PHI1,
-	// Входы	
-	input Z_IR,              // Инжекция BRK последовательности
-	input	[7:0]DL_LATCH,     // Вход данных входной защелки
-	input FETCH,             // Выборка кода инсрукции
-	// Выходы
-	output IMPLIED,          // Инструкция 1 такт
-	output nTWOCYCLE,        // Инструкция 2 такта
-	output reg [7:0]IR       // Регистр инструкций  
+	// Inputs	
+	input Z_IR,              // BRK sequence injection
+	input	[7:0]DL_LATCH,     // Input latch data input
+	input FETCH,             // Opcode fetch
+	// Outputs
+	output IMPLIED,          // Instruction in 1 cycle
+	output nTWOCYCLE,        // 2-cycle instruction
+	output reg [7:0]IR       // Instruction register 
 );
-// Переменные
-// Комбинаторика
+// Combinatorics
 wire [7:0]PD;
 assign PD[7:0]   =  DL_LATCH[7:0] & { 8 { ~Z_IR }};
 assign IMPLIED   = ~( PD[0] | PD[2] | ~PD[3] );
 assign nTWOCYCLE = ~(( IMPLIED & ( PD[1] | PD[4] | PD[7] )) | ~( ~PD[0] | PD[2] | ~PD[3] | PD[4] ) | ~( PD[0] | PD[2] | PD[3] | PD[4] | ~PD[7] ));
-// Логика
+// Logics
 always @(posedge Clk) begin
        if (PHI1 & FETCH) begin
 		 IR[7:0] <= PD[7:0];
 		                   end				  
                       end
-// Конец модуля предварительного декодирования инструкций и регистра инструкций
+// End of instruction pre-decoding module and instruction register
 endmodule
 
 //===============================================================================================
-// Модуль расширенного счетчика циклов
+// Extended cycle counter module
 //===============================================================================================
 module EXTRA_COUNTER(
-   // Такты
+   // Clocks
    input Clk,               
    input PHI1,
    input PHI2,
-	// Входы	
+	// Inputs	
 	input T1,
 	input nREADY,
 	input TRES2,
-	// Выходы		
+	// Outputs		
 	output nT2,
 	output nT3,
 	output nT4,	
 	output nT5
 );
-// Переменные
-reg T1_LATCH;           // Латч T1 
-reg [3:0]LATCH1;			// 1-й латч бита сдвигового регистра
-reg [3:0]LATCH2;			// 2-й латч бита сдвигового регистра
-// Комбинаторика   
+// Variables
+reg T1_LATCH;           // Latch T1 
+reg [3:0]LATCH1;			// 1st shift register bit latch
+reg [3:0]LATCH2;			// 2nd shift register bit latch
+// Combinatorics   
 assign nT2 = TRES2 | LATCH1[0];
 assign nT3 = TRES2 | LATCH1[1];
 assign nT4 = TRES2 | LATCH1[2];
 assign nT5 = TRES2 | LATCH1[3];
-// Логика
+// Logics
 always @(posedge Clk) begin
        if (PHI1) begin
        LATCH1[0]  <= ( ~nREADY & T1_LATCH  )|( nREADY & ( LATCH2[0]));
@@ -440,11 +439,11 @@ always @(posedge Clk) begin
 		 LATCH2[3]  <= nT5;
 		           end
                       end
-// Конец модуля расширенного счетчика циклов
+// End of the extended cycle counter module
 endmodule
 
 //===============================================================================================
-// Модуль декодера инструкций
+// Instruction decoder module
 //===============================================================================================
 module DECODER(
 	input nT0,
@@ -457,7 +456,7 @@ module DECODER(
 	input  [7:0]IR,
 	output [128:0]X
 );
-// Комбинаторика
+// Combinatorics
 	wire IR01;
 	assign IR01 = IR[0] | IR[1];
 	wire PUSHP;
@@ -591,90 +590,91 @@ module DECODER(
 	assign X[127] = ~( ~IR[7] |  IR[6] | ~IR[5] | ~IR[4] | ~IR[3] |  IR[2] |  IR01  );
 	assign X[128] = ~( ~IR[3] |  IR[2] |  IR[0] |  PUSHP ); 
 	assign PUSHP  = ~(  IR[7] |  IR[4] | ~IR[3] |  IR[2] |  IR01  );
-endmodule // Конец модуля Decoder
+// End of Instruction decoder Module	
+endmodule 
 
 //===============================================================================================
-// Модуль рандомной логики
+// Random logic module
 //===============================================================================================
 module RANDOM_LOGIC (
-   // Такты
+   // Clocks
    input Clk,               
-   input PHI1,              // Такт PHI1	
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input [128:0]X,          // Шина Декодера	
-	input [7:0]DB,           // Шина DB
-	input SO,                // Вход синхронизации
+   input PHI1,              // phase PHI1	
+   input PHI2,              // phase PHI2
+	// Inputs	
+	input [128:0]X,          // Instruction decoder outputs
+	input [7:0]DB,           // DB Bus
+	input SO,                // Sync input
 	input nIRQP,             //	
 	input nNMIP,             // 
 	input RESP,              //	
 	input AVR,               //
 	input ACR,               //
-	input IR5,               // Бит 5 регистра инструкций	
+	input IR5,               // Bit 5 of the instruction register	
 	input RDY,               //
 	input nTWOCYCLE,         //
 	input IMPLIED,           //
-	// Выходы
-	output [7:0]FLAG,        // Выход шины данных флагов
-	output Z_ADH0,           // Обнулить бит 0 шины ADH	
-	output Z_ADH17,          // Обнулить биты 1-7 шины ADH
-	output SB_AC,            // Шину SB на аккумулятор
-	output ADL_ABL,          // Шину ADL на регистр адресной шины ABL	
-	output AC_SB,            // Значение аккумулятора на шину SB
-	output SB_DB,            // Проброс данных между шинами DB <-> SB	
-	output AC_DB,            // Аккумулятор на шину DB
-	output SB_ADH,           // Проброс данных между шинами SB <-> ADH	 
-	output DL_ADH,           // Значение защелки DL на шину ADH
-	output DL_ADL,           // Значение защелки DL на шину ADL
-	output ADH_ABH,          // Шину ADH на регистр адресной шины ABH
-	output DL_DB,            // Значение защелки DL на шину DB	
-	output Y_SB,             // Регистр Y на шину SB	
-	output X_SB,             // Регистр X на шину SB
-	output S_SB,             // Регистр S на шину SB	
-	output SB_Y,             // Шина SB на регистр Y	
-	output SB_X,             // Шина SB на регистр X
-	output SB_S,             // Шина SB на регистр S	
-	output S_S,              // Хранение значение в регистре S
-	output S_ADL,            // Регистр S на шину ADL	
-	output Z_ADL0,           //
-	output Z_ADL1,           //	
-	output Z_ADL2,           //	
-	output WRPHI1,           // Сигнал записи процессора	
-	output nT0,              // Цикл ~0	
-	output T1,               // Цикл  1
-	output nT1X,             // Цикл ~T1X
-	output TRES2,            //
-	output nREADY,           // Сигнал "Процессор не готов"	
-	output Z_IR,             //
-	output FETCH,            //
-	output P_DB,             // Данные флагов на шину DB	
-   output PCL_DB,           // Данные PCL на шину DB
-	output PCH_DB,           // Данные PCH на шину DB		
-	output PCL_ADL,          // Данные PCL на шину ADL	
-   output PCH_ADH,          // Данные PCH на шину ADH	
-	output PCL_PCL,          // Режим хранения данных в разрядах счетчика PCL
-	output ADL_PCL,          // Загрузка данных из шины ADL	
-	output ADH_PCH,          // Загрузка данных из шины ADH	
-	output PCH_PCH,          // Режим хранения данных в разрядах счетчика PCH	
-	output NDB_ADD,          // Шину ~DB на вход АЛУ	
-	output DB_ADD,           // Шину DB на вход АЛУ	
-   output Z_ADD,            // Обнулить
-	output SB_ADD,           // Шину SB на вход АЛУ
-	output ADL_ADD,          // Шину ADL на вход АЛУ
-   output ANDS,             // Логическое И
-	output EORS,             // Исключающее ИЛИ
-   output ORS,              // Логическое ИЛИ	
-   output nACIN,            // Входной перенос АЛУ	
-   output SRS,              // Сдвиг вправо
-   output SUMS,             // Сумма А и В	
-   output nDAA,             // Выполнить коррекцию после сложения
-   output ADD_SB7,          // Бит    7 на шину SB	
-   output ADD_SB06,         // Биты 0-6 на шину SB	
-   output ADD_ADL,          // Выход АЛУ на шину ADL
-   output nDSA,             // Выполнить коррекцию после вычитания	
-	output n1_PC             // Входной перенос PC
+	// Outputs
+	output [7:0]FLAG,        // Flag data bus
+	output Z_ADH0,           // Clear bit 0 of the  ADH bus	
+	output Z_ADH17,          // Clear bit 1-7 of the  ADH bus
+	output SB_AC,            // SB Bus to accumulator
+	output ADL_ABL,          // ADL Bus to address bus register ABL	
+	output AC_SB,            // Accumulator to SB Bus
+	output SB_DB,            // Forwarding data between buses DB <-> SB	
+	output AC_DB,            // Accumulator to DB Bus
+	output SB_ADH,           // Forwarding data between buses SB <-> ADH	 
+	output DL_ADH,           // DL latch value per ADH Bus
+	output DL_ADL,           // DL latch value per ADL Bus
+	output ADH_ABH,          // ADH Bus to address bus register ABH
+	output DL_DB,            // DL latch value per DB Bus	
+	output Y_SB,             // Y register to SB Bus	
+	output X_SB,             // X register to SB Bus
+	output S_SB,             // S register to SB Bus	
+	output SB_Y,             // SB Bus to register Y	
+	output SB_X,             // SB Bus to register X
+	output SB_S,             // SB Bus to register S	
+	output S_S,              // Storing a value in a register S
+	output S_ADL,            // Register S to ADL Bus	
+	output Z_ADL0,           // Constant generator control signal bit 0
+	output Z_ADL1,           // Constant generator control signal bit 1	
+	output Z_ADL2,           // Constant generator control signal bit 2	
+	output WRPHI1,           // Processor write signal (phase PHI1)	
+	output nT0,              // Cycle ~0	
+	output T1,               // Cycle  1
+	output nT1X,             // Cycle ~T1X
+	output TRES2,            // Clearing the extended cycle counter
+	output nREADY,           // "Processor not ready" signal	
+	output Z_IR,             // BRK sequence injection
+	output FETCH,            // Opcode fetch
+	output P_DB,             // Flag data to DB Bus	
+   output PCL_DB,           // PCL to  DB  Bus
+	output PCH_DB,           // PCH to  DB  Bus		
+	output PCL_ADL,          // PCL to  ADL Bus
+   output PCH_ADH,          // PCH to  ADH Bus	
+	output PCL_PCL,          // Data storage mode in counter bits PCL
+	output ADL_PCL,          // Loading data from the ADL Bus	
+	output ADH_PCH,          // Loading data from the ADH Bus	
+	output PCH_PCH,          // Data storage mode in counter bits PCH	
+	output NDB_ADD,          // ~DB Bus to ALU input		
+	output DB_ADD,           //  DB Bus to ALU input	
+   output Z_ADD,            // Reset input A of ALU
+	output SB_ADD,           // SB bus to ALU input
+	output ADL_ADD,          // ADL bus to ALU input
+   output ANDS,             // Logical AND
+	output EORS,             // Exclusive OR
+   output ORS,              // Logical OR	
+   output nACIN,            // ALU input carry	
+   output SRS,              // Shift right
+	output SUMS,             // the result of the sum A+B	
+   output nDAA,             // Perform correction after addition
+   output ADD_SB7,          // ALU output bit 7 to SB bus	
+   output ADD_SB06,         // ALU output bits 0-6 per SB bus	
+   output ADD_ADL,          // ALU output to ADL bus
+   output nDSA,             // Perform correction after subtraction	
+	output n1_PC             // PC input carry
 );
-// Связи модулей
+// Module connections
 wire BRK6E;
 wire B_OUT;
 wire BRFW;
@@ -702,7 +702,7 @@ wire ACRL2;
 wire STOR;
 wire nREADYR;
 
-// Модуль ФЛАГОВ
+// FLAGS module
    FLAGS MOD_FLAGS(
     Clk,               
     PHI1,              
@@ -728,7 +728,7 @@ wire nREADYR;
 	 BRFW               
 );
 
-// Модуль упрравления шинами
+// Bus control module
 BUS_CONTROL MOD_BUS_CONTROL(
    Clk,                            
    PHI2,              
@@ -765,7 +765,7 @@ BUS_CONTROL MOD_BUS_CONTROL(
 	DL_DB              		
 );
 
-// Модуль обработки прерываний
+// Interrupt control module
 INT_RESET_CONTROL MOD_INT_RESET_CONTROL(
    Clk,               
    PHI1,              
@@ -785,7 +785,7 @@ INT_RESET_CONTROL MOD_INT_RESET_CONTROL(
 	B_OUT              	 	
 );
 
-// Модуль контроля регистров
+// Register control module
 REGS_CONTROL MOD_REGS_CONTROL(
    Clk,                             
    PHI2,              
@@ -806,7 +806,7 @@ REGS_CONTROL MOD_REGS_CONTROL(
 	S_S                
 );
 
-// Модуль управления программным счетчиком
+// Program counter control module
 PC_SETUP MOD_PC_SETUP(
    Clk,               
    PHI1,              
@@ -830,7 +830,7 @@ PC_SETUP MOD_PC_SETUP(
 	nPCH_PCH           		
 );
 
-// Модуль управления АЛУ
+// ALU control module
 ALU_SETUP MOD_ALU_SETUP(
    Clk,              
    PHI1,              
@@ -869,7 +869,7 @@ ALU_SETUP MOD_ALU_SETUP(
    SR                
 );
 
-// Модуль диспетчера
+// Dispatcher module
 DISPATCH MOD_DISPATCH(
    Clk,               
    PHI1,             
@@ -903,80 +903,80 @@ DISPATCH MOD_DISPATCH(
 	nT1X,              
 	n1_PC              	
 );
-// Конец модуля RANDOM_LOGIC
+// End of module RANDOM_LOGIC
 endmodule
 
 //===============================================================================================
-// Модуль ФЛАГОВ
+// FLAGS module
 //===============================================================================================
 module FLAGS(
-   // Такты
+   // Clocks
    input Clk,               
-   input PHI1,              // Такт PHI1	
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input [128:0]X,          // Шина Декодера		
-	input [7:0]DB,           // Шина DB	
-	input IR5,               // Бит 5 регистра инструкций	
-	input nREADY,            // Сигнал "Процессор не готов"
-	input T7,                // Цикл 7 
-	input SR,                // Сдвиг вправо
+   input PHI1,              // phase PHI1	
+   input PHI2,              // phase PHI2
+	// Inputs	
+	input [128:0]X,          // Instruction decoder bus		
+	input [7:0]DB,           // DB Bus	
+	input IR5,               // Bit 5 of the instruction register	
+	input nREADY,            // "Processor not ready" signal
+	input T7,                // Cycle 7 
+	input SR,                // Shift right
 	input ZTST,              // 
-	input B_OUT,             // Вход флага B
-	input ACR,               // Сигнал переноса АЛУ
+	input B_OUT,             // Flag B input
+	input ACR,               // ALU output carry signal
 	input BRK6E,             // Break Cycle 6 End
-	input AVR,               // Сигнал переполнения АЛУ
-	input SO,                // Вход синхронизации
-	// Выходы
-	output [7:0]FLAG,        // Выход шины данных флагов
-	output P_DB,             // Данные флагов на шину DB
-	output reg nD_OUT,       // Выход флага D
-	output     nI_OUT,       // Выход флага I	
-	output reg nC_OUT,       // Выход флага C	
+	input AVR,               // ALU overflow signal
+	input SO,                // Sync input
+	// Outputs
+	output [7:0]FLAG,        // Flag data bus output
+	output P_DB,             // Flag data to DB bus
+	output reg nD_OUT,       // Flag D output
+	output     nI_OUT,       // Flag I output	
+	output reg nC_OUT,       // Flag C output	
 	output nBRTAKEN,         //
 	output reg BRFW          // 	
 );
-// Переменные
-reg P_DBR, IR5_I, IR5_C, IR5_D, Z_V, ARC_CR;                    // Защелки схемы управления флагами
-reg DBZ_ZR, DB_CR, DB_NR, DB_VR, DB_VR2;                        // Защелки схемы управления флагами
-reg nN_OUT, nZ_OUT, nV_OUT, I_LATCH1;                           // Первая защелка флага
-reg C_LATCH2, Z_LATCH2, I_LATCH2, D_LATCH2, V_LATCH2, N_LATCH2; // Вторая защелка флага
-reg SO_LATCH1, SO_LATCH2, SO_LATCH3, VSET, AVR_LATCH;           // Защелки детектора фронта синхронизации
+// Variables
+reg P_DBR, IR5_I, IR5_C, IR5_D, Z_V, ARC_CR;                    // Flag Control Circuit Latches
+reg DBZ_ZR, DB_CR, DB_NR, DB_VR, DB_VR2;                        // Flag Control Circuit Latches
+reg nN_OUT, nZ_OUT, nV_OUT, I_LATCH1;                           // First flag latch
+reg C_LATCH2, Z_LATCH2, I_LATCH2, D_LATCH2, V_LATCH2, N_LATCH2; // Second flag latch
+reg SO_LATCH1, SO_LATCH2, SO_LATCH3, VSET, AVR_LATCH;           // Edge Detector Latches
 reg BRFW2, BR2_LATCH; 
-// Комбинаторика
-// Управление флагами
+// Combinatorics
+// Flag management
 wire DB_V, DB_P, DB_N;
 assign DB_N = ~(( DBZ_ZR & DB_VR ) | DB_NR );
 assign DB_P = ~( DB_VR | nREADY );
 assign DB_V = ~( DB_VR & DB_VR2 );
 wire nDBZ;
 assign nDBZ = DB[7] | DB[6] | DB[5] | DB[4] | DB[3] | DB[2] | DB[1] | DB[0];
-// Мультиплексор флагов перехода 
+// Branch flag multiplexer 
 wire FLAG_MUX;
 assign FLAG_MUX = ( nZ_OUT & ~X[121] & ~X[126] )|( nC_OUT & X[121] & ~X[126] )|( nV_OUT & ~X[121] & X[126] )|( nN_OUT & X[121] & X[126] );
-// Выход данных флагов
+// Flag Data Output
 assign FLAG[7:0] = { ~nN_OUT, ~nV_OUT, 1'b1, B_OUT, ~nD_OUT, ~nI_OUT, ~nZ_OUT, ~nC_OUT};
 assign P_DB = ~P_DBR;
 assign nI_OUT = I_LATCH1 & ~BRK6E;
-assign nBRTAKEN = ~IR5 ^ FLAG_MUX; // Сигнал готовности перехода
-// Логика
+assign nBRTAKEN = ~IR5 ^ FLAG_MUX; // Branch readiness signal
+// Logics
 always @(posedge Clk) begin 
        if (PHI1) begin 
-		 // Первичные защелки флагов
+		 // Primary flag latches
 		 nC_OUT   <= ( ~DB[0] & ~DB_CR ) | ( ~ACR & ~ARC_CR  ) | ( ~IR5   & IR5_C ) | ( ~( IR5_C | ~ARC_CR | ~DB_CR ) & C_LATCH2 );
 		 nZ_OUT   <= ( ~DB[1] & DB_P   ) | ( nDBZ & ~DBZ_ZR  ) | ( ~( DB_P | ~DBZ_ZR ) & Z_LATCH2 ); 
 		 I_LATCH1 <= ( ~DB[2] & DB_P   ) | ( ~IR5   & IR5_I  ) | ( ~( IR5_I | DB_P ) & I_LATCH2 );	 
 		 nD_OUT   <= ( ~DB[3] & DB_P   ) | ( ~IR5   & IR5_D  ) | ( ~( IR5_D | DB_P ) & D_LATCH2 ); 
 		 nV_OUT   <= ( ~DB[6] & DB_V   ) | ( AVR & AVR_LATCH ) | ( ~( AVR_LATCH | DB_V | VSET ) & V_LATCH2 ) | Z_V;
 	    nN_OUT   <= ( ~DB[7] & DB_N   ) | ( ~DB_N & N_LATCH2 ); 
-		 // Защелки V флага
+		 // V flag latches
        SO_LATCH1 <= SO;
 		 SO_LATCH3 <= ~SO_LATCH2;
-		 // Защелка BRFW
+		 // Latch BRFW
 		      BRFW <= ( ~BR2_LATCH & BRFW2 ) | ( BR2_LATCH & DB[7] );
                   end
        if (PHI2) begin
-		 // Защелки системы управления флагами 
+		 // Flag Control Circuit Latches 
        P_DBR  <= ~( X[98] | X[99] );
        IR5_I  <= X[108];
 		 IR5_C  <= X[110];
@@ -988,70 +988,70 @@ always @(posedge Clk) begin
 		 DB_CR  <= ~( SR | DB_P );
 		 DB_VR  <= ~( X[114] | X[115] );
 		 DB_VR2 <= ~  X[113];
-		 // Вторичные защелки флагов
+		 // Secondary flag latches
 		 C_LATCH2 <= nC_OUT;
 		 Z_LATCH2 <= nZ_OUT;
 		 I_LATCH2 <= I_LATCH1 & ~BRK6E;
 		 D_LATCH2 <= nD_OUT;
 		 V_LATCH2 <= nV_OUT;
 		 N_LATCH2 <= nN_OUT;
-       // Защелки V флага
+       // V flag latches
 		 AVR_LATCH <= X[112];
 		 SO_LATCH2 <= SO_LATCH1;
 		      VSET <= ~( SO_LATCH1 | SO_LATCH3 );
-		 // Защелки BRANCH LOGIC				
+		 // BRANCH LOGIC latches				
 		 BR2_LATCH <= X[80];
 		     BRFW2 <= BRFW; 
                  end
                       end
-// Конец модуля FLAGS
+// End of FLAGS module
 endmodule
 
 //===============================================================================================
-// Модуль управления шинами
+// Bus control module
 //===============================================================================================
 module BUS_CONTROL(
-   // Такты
+   // Clocks
    input Clk,               
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input [128:0]X,          // Шина Декодера		
-	input T0,                // Цикл 0
-	input T1,                // Цикл 1
-	input T6,                // Цикл 6
-	input T7,                // Цикл 7
+   input PHI2,              // phase PHI2
+	// Inputs	
+	input [128:0]X,          // Instruction decoder bus		
+	input T0,                // Cycle 0
+	input T1,                // Cycle 1
+	input T6,                // Cycle 6
+	input T7,                // Cycle 7
 	input nSBXY,             //
-	input AND,               // Операция логического И
+	input AND,               // Logical AND
 	input STXY,              //
 	input STOR,              //
-	input DL_PCH,            // Значение защелки DL на шину PCH	
-	input Z_ADL0,            // Обнуление разряда 0 шины ADL
+	input DL_PCH,            // DL latch value to PCH bus	
+	input Z_ADL0,            // Resetting bit 0 of the ADL bus
 	input nPCH_PCH,          //
-	input ACRL2,             // Вход регистра переноса ALU
-	input nREADY,            // Сигнал "Процессор не готов"
-	input nREADYR,           // Сигнал "Процессор не готов" латч PHI1	
+	input ACRL2,             // ALU Output Carry Register Input
+	input nREADY,            // "Processor not ready" signal
+	input nREADYR,           // Signal "Processor is not ready" patch PHI1	
 	input BRK6E,             // Break Cycle 6 End
 	input INC_SB,            //
-	// Выходы
-	output Z_ADH0,           // Обнулить бит 0 шины ADH	
-	output DL_ADL,           // Значение защелки DL на шину ADL
-	output Z_ADH17,          // Обнулить биты 1-7 шины ADH	
-	output SB_AC,            // Шину SB на аккумулятор
+	// Outputs
+	output Z_ADH0,           // Clear bit 0 of the ADH bus	
+	output DL_ADL,           // Value of DL latch to ADL bus
+	output Z_ADH17,          // Clear bits 1-7 of the ADH bus	
+	output SB_AC,            // SB Bus to accumulator
 	output ZTST,             //
-	output ADL_ABL,          // Шину ADL на регистр адресной шины ABL
-	output AC_SB,            // Значение аккумулятора на шину SB
-	output SB_DB,            // Проброс данных между шинами DB <-> SB	
-	output AC_DB,            // Аккумулятор на шину DB
+	output ADL_ABL,          // PCL to  ADL Bus
+	output AC_SB,            // Accumulator to SB Bus
+	output SB_DB,            // Forwarding data between buses DB <-> SB	
+	output AC_DB,            // Accumulator to DB Bus
 	output PGX,              //
-	output SB_ADH,           // Проброс данных между шинами SB <-> ADH	 
-	output DL_ADH,           // Значение защелки DL на шину ADH	
-	output ADH_ABH,          // Шину ADH на регистр адресной шины ABH
-	output DL_DB             // Значение защелки DL на шину DB		
+	output SB_ADH,           // Forwarding data between buses SB <-> ADH	 
+	output DL_ADH,           // DL latch value per ADH Bus	
+	output ADH_ABH,          // ADH Bus to address bus register ABH
+	output DL_DB             // DL latch value per DB Bus		
 );
-// Переменные
+// Variables
 reg Z_ADH0R, Z_ADH17R, SB_ACR, ADL_ABLR, AC_SBR, SB_DBR;
 reg  AC_DBR, SB_ADHR, DL_ADHR, ADH_ABHR, DL_DBR;     
-// Комбинаторика
+// Combinatorics
 wire nSB_AC;
 assign nSB_AC =  ~( X[58] | X[59] | X[60] | X[61] | X[62] | X[63] | X[64] );
 assign ZTST = T7 | AND | nSBXY | ~nSB_AC ;
@@ -1064,7 +1064,7 @@ wire b;
 assign b = X[45] | X[46] | X[47] | X[48] | BRK6E | INC_SB;
 wire SBA;
 assign SBA = ~( ~( ~nREADYR & ACRL2 ) | ~( X[93] | PGX ));
-//Выходные сигналы 
+//Output signals
 assign Z_ADH0  = ~Z_ADH0R;
 assign DL_ADL  = ~Z_ADH0R;
 assign Z_ADH17 = ~Z_ADH17R;
@@ -1077,7 +1077,7 @@ assign SB_ADH  = ~SB_ADHR;
 assign DL_ADH  = ~DL_ADHR;
 assign ADH_ABH = ~ADH_ABHR;
 assign DL_DB   = ~DL_DBR;
-// Логика
+// Logics
 always @(posedge Clk) begin 				  
        if (PHI2) begin
        Z_ADH0R  <= ~( X[81] | X[82] );
@@ -1093,40 +1093,40 @@ always @(posedge Clk) begin
 		 DL_DBR   <= ~( b | T6 | X[80] | X[101] | ~( X[128] | ~( T0 | X[83] )));	 
 		           end					  
 		                end
-// Конец модуля BUS_CONTROL
+// End of BUS_CONTROL module
 endmodule
 
 //===============================================================================================
-// Модуль обработки прерываний
+// Interrupt control module
 //===============================================================================================
 module INT_RESET_CONTROL(
-   // Такты
+   // Clocks
    input Clk,               
-   input PHI1,              // Такт PHI1	
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input [128:0]X,          // Шина Декодера	
-	input nREADY,            // Сигнал "Процессор не готов"	
+   input PHI1,              // phase PHI1	
+   input PHI2,              // phase PHI2
+	// Inputs	
+	input [128:0]X,          // Instruction decoder bus
+	input nREADY,            // "Processor not ready" signal	
 	input RESP,              //	
 	input nNMIP,             // 
-	input nI_OUT,            // Вход флага I
+	input nI_OUT,            // Flag input I
 	input nIRQP,             // 
-	input T0,                // Цикл 0
-	// Выходы
+	input T0,                // Cycle 0
+	// Outputs
 	output BRK6E,            // Break Cycle 6 End
 	output Z_ADL0,           //
 	output reg Z_ADL1,       //	
 	output reg Z_ADL2,       //
 	output DORES,            //
-	output B_OUT             // Выход флага B	 	
+	output B_OUT             // Flag B Output	 	
 );
-// Переменные
+// Variables
 reg BRK5LATCH, BRK6LATCH1, BRK6LATCH2;
 reg RESLATCH1, RESLATCH2;
 reg BRK7LATCH, NMIPLATCH, FF2LATCH, DELAYLATCH2;
 reg DONMILATCH, FF1LATCH, BRK6ELATCH;
 reg BLATCH1, BLATCH2;
-// Комбинаторика
+// Combinatorics
 assign BRK6E = ~( nREADY | ~BRK6LATCH2 ); 
 wire BRK7;
 assign BRK7 = ~(( X[22] & ~nREADY ) | ~BRK6LATCH1 );
@@ -1139,7 +1139,7 @@ assign nDONMI = ~( DONMILATCH | ~( BRK6ELATCH | FF1LATCH ));
 assign DORES = RESLATCH1 | RESLATCH2;
 assign B_OUT = ~( ~( BRK6E | BLATCH2 ) | DORES );
 assign Z_ADL0 = BRK5LATCH;
-// Логика
+// Logics
 always @(posedge Clk) begin 
        if (PHI1) begin
        BRK6LATCH1  <= ~( BRK5LATCH | ( nREADY & ~BRK6LATCH1 )); 
@@ -1162,41 +1162,41 @@ always @(posedge Clk) begin
 		 Z_ADL2     <= ~( BRK7 | DORES | nDONMI );
 					  end					  
 		                end
-// Конец модуля INT_RESET_CONTROL
+// End of module INT_RESET_CONTROL
 endmodule
 
 //===============================================================================================
-// Модуль управления регистрами
+// Register management module
 //===============================================================================================
 module REGS_CONTROL(
-   // Такты
-   input Clk,               // Тактовый сигнал
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input [128:0]X,          // Шина Декодера		
+   // Clocks
+   input Clk,               // Clock signal
+   input PHI2,              // phase PHI2
+	// Inputs	
+	input [128:0]X,          // Instruction decoder bus		
 	input STOR,              // Stor operation
-	input nREADY,            // Сигнал "Процессор не готов"
-	input nREADYR,           // Сигнал "Процессор не готов" латч PHI1
-	// Выходы
-	output Y_SB,             // Регистр Y на шину SB
+	input nREADY,            // "Processor not ready" signal
+	input nREADYR,           // Signal "Processor is not ready" latch PHI1
+	// Outputs
+	output Y_SB,             // Y register to SB Bus
 	output STXY,             //
-	output X_SB,             // Регистр X на шину SB
-	output reg S_SB,         // Регистр S на шину SB	
-	output SB_X,             // Шина SB на регистр X
+	output X_SB,             // X register to SB Bus
+	output reg S_SB,         // S register to SB Bus	
+	output SB_X,             // SB Bus to register X
 	output nSBXY,            //	
-	output SB_Y,             // Шина SB на регистр Y	
+	output SB_Y,             // SB Bus to register Y	
 	output STKOP,            // Stack operation
-	output S_ADL,            // Регистр S на шину ADL	
-	output SB_S,             // Шина SB на регистр S	
-	output S_S               // Хранение значение в регистре S	
+	output S_ADL,            // Register S to ADL Bus	
+	output SB_S,             // SB Bus to register S	
+	output S_S               // Storing a value in a register S	
 );
-// Переменные
-reg Y_SBR, X_SBR, SB_XR, SB_YR, S_ADLR, SB_SR;       // Выходные латчи модуля 
-// Комбинаторика
+// Variables
+reg Y_SBR, X_SBR, SB_XR, SB_YR, S_ADLR, SB_SR;       // Module output patches 
+// Combinatorics
 assign STXY  = ~(( X[0] & STOR ) | ( X[12] & STOR ));
 assign nSBXY = ~( ~( X[14] | X[15] | X[16] ) & ~( X[18] | X[19] | X[20] ));
 assign STKOP = ~( nREADYR | ~( X[21] | X[22] | X[23] | X[24] | X[25] | X[26] ));
-//Выходные сигналы модуля
+//Module output signals
 assign Y_SB  = ~( Y_SBR | PHI2 );
 assign X_SB  = ~( X_SBR | PHI2 );
 assign SB_X  = ~( SB_XR | PHI2 );
@@ -1204,7 +1204,7 @@ assign SB_Y  = ~( SB_YR | PHI2 );
 assign S_ADL = ~S_ADLR;
 assign SB_S  = ~(  SB_SR | PHI2 );
 assign S_S   = ~( ~SB_SR | PHI2 );
-// Логика
+// Logics
 always @(posedge Clk) begin 			  
        if (PHI2) begin
 		 Y_SBR  <= ~( X[1] | X[2] | X[3]  | X[4]  | X[5]  | ( X[0]  &  STOR ) | ( X[6] &  X[7] ));
@@ -1216,42 +1216,42 @@ always @(posedge Clk) begin
 		 SB_SR  <= ~( STKOP | X[13] | ~( ~X[48] | nREADY ));
 		           end					  
 		                end
-// Конец модуля REGS_CONTROL
+// End of module REGS_CONTROL
 endmodule
 
 //===============================================================================================
-// Модуль управления программным счетчиком
+// Program counter control module
 //===============================================================================================
 module PC_SETUP(
-   // Такты
-   input Clk,               // Тактовый сигнал
-   input PHI1,              // Такт PHI1	
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input [128:0]X,          // Шина Декодера		
-	input T0,                // Цикл 0
-	input T1,                // Цикл 1
-	input nREADY,            // Сигнал "Процессор не готов"
-	input nREADYR,           // Сигнал "Процессор не готов" латч PHI1	
-	// Выходы
-	output PCL_DB,           // Данные PCL на шину DB
-	output PC_DB,            // Данные PC на шину DB
-	output PCH_DB,           // Данные PCH на шину DB	
-	output PCL_ADL,          // Данные PCL на шину ADL	
-   output PCH_ADH,          // Данные PCH на шину ADH
-	output PCL_PCL,          // Режим хранения данных в разрядах счетчика PCL
-	output ADL_PCL,          // Загрузка данных из шины ADL
+   // Clocks
+   input Clk,               // Clock
+   input PHI1,              // phase PHI1	
+   input PHI2,              // phase PHI2
+	// Inputs	
+	input [128:0]X,          // Instruction decoder bus		
+	input T0,                // Cycle 0
+	input T1,                // Cycle 1
+	input nREADY,            // "Processor not ready" signal
+	input nREADYR,           // Signal "Processor is not ready" latch PHI1
+	// Outputs
+	output PCL_DB,           // PCL to  DB  Bus
+	output PC_DB,            // PC  to  DB  Bus
+	output PCH_DB,           // PCH to  DB  Bus	
+	output PCL_ADL,          // PCL to  ADL Bus	
+   output PCH_ADH,          // PCH to  ADH Bus
+	output PCL_PCL,          // Data storage mode in counter bits PCL
+	output ADL_PCL,          // Loading data from the ADL Bus
 	output nADL_PCL,         //	
    output DL_PCH,           // 	
-	output ADH_PCH,          // Загрузка данных из шины ADH	
-	output PCH_PCH,          // Режим хранения данных в разрядах счетчика PCH
+	output ADH_PCH,          // Loading data from the ADH Bus	
+	output PCH_PCH,          // Data storage mode in counter bits PCH
 	output nPCH_PCH          //		
 );
-// Переменные
-reg PCL_DBR,  PCH_DBR,  PCL_ADLR, PCH_ADHR; // Выходные защелки модуля
-reg ADL_PCLR, ADH_PCHR;                     // Выходные защелки модуля     
+// Variables
+reg PCL_DBR,  PCH_DBR,  PCL_ADLR, PCH_ADHR; // Module output latches
+reg ADL_PCLR, ADH_PCHR;                     // Module output latches     
 reg PCL_DBR1;
-// Комбинаторика
+// Combinatorics
 wire JB;
 assign JB = ~( X[94] | X[95] | X[96] );
 assign DL_PCH = ~( ~T0 | JB ); 
@@ -1262,7 +1262,7 @@ wire nADH_PCH;
 assign nADH_PCH = ~( T0 | T1 | X[80] | X[93] | X[83] | X[84] );
 assign nPCH_PCH =    T0 | T1 | X[80] | X[93] | X[83] | X[84];
 assign PC_DB = ~( ~PCL_DBR1 & ~( X[77] | X[78] ));
-//Выходные сигналы 
+//Output signals 
 assign PCL_DB  = ~PCL_DBR;
 assign PCH_DB  = ~PCH_DBR;
 assign PCL_ADL = ~PCL_ADLR;
@@ -1271,7 +1271,7 @@ assign PCL_PCL = ~( PHI2 | ~ADL_PCLR );
 assign ADL_PCL = ~( PHI2 |  ADL_PCLR );
 assign PCH_PCH = ~( PHI2 | ~ADH_PCHR );
 assign ADH_PCH = ~( PHI2 |  ADH_PCHR );
-// Логика
+// Logics
 always @(posedge Clk) begin 
        if (PHI1) begin
        PCL_DBR1 <= ~( nREADY | PCH_DBR );
@@ -1285,61 +1285,60 @@ always @(posedge Clk) begin
 		 ADH_PCHR <= nADH_PCH;
 		           end					  
 		                end
-// Конец модуля RES_CONTROL
+// End of the program counter control module
 endmodule
 
 //===============================================================================================
-// Модуль управления АЛУ
+// ALU control module
 //===============================================================================================
-// Модуль ALU_SETUP
 module ALU_SETUP(
-   // Такты
-   input Clk,               // Тактовый сигнал
-   input PHI1,              // Такт PHI1	
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input [128:0]X,          // Шина Декодера	
-	input nREADY,            // Сигнал "Процессор не готов"
-	input nREADYR,           // Сигнал "Процессор не готов" латч PHI1		
+   // Clocks
+   input Clk,               // Clock
+   input PHI1,              // phase PHI1	
+   input PHI2,              // phase PHI2
+	// Inputs	
+	input [128:0]X,          // Instruction decoder bus	
+	input nREADY,            // "Processor not ready" signal
+	input nREADYR,           // Signal "Processor is not ready" latch PHI1	
 	input PGX,               //
-	input nD_OUT,            // Вход флага D	
-	input nC_OUT,            // Вход флага C
-	input T0,                // Цикл 0
-	input T1,                // Цикл 1
-	input T6,                // Цикл 6
-	input T7,                // Цикл 7
+	input nD_OUT,            // Flag D input	
+	input nC_OUT,            // Flag C input
+	input T0,                // Cycle 0
+	input T1,                // Cycle 1
+	input T6,                // Cycle 6
+	input T7,                // Cycle 7
 	input BRK6E,             // Break Cycle 6 End
 	input STKOP,             // Stack operation
 	input BRFW,              // BranchForward
-	// Выходы
-	output Z_ADD,            // Обнулить
-	output SB_ADD,           // Шину SB на вход АЛУ
-	output NDB_ADD,          // Шину ~DB на вход АЛУ
-	output DB_ADD,           // Шину DB на вход АЛУ
-	output ADL_ADD,          // Шину ADL на вход АЛУ
-   output AND,              // Логическое И
-   output reg ANDS,         // Логическое И
-   output reg ORS,          // Логическое ИЛИ
-   output reg nACIN,        // Входной перенос АЛУ
-   output reg SRS,          // Сдвиг вправо
-   output reg SUMS,	       // Сумма А + В
-   output reg EORS,         // Исключающее ИЛИ
-   output ADD_SB06,         // Биты 0-6 на шину SB	
-   output reg ADD_SB7,      // Бит    7 на шину SB	
-   output ADD_ADL,          // Выход АЛУ на шину ADL
-   output reg nDSA,         // Выполнить коррекцию после вычитания	
-   output reg nDAA,         // Выполнить коррекцию после сложения
-	output INC_SB,           // Инкремент SB
-   output SR                // Сдвиг вправо	
+	// Outputs
+	output Z_ADD,            // Reset input A of ALU
+	output SB_ADD,           // SB bus to ALU input
+	output NDB_ADD,          // ~DB Bus to ALU input
+	output DB_ADD,           //  DB Bus to ALU input
+	output ADL_ADD,          // ADL bus to ALU input
+   output AND,              // Logical AND
+   output reg ANDS,         // Logical AND
+   output reg ORS,          // Logical OR 
+   output reg nACIN,        // ALU input carry
+   output reg SRS,          // Shift right
+   output reg SUMS,	       // the result of the sum A+B	
+   output reg EORS,         // Exclusive OR
+   output ADD_SB06,         // ALU output bits 0-6 per SB bus	
+   output reg ADD_SB7,      // ALU output bit 7 to SB bus	
+   output ADD_ADL,          // ALU output to ADL bus
+   output reg nDSA,         // Perform correction after subtraction	
+   output reg nDAA,         // Perform correction after addition
+	output INC_SB,           // SB Increment
+   output SR                // Shift right	
 );
-// Переменные
-reg Z_ADDR, NDB_ADDR, DB_ADDR, ADL_ADDR;           // Защелки сигналов управления входными защелками АЛУ
-reg ADD_SB06R, ADD_ADLR;                           // Защелки выходных сигналов модуля
-reg ANDS1, SUMS1, ORS1, SRS1, EORS1, nDSA1, nDAA1; // Защелки сигналов управления режимами АЛУ
-reg ACIN1, ACIN2, ACIN3, ACIN4;                    // Защелки схемы входного переноса АЛУ    
-reg MUX_LATCH, COUT_LATCH;                         // Защелки схемы ADDSB7
-reg FFLATCH1, FFLATCH2;                            // Защелки регистра схемы ADDSB7
-// Комбинаторика
+// Variables
+reg Z_ADDR, NDB_ADDR, DB_ADDR, ADL_ADDR;           // ALU input latches control signal latches
+reg ADD_SB06R, ADD_ADLR;                           // Module output latches
+reg ANDS1, SUMS1, ORS1, SRS1, EORS1, nDSA1, nDAA1; // ALU mode control signal latches
+reg ACIN1, ACIN2, ACIN3, ACIN4;                    // ALU input carry circuit latches    
+reg MUX_LATCH, COUT_LATCH;                         // ADDSB7 circuit latches
+reg FFLATCH1, FFLATCH2;                            // ADDSB7 circuit register latches
+// Combinatorics
 wire BRX;
 assign BRX =  X[49] | X[50] | ~( ~X[93] | BRFW );
 wire nADL_ADD;
@@ -1349,7 +1348,7 @@ wire OR;
 assign OR  =  X[32] | nREADY;
 assign SR  =  X[75] | ( T6 & X[76] );
 assign INC_SB = X[39] | X[40] | X[41] | X[42] | X[43] | ( T6 & X[44] );
-//Выходные сигналы 
+//Output signals
 assign Z_ADD    = ~( PHI2 | Z_ADDR );
 assign SB_ADD   = ~( PHI2 | ~Z_ADDR );
 assign NDB_ADD  = ~( PHI2 | NDB_ADDR );
@@ -1357,7 +1356,7 @@ assign DB_ADD   = ~( PHI2 | DB_ADDR );
 assign ADL_ADD  = ~( PHI2 | ADL_ADDR );
 assign ADD_SB06 = ~ADD_SB06R;
 assign ADD_ADL  = ~ADD_ADLR;
-// Логика
+// Logics
 always @(posedge Clk) begin 
        if (PHI1) begin
        nACIN 	   <= ~( ACIN1 | ACIN2 | ACIN3 | ACIN4 );
@@ -1394,19 +1393,19 @@ always @(posedge Clk) begin
 		 FFLATCH2   <= FFLATCH1;	 
 					  end					  
 		                end
-// Конец модуля ALU_SETUP
+// End of module ALU_SETUP
 endmodule
 
 //===============================================================================================
-// Модуль ДИСПЕТЧЕРА
+// DISPATCH module
 //===============================================================================================
 module DISPATCH(
-   // Такты
-   input Clk,               // Тактовый сигнал
-   input PHI1,              // Такт PHI1	
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input [128:0]X,          // Шина Декодера	
+   // Clocks
+   input Clk,               // Clock
+   input PHI1,              // phase PHI1	
+   input PHI2,              // phase PHI2
+	// Inputs
+	input [128:0]X,          // Instruction decoder bus
 	input ACR,               //
 	input BRFW,              //
 	input RDY,               //
@@ -1418,25 +1417,25 @@ module DISPATCH(
 	input nTWOCYCLE,         //	
 	input nADL_PCL,          //
 	input IMPLIED,           //
-	input B_OUT,             // Вход флага B	
-	// Выходы
+	input B_OUT,             // Flag B input	
+	// Outputs
 	output reg ACRL2,        //
-	output T6,               // Цикл  6
-	output reg T7,           // Цикл  7
+	output T6,               // Cycle  6
+	output reg T7,           // Cycle  7
 	output STOR,             //
 	output TRES2,            //
 	output FETCH,            //
 	output Z_IR,             //
-	output reg nREADY,       // Сигнал "Процессор не готов"
-	output nREADYR,          // Сигнал "Процессор не готов" латч PHI1  
-	output WRPHI1,           // Сигнал записи процессора	
-	output T1,               // Цикл  1
-	output nT0,              // Цикл ~0	
-	output T0,               // Цикл  0
-	output nT1X,             // Цикл ~T1X
-	output n1_PC             // Входной перенос PC		
+	output reg nREADY,       // "Processor not ready" signal
+	output nREADYR,          // Signal "Processor is not ready" latch PHI1 
+	output WRPHI1,           // Processor write signal (phase PHI1)	
+	output T1,               // Cycle  1
+	output nT0,              // Cycle ~0	
+	output T0,               // Cycle  0
+	output nT1X,             // Cycle ~T1X
+	output n1_PC             // PC input carry		
 );
-// Переменные
+// Variables
 reg RDYDELAY1, RDYDELAY2, nREADY2, WRLATCH; //
 reg ACRL_LATCH1;                            //
 reg T61, T62, T67, T71;                     // 
@@ -1448,7 +1447,7 @@ reg BRLATCH1, BRLATCH2;                     //
 reg COMPLATCH2;                             // 
 reg T0LATCH, T1LATCH, T1XLATCH;             //
 reg IPC1, IPC2, IPC3;                       //
-// Комбинаторика
+// Combinatorics
 wire nMEMOP;
 assign nMEMOP = ~( X[111] | X[122] | X[123] | X[124] | X[125] );
 wire nSHIFT;
@@ -1465,7 +1464,7 @@ wire nTRESX;
 assign nTRESX = ~( BRK6E | ~TRESXLATCH2 | ~( ACRL1 | nREADY | REST | TRESXLATCH1 ));
 wire i2;
 assign i2 = BRLATCH2 & ( ~ACR ^ BRFW );
-//Выходные сигналы 
+//Output signals 
 assign STOR = ~( ~X[97] | nMEMOP );
 assign FETCH = ~( nREADY | ~FETCHLATCH );
 assign Z_IR = ~( B_OUT & FETCH );
@@ -1478,7 +1477,7 @@ assign T1 = ~T1LATCH;
 assign nT1X = ~T1XLATCH;
 assign n1_PC = ~( IPC1 & ( IPC2 | IPC3 ));
 assign nREADYR = RDYDELAY1;
-// Логика
+// Logics
 always @(posedge Clk) begin 
        if (PHI1) begin
        RDYDELAY1   <= nREADY; 
@@ -1514,174 +1513,151 @@ always @(posedge Clk) begin
 		 T0LATCH     <= nT0;
 					  end					  
 		                end
-// Конец модуля DISPATCH
+// End of module DISPATCH
 endmodule
 
 //===============================================================================================
-// Модуль мультиплексирования шин
+// Bus multiplexing module
 //===============================================================================================
 module BUS_MUX(
-	// Секция входов
-	// Управление генератором констант	
-	input Z_ADL0,            // Обнулить бит 0 шины ADL
-	input Z_ADL1,            // Обнулить бит 1 шины ADL
-	input Z_ADL2,            // Обнулить бит 2 шины ADL
-	input Z_ADH0,            // Обнулить бит 0 шины ADH
-	input Z_ADH17,           // Обнулить биты 1-7 шины ADH
-   // Управление мультиплексорами шин 	
-	input	SB_DB,			    // Данные SB на шину DB
-	input	PCL_DB,			    // Данные PCL на шину DB
-	input	PCH_DB,			    // Данные PCH на шину DB
-	input	P_DB,			       // Данные флагов на шину DB
-	input	AC_DB,			    // Данные аккумулятора на шину DB
-	input	AC_SB,			    // Данные аккумулятора на шину SB
-	input	ADD_ADL,			    // Данные АЛУ на шину ADL
-	input	ADD_SB06,			 // Данные АЛУ биты 0-6 на шину SB
-	input	ADD_SB7,		   	 // Данные АЛУ бит  7 на шину SB
-   input Y_SB,              // Данные регистра Y на шину SB
-   input X_SB,              // Данные регистра X на шину SB
-   input S_SB,              // Данные регистра S на шину SB	
-	input	SB_ADH,			    // Данные ADH на шину SB	 
-	input S_ADL,             // Данные регистра S на шину ADL
-	input DL_ADL,            // Данные Data Latch на шину ADL
-	input DL_ADH,            // Данные Data Latch на шину ADH
-	input DL_DB,             // Данные Data Latch на шину DB	
-	input	PCL_ADL,			    // Данные PCL на шину ADL
-	input	PCH_ADH,			    // Данные PCH на шину ADH
-	// Входные шины
-	input	[7:0]DL,		       // Шина DL
-	input	[7:0]PCL,          // Шина PCL
-	input	[7:0]PCH,          // Шина PCH
-	input	[7:0]FLAG,         // Данные флагов
-	input	[7:0]ADD,          // Данные АЛУ
-	input	[7:0]ACC,          // Данные аккумулятора	
-	input	[7:0]Y_REG,        // Данные регистра Y
-	input	[7:0]X_REG,        // Данные регистра X
-	input	[7:0]S_REG,        // Данные регистра S
+	// Inputs
+	// Constant generator control	
+	input Z_ADL0,            // Clear bit 0 of the ADL bus
+	input Z_ADL1,            // Clear bit 1 of the ADL bus
+	input Z_ADL2,            // Clear bit 2 of the ADL bus
+	input Z_ADH0,            // Clear bit 0 of the ADH bus
+	input Z_ADH17,           // Clear bits 1-7 of the ADH bus
+   // Bus multiplexer control	
+	input	SB_DB,			    // Forwarding data between buses DB <-> SB
+	input	PCL_DB,			    // PCL to  DB  Bus
+	input	PCH_DB,			    // PCH to  DB  Bus
+	input	P_DB,			       // Flag data to DB Bus
+	input	AC_DB,			    // Accumulator to DB Bus
+	input	AC_SB,			    // Accumulator to SB Bus
+	input	ADD_ADL,			    // ALU output to ADL bus
+	input	ADD_SB06,			 // ALU output bits 0-6 per SB bus
+	input	ADD_SB7,		   	 // ALU output bit 7 to SB bus
+   input Y_SB,              // Y register to SB Bus
+   input X_SB,              // X register to SB Bus
+   input S_SB,              // S register to SB Bus	
+	input	SB_ADH,			    // Forwarding data between buses SB <-> ADH	 
+	input S_ADL,             // Register S to ADL Bus
+	input DL_ADL,            // DL latch value per ADL Bus
+	input DL_ADH,            // DL latch value per ADH Bus
+	input DL_DB,             // DL latch value per DB Bus	
+	input	PCL_ADL,			    // PCL to  ADL Bus
+	input	PCH_ADH,			    // PCH to  ADH Bus
+	// Input buses
+	input	[7:0]DL,		       // Input DатаLatch Bus
+	input	[7:0]PCL,          // LSB bus PC
+	input	[7:0]PCH,          // MSB bus PC
+	input	[7:0]FLAG,         // Flag data bus
+	input	[7:0]ADD,          // ADD Bus (output ALU)
+	input	[7:0]ACC,          // ADD Bus (accumulator output)
+	input	[7:0]Y_REG,        // register Y
+	input	[7:0]X_REG,        // register X
+	input	[7:0]S_REG,        // Stack pointer
 	// Секция выходов
-	output [7:0]DB,	       // Выход шины DB
-	output [7:0]SB,	       // Выход шины SB	
-	output [7:0]ADL,	       // Выход шины ADL
-	output [7:0]ADH 	       // Выход шины ADH		
+	output [7:0]DB,	       // DB Bus
+	output [7:0]SB,	       // SB Bus
+	output [7:0]ADL,	       // ADL Bus
+	output [7:0]ADH 	       // ADH Bus		
 );
 
-// Комбинаторика
-// Промежуточные шины
+// Combinatorics
+// Intermediate buses
 wire [7:0]DBT;  
 wire [7:0]SBT;
-wire [7:0]SBR;
-wire [7:0]SBB;
 wire [7:0]SBH;
-wire [7:0]ADLT; 
 wire [7:0]ADHT;
-wire [7:0]ADHC; 
-// Мультиплексор шины DBT
-assign DBT[7:0]  = (PCL[7:0]&{8{PCL_DB}}) | (PCH[7:0]&{8{PCH_DB}}) | (ACC[7:0]&{8{AC_DB}}) | (FLAG[7:0]&{8{P_DB}}) | (DL[7:0]&{8{DL_DB}}) | {8{~( PCL_DB | PCH_DB | AC_DB | P_DB | DL_DB )}};
-// Мультиплексор шины SBT
-assign SBT[7:0]  = (X_REG[7:0] & {8{X_SB}}) | (Y_REG[7:0] & {8{Y_SB}}) | (S_REG[7:0] & {8{S_SB}}) | (ACC[7:0] & {8{AC_SB}}) | {8{~( X_SB | Y_SB | S_SB | AC_SB)}};
-// Мультиплексор шины ADLT
-assign ADLT[7:0]  = (S_REG[7:0] & {8{S_ADL}}) | (PCL[7:0] & {8{PCL_ADL}}) | (DL[7:0] & {8{DL_ADL}}) | (ADD[7:0] & {8{ADD_ADL}}) | {8{~( S_ADL | PCL_ADL | DL_ADL | ADD_ADL)}}; 
-// Мультиплексор шины ADHT
-assign ADHT[7:0] = (PCH[7:0] & {8{PCH_ADH}}) | (DL[7:0] & {8{DL_ADH}}) | {8{~(PCH_ADH | DL_ADH)}};
-// Мультиплексор шины SBH
-assign SBH[7:0]  =  SB_ADH  ? ( ADHC[7:0] & SBR[7:0] ) : SBR[7:0]; 
-// Генератор констант
-assign ADL[7:3]  =  ADLT[7:3];
-assign ADL[0]    = ~Z_ADL0  & ADLT[0];
-assign ADL[1]    = ~Z_ADL1  & ADLT[1];
-assign ADL[2]    = ~Z_ADL2  & ADLT[2];
-assign ADHC[0]   = ~Z_ADH0  & ADHT[0];
-assign ADHC[7:1] = { 7 { ~Z_ADH17 }} & ADHT[7:1];
-// Вывод данных АЛУ на шину SB
-assign SBB[6:0]  = (ADD_SB06) ? ADD[6:0] : SBT[6:0];
-assign SBB[7]    = (ADD_SB7)  ? ADD[7]   : SBT[7]; 
-// Вывод значений для обработки недокументированных опкодов на шину SB
-wire SELND1;
-wire SELND2;
-wire [7:0]SBADX;
-wire [7:0]SBADXY;
-assign SELND1 = (X_SB & ADD_SB06 & ADD_SB7) | (Y_SB & ADD_SB06 & ADD_SB7);
-assign SELND2 = X_SB & AC_SB;
-assign SBADX[7:0]  =   X_REG[7:0] & ACC[7:0] & { 8 { SELND2 }};
-assign SBADXY[7:0] = ( X_REG[7:0] & ADD[7:0] & {8{ X_SB & ADD_SB06 & ADD_SB7 }}) | ( Y_REG[7:0] & ADD[7:0] & {8{ Y_SB & ADD_SB06 & ADD_SB7 }});
-assign SBR[7:0]    = SBADX[7:0] | ( SBB[7:0] & {8{ ~( SELND1 | SELND2 )}}) | ( SBADXY[7:0] & { 8 { SELND1 }});
-// Мультиплексор шины DB
+// DBT bus multiplexer
+assign DBT[7:0]  = ( ~{8{AC_DB}} | ACC[7:0] ) & ( ~{8{P_DB}} | FLAG[7:0] ) & ( ~{8{DL_DB}} | DL[7:0] ) & ( ~{8{PCL_DB}} | PCL[7:0] ) & ( ~{8{PCH_DB}} | PCH[7:0] );
+// SBT bus multiplexer
+assign SBT[7:0]  = ( ~{8{X_SB}} | X_REG[7:0] ) & ( ~{8{Y_SB}} | Y_REG[7:0] ) & ( ~{8{S_SB}} | S_REG[7:0] ) & ( ~{8{AC_SB}} | ACC[7:0] ) & { ~ADD_SB7 | ADD[7], ~{7{ADD_SB06}} | ADD[6:0]}; 
+// ADHT bus multiplexer
+assign ADHT[7:0] = ( ~{8{PCH_ADH}} | PCH[7:0] ) & ( ~{8{DL_ADH}} | DL[7:0] ) & { ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH17, ~Z_ADH0 };
+// SBH bus multiplexer
+assign SBH[7:0]  =  SB_ADH ? ( ADHT[7:0] & SBT[7:0] ) : SBT[7:0];
+// DB bus multiplexer
 assign DB[7:0]   =  SB_DB  ? ( DBT[7:0]  & SBH[7:0] ) : DBT[7:0];
-// Мультиплексор шины SB
+// SB bus multiplexer
 assign SB[7:0]   =  SB_DB  ? ( DBT[7:0]  & SBH[7:0] ) : SBH[7:0];
-// Мультиплексор шины ADH
-assign ADH[7:0]  =  SB_ADH ? ( ADHC[7:0] & SBR[7:0] ) : ADHC[7:0];					
-// Конец модуля BUS_MUX
+// ADH bus multiplexer
+assign ADH[7:0]  =  SB_ADH ? ( ADHT[7:0] & SBT[7:0] ) : ADHT[7:0];
+// ADL bus multiplexer
+assign ADL[7:0]  = ( ~{8{S_ADL}} | S_REG[7:0] ) & ( ~{8{ADD_ADL}} | ADD[7:0] ) & ( ~{8{PCL_ADL}} | PCL[7:0] ) & ( ~{8{DL_ADL}} | DL[7:0] ) & { 5'h1f, ~Z_ADL2, ~Z_ADL1, ~Z_ADL0 };					
+// End of module BUS_MUX
 endmodule
 
 //===============================================================================================
-// Модуль АЛУ
+// ALU module
 //===============================================================================================
 module ALU (
-   // Такты
-   input Clk,               // Тактовый сигнал
-   input PHI2,              // Такт PHI2
-	// Входы	
-	input Z_ADD,             // Обнуление входа AI АЛУ	
-	input [7:0]SB,           // Шина SB
-	input	SB_ADD,            // Загрузка данных из шины SB
-	input [7:0]DB,           // Шина DB
-	input NDB_ADD,           // Загрузка инвертированных данных шины DB
-	input	DB_ADD,            // Загрузка данных из шины DB
-	input [7:0]ADL,          // Шина ADL
-   input ADL_ADD,           // Загрузка данных из шины ADL
-	input nACIN,             // Входной перенос АЛУ
-	input ANDS,              // Результат логического И
-	input ORS,               // Результат логического ИЛИ
-	input EORS,              // Результат логического исключающего ИЛИ 
-	input SRS,               // Результат сдвига вправо
-	input SUMS,              // Результат суммирования A + B
-	input SB_AC,             // Шина SB на аккумулятор
-	input nDAA,              // Выполнить коррекцию после сложения 
-	input nDSA,              // Выполнить коррекцию после вычитания
-	// Выходы
-	output reg [7:0]ACC,     // Выход аккумулятора
-	output reg [7:0]ADD,     // Выход результата операций 
-   output ACR,              // Выход переноса АЛУ
-	output reg AVR           // Выход переполнения АЛУ
+   // Clocks
+   input Clk,               // Clock
+   input PHI2,              // phase PHI2
+	// Inputs
+	input Z_ADD,             // Reset input A of ALU
+	input [7:0]SB,           // SB bus
+	input	SB_ADD,            // SB bus to ALU input
+	input [7:0]DB,           // DB bus
+	input NDB_ADD,           // ~DB Bus to ALU input
+	input	DB_ADD,            //  DB Bus to ALU input
+	input [7:0]ADL,          // ADL bus
+   input ADL_ADD,           // ADL bus to ALU input
+	input nACIN,             // ALU input carry
+	input ANDS,              // Logical AND result 
+	input ORS,               // Logical OR result
+	input EORS,              // Logical XOR result 
+	input SRS,               // Right shift result
+	input SUMS,              // the result of the sum A+B
+	input SB_AC,             // SB Bus to accumulator
+	input nDAA,              // Perform correction after addition 
+	input nDSA,              // Perform correction after subtraction
+	// Outputs
+	output reg [7:0]ACC,     // accumulator output
+	output reg [7:0]ADD,     // Output of the result of operations
+   output ACR,              // ALU carry output
+	output reg AVR           // ALU overflow output
 );
-// Переменные
-reg [7:0]AI;                    // Входной латч AI
-reg [7:0]BI;                    // Входной латч BI
-reg LATCH_C7;                   // Латчи схемы переполнения АЛУ
-//reg LATCH_DC7;                  // Латчи схемы переполнения АЛУ
-//reg DAAL, DAAHR, DSAL, DSAHR;   // Латчи управления десятичной коррекцией  
-// Комбинаторика логических операций
-wire [7:0]ANDo;                 // Логическое И
-wire [7:0]ORo;                  // Логическое ИЛИ
-wire [7:0]XORo;                 // Логическое исключающее ИЛИ
-wire [7:0]SUMo;                 // Сумма А и В
+// Variables
+reg [7:0]AI;                    // AI input latch
+reg [7:0]BI;                    // BI input latch
+reg LATCH_C7;                   // ALU overflow circuit latches
+reg LATCH_DC7;                  // ALU overflow circuit latches
+//reg DAAL, DAAHR, DSAL, DSAHR;   // Decimal correction control latches  
+// Combinatorics of logical operations
+wire [7:0]ANDo;                 // Logical AND
+wire [7:0]ORo;                  // Logical OR
+wire [7:0]XORo;                 // Logical XOR
+wire [7:0]SUMo;                 // Sum A + B
 assign ANDo[7:0] =   AI[7:0] &  BI[7:0];
 assign  ORo[7:0] =   AI[7:0] |  BI[7:0]; 
 assign XORo[7:0] =   AI[7:0] ^  BI[7:0];
 assign SUMo[7:0] = XORo[7:0] ^ CIN[7:0];
-wire [7:0]RESULT;               // Результат АЛУ
+wire [7:0]RESULT;               // ALU result bus
 assign RESULT[7:0] = ({8{ANDS}} & ANDo[7:0]) | ({8{ORS}} & ORo [7:0]) | ({8{EORS}} & XORo[7:0]) | ({8{SRS}} & {1'b0 ,ANDo[7:1]}) | ({8{SUMS}} & SUMo[7:0]);
-// Комбинаторика переполнения АЛУ
+// Combinatorics of ALU overflow
 wire [7:0]CIN;	
-assign CIN[7:0] = { COUT[6:0], ~nACIN };	// assign CIN[7:0] = { COUT[6:4], DCOUT3, COUT[2:0], ~nACIN };
+assign CIN[7:0] = { COUT[6:0], ~nACIN };	// assign CIN[7:0] = { COUT[6:4], DCOUT3, COUT[2:0], ~nACIN };	
 wire [7:0]COUT;
 assign COUT[7:0] = ( CIN[7:0] & ORo[7:0] ) | ANDo[7:0] ;
-//wire DCOUT3;
+wire DCOUT3;
 //assign DCOUT3 = COUT[3] & ~DC3;
-assign ACR = LATCH_C7;	        //assign ACR = LATCH_C7 | LATCH_DC7;		
-/* BCD 
+assign ACR = LATCH_C7;	               //	ACR = LATCH_C7 | LATCH_DC7;
+//BCD
+/* 
 wire DAAH, DSAH;
 assign DAAH =    ACR & DAAHR;
 assign DSAH = ~( ACR | DSAHR );
-wire b0,b1,b2,b3,b4,b5; // промежуточные сигналы BCD
+wire b0,b1,b2,b3,b4,b5; // intermediate signals BCD
 assign b0 = DAAL | DSAL;
 assign b1 = (( DAAL &  ~ADD[1] )           | ( DSAL & ADD[1] ));
 assign b2 = (( DAAL & ( ADD[1] | ADD[2] )) | ( DSAL & ~( ADD[1] & ADD[2] )));
 assign b3 = DAAH | DSAH;
 assign b4 = (( DAAH &  ~ADD[5] )           | ( DSAH & ADD[5] ));
 assign b5 = (( DAAH & ( ADD[5] | ADD[6] )) | ( DSAH & ~( ADD[5] & ADD[6] )));
-wire [7:0]BCDRES;       // Выход схемы десятичной коррекции
+wire [7:0]BCDRES;       // Decimal correction output
 assign BCDRES[0] =  SB[0];
 assign BCDRES[1] =  SB[1] ^ b0;
 assign BCDRES[2] =  SB[2] ^ b1;
@@ -1692,7 +1668,7 @@ assign BCDRES[6] =  SB[6] ^ b4;
 assign BCDRES[7] =  SB[7] ^ b5;
 // BCD CARRY
 wire DC3,DC7; 
-wire a,b,c,d,e,f,g; // промежуточные сигналы BCD CARRY
+wire a,b,c,d,e,f,g; // intermediate signals BCD CARRY
 assign a   = ~( ~ORo[0] | ( nACIN & ~ANDo[0] ));
 assign b   = ~( a & ANDo[1] );
 assign c   = ~( ANDo[2] | XORo[3] );
@@ -1703,48 +1679,48 @@ assign g   = ~( XORo[5] | XORo[6] | ANDo[5] | COUT[4] );
 assign DC3 = ~( nDAA | (( b | ~ORo[2]  ) & ( c | d )) );
 assign DC7 = ~( nDAA | (( e | ~XORo[6] ) & ( f | g )) );
 */
-// Логика
+// Logics
 always @(posedge Clk) begin
             if (Z_ADD | SB_ADD )             AI[7:0] <= Z_ADD ? 8'h00 : SB[7:0];                   		
 		      if (DB_ADD | NDB_ADD | ADL_ADD ) BI[7:0] <= NDB_ADD ? ~DB[7:0] : ADL_ADD ? ADL[7:0] : DB[7:0]; 	                              																
-		      if (SB_AC)  ACC[7:0]  <= SB[7:0];		     //if (SB_AC)  ACC[7:0]  <= BCDRES[7:0];		
+		      if (SB_AC)  ACC[7:0]  <= SB[7:0];	     //	if (SB_AC)  ACC[7:0]  <= BCDRES[7:0];	
 		               if (PHI2) begin
 		             ADD[7:0]  <= RESULT[7:0];
 				       LATCH_C7  <= COUT[7];
-					 // LATCH_DC7 <= DC7;
+					    //LATCH_DC7 <= DC7;
 								 AVR <=  ( COUT[6] & ORo[7] ) | ( ~COUT[6] & ~ANDo[7] );
-		              // DAAL  <=  ( COUT[3] & ~nDAA );
-						  // DAAHR <= ~nDAA;
-						  // DSAL  <= ~( COUT[3] |  nDSA );
-						  // DSAHR <=  nDSA;
+		                 //DAAL  <=  ( COUT[3] & ~nDAA );
+						     //DAAHR <= ~nDAA;
+						     //DSAL  <= ~( COUT[3] |  nDSA );
+						     //DSAHR <=  nDSA;
 		                         end
                       end
-// Конец модуля ALU
+// End of ALU module
 endmodule
 
 //===============================================================================================
-// Модуль Программного счетчика (PC)
+// Program Counter (PC) Module
 //===============================================================================================
 module PC (
-   // Такты
-   input Clk,               // Тактовый сигнал
-   input PHI2,
-	// Входы	
-	input n1_PC,             // Входной перенос счетчика	
-	input PCL_PCL,           // Режим хранения данных в разрядах счетчика PCL
-	input	ADL_PCL,           // Загрузка данных из шины ADL
-	input [7:0]ADL,          // Шина ADL
-	input PCH_PCH,           // Режим хранения данных в разрядах счетчика PCH
-	input	ADH_PCH,           // Загрузка данных из шины ADH
-	input [7:0]ADH,          // Шина ADH		
-	// Выходы
-	output reg [7:0]PCL,     // Выход младших 8 битов PC 
-	output reg [7:0]PCH      // Выход старших 8 битов PC  
+   // Clocks
+   input Clk,               // Clock
+   input PHI2,              // phase PHI2
+	// Inputs	
+	input n1_PC,             // Input counter carry	
+	input PCL_PCL,           // PCL counter bit storage mode
+	input	ADL_PCL,           // Loading data from the ADL bus
+	input [7:0]ADL,          // ADL Bus	
+	input PCH_PCH,           // PCH counter bit storage mode
+	input	ADH_PCH,           // Loading data from the ADH bus
+	input [7:0]ADH,          // ADH Bus			
+	// Outputs
+	output reg [7:0]PCL,     // Output of the LSB 8 bits of PC 
+	output reg [7:0]PCH      // Output of the MSB 8 bits of PC  
 );
-// Переменные
-reg [7:0]PCLS;              // Промежуточный регистр PCL
-reg [7:0]PCHS;              // Промежуточный регистр PCH
-// Комбинаторика
+// Variables
+reg [7:0]PCLS;              // PCL Counter Intermediate Register
+reg [7:0]PCHS;              // PCH Counter Intermediate Register
+// Combinatorics
 wire [7:0]ADL_COUT;
 assign ADL_COUT[7:0] =  PCLS[7:0] & {ADL_COUT[6:0], ~n1_PC}; 
 wire [7:0]ADH_COUT;
@@ -1753,7 +1729,7 @@ wire PCH_IN;
 assign PCH_IN = PCLS[7] & PCLS[6] & PCLS[5] & PCLS[4] & PCLS[3] & PCLS[2] & PCLS[1] & PCLS[0] & ~n1_PC;
 wire PCH_03;
 assign PCH_03 = PCHS[3] & PCHS[2] & PCHS[1] & PCHS[0] & ~n1_PC & PCH_IN;
-// Логика
+// Logics
 always @(posedge Clk) begin
        if ( PCL_PCL | ADL_PCL ) begin
 		 PCLS[7:0] <= ( { 8 { PCL_PCL }} & PCL[7:0] )|( { 8 { ADL_PCL }} & ADL[7:0] );
@@ -1766,5 +1742,5 @@ always @(posedge Clk) begin
 		 PCH[7:0] <= ( PCHS[7:0] ^ {ADH_COUT[6:4], PCH_03, ADH_COUT[2:0], PCH_IN} ); 
 		           end
                       end
-// Конец модуля Program counter
+// End of module Program Counter (PC)
 endmodule
