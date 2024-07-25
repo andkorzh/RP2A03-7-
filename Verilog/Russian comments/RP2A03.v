@@ -839,7 +839,7 @@ NOISE_TABLE MOD_NOISE_TABLE ( { PAL, N_CONTROL[3:0] }, Clk, NNF[10:0] );
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W400C, ( NORND | RSOUT[14] ), W400F, nLFO1, RND_n_LC, RND[3:0] );
 // Логика
 always @(posedge Clk) begin
-       if ( Reset ) N_CONTROL[4:0] <= 4'h0 ; 
+       if ( Reset ) N_CONTROL[4:0] <= 5'h0 ; 
   else if ( W400E ) N_CONTROL[4:0] <= { DB[7], DB[3:0] };		 
 		 if ( ACLK1 ) begin
        SOUT[10:0]  <= NLFSR1[10:0];
