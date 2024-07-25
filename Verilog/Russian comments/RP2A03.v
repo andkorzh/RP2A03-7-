@@ -822,9 +822,9 @@ assign NPLALS   =  ( | SOUT[9:0] | ~SOUT[10] );        // OR от всех вы�
 wire NLFSR_IN;
 assign NLFSR_IN = ~( Reset | ( SOUT[8] & SOUT[10] ) | ~( NPLAZ | SOUT[8] | SOUT[10] ));
 wire   NFSTEP;
-assign NFSTEP   = ~( ~nACLK2 | ~( Reset | NPLALS ));
+assign NFSTEP   = ~( nACLK2 | ~( Reset | NPLALS ));
 wire   NFLOAD;
-assign NFLOAD   = ~( ~nACLK2 |  ( Reset | NPLALS ));
+assign NFLOAD   = ~( nACLK2 |  ( Reset | NPLALS ));
 // Управление RANDOM LFSR
 wire RLFSR_IN;
 assign RLFSR_IN = ~(( RMODE_MUX & RSOUT[14] ) | ~( NRPLA | RMODE_MUX | RSOUT[14] ));
