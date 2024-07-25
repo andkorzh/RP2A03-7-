@@ -157,8 +157,7 @@ MOS6502_WBCD MOD_MOS6502_WBCD(
 );
 
 REG_SEL MOD_REG_SEL(
-  PHI1,			  
-  Reset,			   
+  PHI1,			  			   
   RW,          
   ADR[4:0],      
   CPU_A[15:5],
@@ -440,7 +439,6 @@ module REG_SEL(
 // Такты
 input	PHI1,			   // Фаза PHI1 CPU 
 //Входы
-input	RES,			   // Общий сброс
 input	RW,            // чтение/запись CPU
 input [4:0]ADR,      // Адресное пространство APU 
 input [15:5]CPU_A,   // Адресное пространство CPU
