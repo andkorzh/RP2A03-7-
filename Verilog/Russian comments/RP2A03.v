@@ -808,7 +808,7 @@ output RND_n_LC,    // Выход HALT (флага запрета счетчик
 output [3:0]RND     // Выход канала
 );
 // Переменные
-reg [4:0]F;          // Регистр установки частоты
+reg [3:0]F;          // Регистр установки частоты
 reg RMODE;           // Режим работы RANDOM LFSR (периодический / непериодический шум)	
 reg [10:0]SOUT;      // FREQ LFSR
 reg [10:0]NLFSR1;    // FREQ LFSR
@@ -835,7 +835,7 @@ wire RMODE_MUX;                                          // Мультиплек
 assign RMODE_MUX = RMODE ? RSOUT[8] : RSOUT[13];
 //Вложенный модуль NOISE_TABLE
 wire [10:0]NNF;
-NOISE_TABLE MOD_NOISE_TABLE ( { PAL, N_CONTROL[3:0] }, Clk, NNF[10:0] );
+NOISE_TABLE MOD_NOISE_TABLE ( { PAL, F[3:0] }, Clk, NNF[10:0] );
 //Вложенный модуль ENVELOPE_GEN
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W400C, ( NORND | RSOUT[14] ), W400F, nLFO1, RND_n_LC, RND[3:0] );
 // Логика
