@@ -808,7 +808,8 @@ output RND_n_LC,    // Выход HALT (флага запрета счетчик
 output [3:0]RND     // Выход канала
 );
 // Переменные
-reg [4:0]N_CONTROL;  // Управляющий регистр
+reg [4:0]F;          // Регистр установки частоты
+reg RMODE;           // Режим работы RANDOM LFSR (периодический / непериодический шум)	
 reg [10:0]SOUT;      // FREQ LFSR
 reg [10:0]NLFSR1;    // FREQ LFSR
 reg [14:0]RSOUT;     // RANDOM LFSR
@@ -831,7 +832,7 @@ assign RLFSR_IN = ~(( RMODE_MUX & RSOUT[14] ) | ~( NRPLA | RMODE_MUX | RSOUT[14]
 wire NRPLA;
 assign NRPLA = ~( | RSOUT[14:0] );                       // NOR от всех выходов RANDOM LFSR
 wire RMODE_MUX;                                          // Мультиплексор режима работы Рандом ЛФСР (периодический непериодический шум)
-assign RMODE_MUX = N_CONTROL[4] ? RSOUT[8] : RSOUT[13];
+assign RMODE_MUX = RMODE ? RSOUT[8] : RSOUT[13];
 //Вложенный модуль NOISE_TABLE
 wire [10:0]NNF;
 NOISE_TABLE MOD_NOISE_TABLE ( { PAL, N_CONTROL[3:0] }, Clk, NNF[10:0] );
@@ -839,8 +840,8 @@ NOISE_TABLE MOD_NOISE_TABLE ( { PAL, N_CONTROL[3:0] }, Clk, NNF[10:0] );
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W400C, ( NORND | RSOUT[14] ), W400F, nLFO1, RND_n_LC, RND[3:0] );
 // Логика
 always @(posedge Clk) begin
-       if ( Reset ) N_CONTROL[4:0] <= 5'h0 ; 
-  else if ( W400E ) N_CONTROL[4:0] <= { DB[7], DB[3:0] };		 
+       if ( Reset ) {RMODE, F[3:0]} <= 5'h0 ; 
+  else if ( W400E ) {RMODE, F[3:0]} <= { DB[7], DB[3:0] };		 
 		 if ( ACLK1 ) begin
        SOUT[10:0]  <= NLFSR1[10:0];
 		 RSOUT[14:0] <= RLFSR1[14:0];
