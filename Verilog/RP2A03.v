@@ -615,6 +615,10 @@ module SQUARE_CHANNEL(
 // Variables
 reg [10:0]F;        // Frequency setting register
 reg [10:0]SUMR;     // Adder output value latch
+reg [2:0]SR;        // SWEEP Initial Frequency Shift Magnitude Register
+reg DEC;            // SWEEP Frequency Increment Direction Register
+reg [2:0]P;         // SWEEP change period	
+reg SWDIS;          // SWEEP Enable Register	
 reg [7:0]SWEEP_CTR; // SWEEP control register
 reg [1:0]DT;        // Duty register
 reg SWRELOAD_FF;    // SWEEP counter reload trigger
@@ -628,14 +632,6 @@ reg [2:0]SWCNT;     // Period counter SWEEP
 reg [2:0]SWCNT2;    // Period counter SWEEP
 reg SQR;            // Промежуточный латч выхода 
 // Combinatorics
-wire [2:0]SR;
-assign SR[2:0] = SWEEP_CTR[2:0];
-wire DEC;
-assign DEC = SWEEP_CTR[3];
-wire [2:0]P;
-assign P[2:0] = SWEEP_CTR[6:4];
-wire SWDIS;
-assign SWDIS = SWEEP_CTR[7];
 // BARREL SHIFTER
 wire [10:0]BS;      // Input  BARREL SHIFTER
 wire [10:0]S;       // Output BARREL SHIFTER
@@ -698,7 +694,7 @@ always @(posedge Clk) begin
 		              end  
 		 if ( W4002_6 | DO_SWEEP ) F[7:0]  <= (( { 8 { DO_SWEEP }} & SUMR[7:0]  ) | ( { 8 { W4002_6 }} & DB[7:0] ));
 		 if ( W4003_7 | DO_SWEEP ) F[10:8] <= (( { 3 { DO_SWEEP }} & SUMR[10:8] ) | ( { 3 { W4003_7 }} & DB[2:0] ));							  
-		 if ( W4001_5 ) SWEEP_CTR[7:0] <= DB[7:0];
+		 if ( W4001_5 ) { SWDIS, P[2:0], DEC, SR[2:0] } <= DB[7:0];
        if ( W4000_4 ) DT[1:0]        <= DB[7:6];		 
        if ( FQSTEP | FQLOAD | Reset ) FQCNT[10:0] <= ( Reset ? 11'h000 : FQLOAD ? F[10:0] : FQCNT2[10:0] );	 
 		 if ( Reset  | W4003_7 ) DUCNT[2:0] <= 3'h0;
