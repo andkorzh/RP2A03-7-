@@ -808,7 +808,8 @@ module NOISE_CHANNEL(
   output [3:0]RND      // Channel output
 );
 // Variables
-reg [4:0]N_CONTROL;  // Control register
+reg [3:0]F;          // Frequency setting register
+reg RMODE;           // Periodic / non-periodic noise	
 reg [10:0]SOUT;      // FREQ LFSR
 reg [10:0]NLFSR1;    // FREQ LFSR
 reg [14:0]RSOUT;     // RANDOM LFSR
@@ -831,16 +832,16 @@ assign RLFSR_IN = ~(( RMODE_MUX & RSOUT[14] ) | ~( NRPLA | RMODE_MUX | RSOUT[14]
 wire NRPLA;
 assign NRPLA = ~( | RSOUT[14:0] );                       // NOR from all RANDOM LFSR outputs
 wire RMODE_MUX;                                          // Multiplexer operating mode Random LFSR (periodic non-periodic noise)
-assign RMODE_MUX = N_CONTROL[4] ? RSOUT[8] : RSOUT[13];
+assign RMODE_MUX = RMODE ? RSOUT[8] : RSOUT[13];
 //Internal module NOISE_TABLE
 wire [10:0]NNF;
-NOISE_TABLE MOD_NOISE_TABLE ( { PAL, N_CONTROL[3:0] }, Clk, NNF[10:0] );
+NOISE_TABLE MOD_NOISE_TABLE ( { PAL, F[3:0] }, Clk, NNF[10:0] );
 //Internal module ENVELOPE_GEN
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W400C, ( NORND | RSOUT[14] ), W400F, nLFO1, RND_n_LC, RND[3:0] );
 // Logics
 always @(posedge Clk) begin
-       if ( Reset ) N_CONTROL[4:0] <= 5'h0 ; 
-  else if ( W400E ) N_CONTROL[4:0] <= { DB[7], DB[3:0] };		 
+       if ( Reset ) {RMODE, F[3:0]} <= 5'h0 ; 
+  else if ( W400E ) {RMODE, F[3:0]} <= { DB[7], DB[3:0] };		 
 		 if ( ACLK1 ) begin
        SOUT[10:0]  <= NLFSR1[10:0];
 		 RSOUT[14:0] <= RLFSR1[14:0];
