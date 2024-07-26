@@ -614,8 +614,11 @@ output [3:0]SQ_OUT  // Выход канала
 );
 // Переменные
 reg [10:0]F;        // Регистр установки частоты младшие биты
-reg [10:0]SUMR;     // Регистр выходного значения сумматора
-reg [7:0]SWEEP_CTR; // Регистр управления SWEEP
+reg [10:0]SUMR;     // Латч выходного значения сумматора
+reg [2:0]SR;        // Регистр магнитуды сдвига исходной частоты SWEEP
+reg DEC;            // Регистр направления приращения частоты SWEEP
+reg [2:0]P;         // Период изменения SWEEP
+reg SWDIS;          // Флаг включения SWEEP
 reg [1:0]DT;        // Регистр скважности
 reg SWRELOAD_FF;    // Триггер перезагрузки счетчика SWEEP
 reg SWRELOAD_LATCH; // Латч    перезагрузки счетчика SWEEP
@@ -628,14 +631,6 @@ reg [2:0]SWCNT;     // Счетчик периода SWEEP
 reg [2:0]SWCNT2;    // Счетчик периода SWEEP
 reg SQR;            // Промежуточный латч выхода 
 // Комбинаторика
-wire [2:0]SR;
-assign SR[2:0] = SWEEP_CTR[2:0];
-wire DEC;
-assign DEC = SWEEP_CTR[3];
-wire [2:0]P;
-assign P[2:0] = SWEEP_CTR[6:4];
-wire SWDIS;
-assign SWDIS = SWEEP_CTR[7];
 // BARREL SHIFTER
 wire [10:0]BS;      // Вход  BARREL SHIFTER
 wire [10:0]S;       // Выход BARREL SHIFTER
@@ -698,7 +693,7 @@ always @(posedge Clk) begin
 		              end  
 		 if ( W4002_6 | DO_SWEEP ) F[7:0]  <= (( { 8 { DO_SWEEP }} & SUMR[7:0]  ) | ( { 8 { W4002_6 }} & DB[7:0] ));
 		 if ( W4003_7 | DO_SWEEP ) F[10:8] <= (( { 3 { DO_SWEEP }} & SUMR[10:8] ) | ( { 3 { W4003_7 }} & DB[2:0] ));							  
-		 if ( W4001_5 ) SWEEP_CTR[7:0] <= DB[7:0];
+		 if ( W4001_5 ) { SWDIS, P[2:0], DEC, SR[2:0] }   <= DB[7:0];
        if ( W4000_4 ) DT[1:0]        <= DB[7:6];		 
        if ( FQSTEP | FQLOAD | Reset ) FQCNT[10:0] <= ( Reset ? 11'h000 : FQLOAD ? F[10:0] : FQCNT2[10:0] );	 
 		 if ( Reset  | W4003_7 ) DUCNT[2:0] <= 3'h0;
