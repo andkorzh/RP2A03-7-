@@ -1,4 +1,4 @@
-﻿/*
+/*
  ===============================================================================================
  *                              Copyright (C) 2023-2024  andkorzh
  *
@@ -120,7 +120,7 @@ assign ADDR_BUS[15:0] = nRES ? ADR[15:0] : 16'hZZZZ;
 assign OUT[2:0]  = nRES ? OUTR[2:0] : 3'hZ;
 assign nIN[1:0]  = nRES ? { nR4017, nR4016 } : 2'hZ;
 assign DBIN[7:0] = ~nR4015 ? { R4015DB[7:6], DB[5], R4015DB[4:0] } : DB[7:0]; // Чтение регистра R4015
-assign SOUT[5:0] = (SQA[3:0] + SQB[3:0]) + (RND[3:0] + TRIA[3:0]);
+assign SOUT[5:0] = SQA[3:0] + SQB[3:0] + TRIA[3:0] + RND[3:0];
 // Логика
 always @(posedge Clk) begin
          if ( W4016 )   OUTR1[2:0] <= DB[2:0];
@@ -157,7 +157,7 @@ MOS6502_WBCD MOD_MOS6502_WBCD(
 );
 
 REG_SEL MOD_REG_SEL(
-  PHI1,			  			   
+  PHI1,			  		   
   RW,          
   ADR[4:0],      
   CPU_A[15:5],
@@ -613,11 +613,11 @@ output SQ_n_LC,     // Выход HALT (флага запрета счетчик
 output [3:0]SQ_OUT  // Выход канала
 );
 // Переменные
-reg [10:0]F;        // Регистр установки частоты
-reg [10:0]SUMR;     // Латч выходного значения сумматора
+reg [10:0]F;        // Регистр установки частоты младшие биты
+reg [10:0]SUMR;     // Регистр выходного значения сумматора
 reg [2:0]SR;        // Регистр магнитуды сдвига исходной частоты SWEEP
 reg DEC;            // Регистр направления приращения частоты SWEEP
-reg [2:0]P;         // Регистр периода изменения SWEEP
+reg [2:0]P;         // Период изменения SWEEP
 reg SWDIS;          // Регистр включения SWEEP
 reg [1:0]DT;        // Регистр скважности
 reg SWRELOAD_FF;    // Триггер перезагрузки счетчика SWEEP
@@ -655,9 +655,9 @@ assign DO_SWEEP = ~( ~SCO | NOSQx | nLFO2 | ~( | SR[2:0] ) | ~SWDIS | ~( | F[10:
 //Управление скважностью 
 wire [3:0]DUTY;
 assign DUTY[0] = ~( ~DUCNT[0] | ~( DUCNT[1] & DUCNT[2] ));
-assign DUTY[1] =     DUCNT[1] &   DUCNT[2];
+assign DUTY[1] =     DUCNT[1] &    DUCNT[2] ;
 assign DUTY[2] =     DUCNT[2];
-assign DUTY[3] = ~(  DUCNT[1] &   DUCNT[2] );
+assign DUTY[3] = ~(  DUCNT[1] &    DUCNT[2] );
 wire DUTY_MUX;
 assign DUTY_MUX = ( DUTY[0] & ~DT[0] & ~DT[1] )|( DUTY[1] & DT[0] & ~DT[1] )|( DUTY[2] & ~DT[0] & DT[1] )|( DUTY[3] & DT[0] & DT[1] );
 // Управление счетчиками частоты и периода SWEEP
@@ -725,7 +725,8 @@ output TRI_n_LC     // Выход HALT (флага запрета счетчик
 );
 // Переменные
 reg [10:0]FR;       // Регистр установки частоты 
-reg [7:0]LIN;       // Регистр управления линейным счетчиком           
+reg [6:0]LIN;       // Регистр управления линейным счетчиком
+reg TRILC;          // Регистр управления счетчиком длины          
 reg FCOLATCH;       // Защелка схемы переполнения счетчика частоты
 reg TCOLATCH;       // Защелка схемы переполнения линейного счетчика 
 reg RELOAD;         // Защелка схемы перезагрузки линейного счетчика
@@ -747,7 +748,7 @@ wire TLLOAD;
 assign TLSTEP = ~( TCOLATCH |  RELOAD | nLFO1 );
 assign TLLOAD = ~( ~RELOAD  | nLFO1 );
 wire TTSTEP;
-assign TTSTEP =  ~( PHI1 | TLCout[6] | NOTRI | ~FCOLATCH );
+assign TTSTEP = ~( PHI1 | TLCout[6] | NOTRI | ~FCOLATCH );
 wire [10:0]TFCout;
 assign TFCout[10:0] = ~TFCNT[10:0] & { TFCout[9:0], 1'b1 };
 wire [6:0]TLCout;
@@ -756,10 +757,10 @@ wire [4:0]TTCout;
 assign TTCout[4:0]  =  TTCNT[4:0]  & { TTCout[3:0], 1'b1 };
 // Выход
 assign TRIA[3:0] = ~( TTCNT[3:0] ^ { 4 { TTCNT[4] }});
-assign TRI_n_LC = ~LIN[7]; 
+assign TRI_n_LC = ~TRILC; 
 // Логика
 always @(posedge Clk) begin
-       if ( ~( nLFO1 | LIN[7] | ~RELOAD )) RELOAD_FF <= 1'b0;
+       if ( ~( nLFO1 | TRILC | ~RELOAD )) RELOAD_FF <= 1'b0;
   else if ( W400B ) RELOAD_FF <= 1'b1;
 		 if ( PHI1 ) begin
        FCOLATCH <= TFCout[10];
@@ -768,7 +769,7 @@ always @(posedge Clk) begin
                    end
 		 if ( W400A ) FR[7:0]  <= DB[7:0];
 		 if ( W400B ) FR[10:8] <= DB[2:0];		 				 
-		 if ( W4008 ) LIN[7:0] <= DB[7:0];
+		 if ( W4008 ) {TRILC, LIN[6:0]} <= DB[7:0];
 		 if ( Reset | TFLOAD | TFSTEP ) TFCNT[10:0] <= ( Reset ? 11'h000 : TFLOAD ? FR[10:0] : TFCNT2[10:0] );  //
 		 if ( Reset | TLLOAD | TLSTEP ) TLCNT[6:0]  <= ( Reset ? 7'h00   : TLLOAD ? LIN[6:0] : TLCNT2[6:0]  );  //
 		 if ( Reset | TTSTEP ) TTCNT[4:0] <= ( Reset ? 5'h00 : TTCNT2[4:0] );				 
@@ -804,7 +805,7 @@ output [3:0]RND     // Выход канала
 );
 // Переменные
 reg [3:0]F;          // Регистр установки частоты
-reg RMODE;           // Режим работы RANDOM LFSR (периодический / непериодический шум)	
+reg RMODE;           // Режим работы RANDOM LFSR 
 reg [10:0]SOUT;      // FREQ LFSR
 reg [10:0]NLFSR1;    // FREQ LFSR
 reg [14:0]RSOUT;     // RANDOM LFSR
@@ -835,7 +836,7 @@ NOISE_TABLE MOD_NOISE_TABLE ( { PAL, F[3:0] }, Clk, NNF[10:0] );
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W400C, ( NORND | RSOUT[14] ), W400F, nLFO1, RND_n_LC, RND[3:0] );
 // Логика
 always @(posedge Clk) begin
-       if ( Reset ) {RMODE, F[3:0]} <= 5'h0 ; 
+       if ( Reset ) {RMODE, F[3:0]} <= 5'h00; 
   else if ( W400E ) {RMODE, F[3:0]} <= { DB[7], DB[3:0] };		 
 		 if ( ACLK1 ) begin
        SOUT[10:0]  <= NLFSR1[10:0];
@@ -903,8 +904,8 @@ reg RUN_LATCH;           // Промежуточный латч флага START
 reg NOUT_LATCH;          // Латч перполнения счетчика бит сэмпла
 reg SOUT_LATCH;          // Латч перполнения счетчика байт сэмпла
 reg DOUT_LATCH;          // Латч перполнения выходного реверсивного счетчика
-reg [8:0]DLFSROUT;       // LFSR
-reg [8:0]DLFSR1;         // LFSR
+reg [8:0]DLFSROUT;       // FREQ LFSR
+reg [8:0]DLFSR1;         // FREQ LFSR
 reg [2:0]DMCSBCNT;       // Счетчик бит сэмпла
 reg [2:0]DMCSBCNT1;      // Счетчик бит сэмпла
 reg [11:0]DMCSLCNT;      // Счетчик байт сэмпла
@@ -948,7 +949,7 @@ assign DSTEP = ~( ~DFLOAD | DOUT_LATCH | DMC_DSTEP_LATCH );
 wire [5:0]DMCOCout;
 assign DMCOCout[5:0] = { DMCOCout[4:0], 1'b1 } & ( DMC_OUT[5:0] ^ { 6 { ~SHIFT_REG[0] }});     // BOUT = ~SHIFT_REG[0]
 //Управление сдвиговым регистром сэмплов DMC_SHIFT_REG и буфером чтения сэмплов DMC_SAMPLE
-wire PCM;    // Строб загрузки сэмпла из шины данных 
+wire PCM;    // Строб загрузки байта сэмпла из шины данных 
 assign PCM = ~( PHI1 | nDMC_AB ); 
 wire BLOAD;
 wire BSTEP;
@@ -966,29 +967,29 @@ assign OUT_4015DB4 = DMC_EN;
 assign DMC[6:0] = { DMC_OUT[5:0], DMC_0 };
 // Логика
 always @(posedge Clk) begin
+       if ( Reset | ED1 ) DMC_EN <=  1'b0;
+  else if ( W4015 )       DMC_EN <=  DB[4];
        if ( W4015 | ~ENIRQ | Reset ) DMC_INT_FF <= 1'b0;
-  else if ( ED1 ) DMC_INT_FF <= 1'b1;
-       if ( PCMDONE | Reset ) DMC_PCM_FF <= 1'b0;
-  else if ( PCM )     DMC_PCM_FF <= 1'b1;
-       if ( BLOAD | Reset )  DMC_STOP_FF <= 1'b0; 
-  else if ( PCM )	   DMC_STOP_FF <= 1'b1;
+  else if ( ED1 )                    DMC_INT_FF <= 1'b1;
+       if ( PCMDONE | Reset ) DMC_PCM_FF  <= 1'b0;
+  else if ( PCM )             DMC_PCM_FF  <= 1'b1;
+       if ( BLOAD | Reset )   DMC_STOP_FF <= 1'b0; 
+  else if ( PCM )	            DMC_STOP_FF <= 1'b1;
        if ( ~( DMC_STOP_LATCH | ~NOUT_LATCH | ~DFLOAD ) | Reset ) DMC_STEP_FF  <= 1'b0;
   else if ( BLOAD )  DMC_STEP_FF <= 1'b1;	 
        if ( DMC_STOP_FF | ~EN_LATCH3 | Reset ) DMC_START_FF  <= 1'b0;
   else if ( ~( DMC_STOP_FF | ~EN_LATCH3 | ~( ~PHI1 & RW ))) DMC_START_FF  <= 1'b1;
        if ( W4010 ) { ENIRQ, LOOP, FS[3:0] } <= { DB[7:6], DB[3:0] };
-       if ( W4011 ) DMC_0         <=   DB[0];
-		 if ( W4012 ) DMC_ADR[7:0]  <=   DB[7:0];
-		 if ( W4013 ) DMC_LEN[7:0]  <=   DB[7:0];
-		 if ( PCM )    SAMPLE[7:0]  <=   DB[7:0];
-       if ( Reset | ED1 )  DMC_EN <=   1'b0;
-  else if ( W4015 ) DMC_EN        <=   DB[4];
-       if ( ~nACLK2 ) nDMC_AB     <=   1'b1;
+       if ( W4011 ) DMC_0        <= DB[0];
+		 if ( W4012 ) DMC_ADR[7:0] <= DB[7:0];
+		 if ( W4013 ) DMC_LEN[7:0] <= DB[7:0];
+		 if ( PCM )    SAMPLE[7:0] <= DB[7:0];
+       if ( ~nACLK2 ) nDMC_AB    <= 1'b1;
   else if ( ACLK1 & RUN_LATCH ) nDMC_AB	 <=   1'b0;	 
 		 if ( DFSTEP | DFLOAD ) DLFSR1[8:0]  <= ( DFLOAD ? LP[8:0] : { DLFSROUT[7:0], DLFSR_IN }); 
 		 if ( DFLOAD | Reset ) DMCSBCNT[2:0] <= ( Reset  ? 3'b000  :  DMCSBCNT1[2:0] );
 		 if ( W4011 | DSTEP | Reset ) DMC_OUT[5:0]   <= ( Reset ? 6'h00 : W4011 ? DB[6:1] : DMC_OUT1[5:0] );
-		 if ( BSTEP | BLOAD | Reset ) SHIFT_REG[7:0] <= ( Reset ? 8'h00 : BLOAD ? SAMPLE[7:0] : { 1'b0, SHIFT_REG1[6:0] }); // 1'b1
+		 if ( BSTEP | BLOAD | Reset ) SHIFT_REG[7:0] <= ( Reset ? 8'h00 : BLOAD ? SAMPLE[7:0] : { 1'b0, SHIFT_REG1[6:0] }); 
 		 if ( DSSTEP | DSLOAD | Reset ) begin
 		 DMCSLCNT[11:0] <= ( Reset ? 12'h000  : DSLOAD ? { DMC_LEN[7:0], 4'h0 } : DMCSLCNT1[11:0] );
 		 DMC_A[14:0]    <= ( Reset ? 15'h0000 : DSLOAD ? { 1'b1, DMC_ADR[7:0], 6'h00 } : DMC_A1[14:0] );
@@ -1132,10 +1133,10 @@ always @(posedge Clk) begin
        ENABLE_REG2 <= ~ENABLE_REG1;
 		 CARRY_LATCH <= LCCout[7];
        STEP_LATCH  <= ~ENABLE_FF;
-		 LCNT2[7:0]  <= ( LCNT1[7:0] ^ {LCCout[6:0], HALT} );
+		 LCNT2[7:0]  <= LCNT1[7:0] ^ {LCCout[6:0], HALT};
 		              end				  
-		 if ( W4015 | Reset  )         ENABLE_REG1 <= (Reset) ? 1'b0  : DB_IN;                       
-		 if ( W400x | LCSTEP | Reset ) LCNT1[7:0]  <= (Reset) ? 8'h00 : (W400x) ? LC[7:0] : LCNT2[7:0]; 
+		 if ( W4015 | Reset  )         ENABLE_REG1 <= Reset ? 1'b0  : DB_IN;                       
+		 if ( W400x | LCSTEP | Reset ) LCNT1[7:0]  <= Reset ? 8'h00 : W400x ? LC[7:0] : LCNT2[7:0]; 
                       end
 // Конец модуля счетчика длительности
 endmodule
@@ -1159,11 +1160,13 @@ module ENVELOPE_GEN(
 	output [3:0]V            // Шина данных громкости канала 
 );
 // Переменные
-reg [3:0]DDCNT;
-reg [3:0]DDCNT2;
-reg [3:0]ENV;
-reg [3:0]ENV2;
-reg [5:0]IN_REG;            // Регистр управления
+reg [3:0]DDCNT;             // Счетчик ENVELOPE DECAY
+reg [3:0]DDCNT2;            // Счетчик ENVELOPE DECAY
+reg [3:0]ENV;               // Счетчик ENVELOPE
+reg [3:0]ENV2;              // Счетчик ENVELOPE
+reg [3:0]VOL;               // Регистр управления громкостью
+reg ENVDIS;                 // Регистр отключения ENVELOPE
+reg CH_LC;                  // Регистр управления флагом запрета счетчика длительности
 reg ECO_LATCH;
 reg RELOAD_LATCH;        
 reg RCO_LATCH;
@@ -1182,9 +1185,9 @@ assign RSTEP = ~( ~RCO_LATCH | nLFO1 );
 wire [3:0]DCout;
 assign DCout[3:0] = ~DDCNT[3:0] & { DCout[2:0],  1'b1 }; 
 wire [3:0]ENCout;
-assign ENCout[3:0] =  ~ENV[3:0] & { ENCout[2:0], 1'b1 };
-assign V[3:0] = ~( { 4 { CH_IN }}  | ~( IN_REG[4] ? IN_REG[3:0] : ENV[3:0] ));
-assign CH_n_LC = ~IN_REG[5];
+assign ENCout[3:0] = ~ENV[3:0] & { ENCout[2:0], 1'b1 };
+assign V[3:0]  = ~( {4{ CH_IN }} | ~( ENVDIS ? VOL[3:0] : ENV[3:0] ));
+assign CH_n_LC = ~CH_LC;
 // Логика
 always @(posedge Clk) begin
        if ( ~( nLFO1 | ~RELOAD_LATCH )) ENV_RELOAD_FF <= 1'b0;
@@ -1196,9 +1199,9 @@ always @(posedge Clk) begin
 		 DDCNT2[3:0]  <= DDCNT[3:0]  ^ { DCout[2:0],  1'b1 };
 		 ENV2[3:0]    <= ENV[3:0]    ^ { ENCout[2:0], 1'b1 };
 		          end
-		 if ( W400x ) IN_REG[5:0] <= DB[5:0];                      
-		 if ( RLOAD | RSTEP | Reset ) DDCNT[3:0] <= Reset ? 4'h0 : RLOAD ? IN_REG[3:0] : DDCNT2[3:0];								  
-		 if ( ERES  | ESTEP | Reset )   ENV[3:0] <= Reset ? 4'h0 : ERES ? { 4 { EIN }} : ENV2[3:0];
+		 if ( W400x ) {CH_LC, ENVDIS, VOL[3:0]} <= DB[5:0];                      
+		 if ( RLOAD | RSTEP | Reset ) DDCNT[3:0] <= Reset ? 4'h0 : RLOAD ? VOL[3:0] : DDCNT2[3:0];								  
+		 if ( ERES  | ESTEP | Reset )   ENV[3:0] <= Reset ? 4'h0 : ERES  ? {4{ EIN }} : ENV2[3:0];
                       end
 // Конец модуля генератора огибающей
 endmodule							 
