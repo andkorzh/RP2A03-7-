@@ -680,8 +680,8 @@ assign SWCout[2:0]  = ~SWCNT[2:0]  & { SWCout[1:0], 1'b1 };
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W4000_4, ~SQR , W4003_7, nLFO1, SQ_n_LC, SQ_OUT[3:0] ); 
 // Logics
 always @(posedge Clk) begin
-       if ( ~( nLFO2 | SWRELOAD_LATCH )) SWRELOAD_FF <= 1'b0;
-  else if ( W4001_5 )                    SWRELOAD_FF <= 1'b1;
+                 if ( ~( nLFO2 | SWRELOAD_LATCH )) SWRELOAD_FF <= 1'b0;
+            else if ( W4001_5 )                    SWRELOAD_FF <= 1'b1;
 		 if ( ACLK1 ) begin
 		 FCO <= FQCout[10];               // Frequency counter overflow latch
 		 SCO <= SWCout[2];                // SWEEP length counter overflow latch
@@ -695,11 +695,11 @@ always @(posedge Clk) begin
 		 if ( W4002_6 | DO_SWEEP ) F[7:0]  <= (( { 8 { DO_SWEEP }} & SUMR[7:0]  ) | ( { 8 { W4002_6 }} & DB[7:0] ));
 		 if ( W4003_7 | DO_SWEEP ) F[10:8] <= (( { 3 { DO_SWEEP }} & SUMR[10:8] ) | ( { 3 { W4003_7 }} & DB[2:0] ));							  
 		 if ( W4001_5 ) { SWDIS, P[2:0], DEC, SR[2:0] } <= DB[7:0];
-       if ( W4000_4 ) DT[1:0]        <= DB[7:6];		 
-       if ( FQSTEP | FQLOAD | Reset ) FQCNT[10:0] <= ( Reset ? 11'h000 : FQLOAD ? F[10:0] : FQCNT2[10:0] );	 
+                 if ( W4000_4 ) DT[1:0]        <= DB[7:6];		 
+                 if ( FQSTEP | FQLOAD | Reset ) FQCNT[10:0] <= ( Reset ? 11'h000 : FQLOAD ? F[10:0] : FQCNT2[10:0] );	 
 		 if ( Reset  | W4003_7 ) DUCNT[2:0] <= 3'h0;
-  else if ( FQLOAD ) DUCNT[2:0] <= DUCNT2[2:0];
-       if ( SWSTEP | SWLOAD | Reset )  SWCNT[2:0] <= ( Reset ? 3'h0 : SWLOAD ? P[2:0] : SWCNT2[2:0] );
+            else if ( FQLOAD ) DUCNT[2:0] <= DUCNT2[2:0];
+                 if ( SWSTEP | SWLOAD | Reset )  SWCNT[2:0] <= ( Reset ? 3'h0 : SWLOAD ? P[2:0] : SWCNT2[2:0] );
                       end
 // End of square channel module
 endmodule
@@ -709,16 +709,16 @@ endmodule
 //===============================================================================================
 module TRIANGLE_CHANNEL(
   // Clocks
-  input	Clk,			  // Clock
-  input	PHI1,         // Phase PHI1 CPU 
-  input	ACLK1,	     // Phase 1 APU
+  input	Clk,	          // Clock
+  input	PHI1,             // Phase PHI1 CPU 
+  input	ACLK1,	          // Phase 1 APU
   //Inputs 		
   input	Reset,		  // Reset signal
-  input [7:0]DB,		  // Data bus
+  input [7:0]DB,          // Data bus
   input	W400A,		  // Port $W400A
   input	W400B,		  // Port $W400B
   input	W4008,		  // Port $W4008
-  input nLFO1,         // Low Frequency Oscillator /LFO1
+  input nLFO1,            // Low Frequency Oscillator /LFO1
   input	NOTRI,		  // Suspend input from channel length counter
   // Outputs 
   output [3:0]TRIA,    // Channel output
@@ -726,7 +726,8 @@ module TRIANGLE_CHANNEL(
 );
 // Variables
 reg [10:0]FR;       // Frequency setting register 
-reg [7:0]LIN;       // Linear Counter Control Register           
+reg [6:0]LIN;       // Linear Counter Control Register 
+reg TRILC;          // Length Counter Control Register	
 reg FCOLATCH;       // Frequency counter overflow circuit latch
 reg TCOLATCH;       // Linear counter overflow circuit latch
 reg RELOAD;         // Linear counter reload circuit latch
@@ -757,19 +758,19 @@ wire [4:0]TTCout;
 assign TTCout[4:0]  =  TTCNT[4:0]  & { TTCout[3:0], 1'b1 };
 // Output
 assign TRIA[3:0] = ~( TTCNT[3:0] ^ { 4 { TTCNT[4] }});
-assign TRI_n_LC = ~LIN[7]; 
+assign TRI_n_LC = ~TRILC; 
 // Logics
 always @(posedge Clk) begin
-       if ( ~( nLFO1 | LIN[7] | ~RELOAD )) RELOAD_FF <= 1'b0;
-  else if ( W400B ) RELOAD_FF <= 1'b1;
+                 if ( ~( nLFO1 | TRILC | ~RELOAD )) RELOAD_FF <= 1'b0;
+            else if ( W400B ) RELOAD_FF <= 1'b1;
 		 if ( PHI1 ) begin
-       FCOLATCH <= TFCout[10];
-       TFCNT2[10:0] <=  TFCNT[10:0] ^ { TFCout[9:0], 1'b1 };
+                 FCOLATCH <= TFCout[10];
+                 TFCNT2[10:0] <=  TFCNT[10:0] ^ { TFCout[9:0], 1'b1 };
 		 TTCNT2[4:0]  <=  TTCNT[4:0]  ^ { TTCout[3:0], 1'b1 }; 
                    end
 		 if ( W400A ) FR[7:0]  <= DB[7:0];
 		 if ( W400B ) FR[10:8] <= DB[2:0];		 				 
-		 if ( W4008 ) LIN[7:0] <= DB[7:0];
+		 if ( W4008 ) {TRILC, LIN[6:0]} <= DB[7:0];
 		 if ( Reset | TFLOAD | TFSTEP ) TFCNT[10:0] <= ( Reset ? 11'h000 : TFLOAD ? FR[10:0] : TFCNT2[10:0] );  //
 		 if ( Reset | TLLOAD | TLSTEP ) TLCNT[6:0]  <= ( Reset ? 7'h00   : TLLOAD ? LIN[6:0] : TLCNT2[6:0]  );  //
 		 if ( Reset | TTSTEP ) TTCNT[4:0] <= ( Reset ? 5'h00 : TTCNT2[4:0] );				 
@@ -787,21 +788,21 @@ endmodule
 //===============================================================================================
 module NOISE_CHANNEL(
   // Clocks
-  input	Clk,			  // Clock
-  input	ACLK1,        // Phase  1 APU
-  input	nACLK2,	     // Phase /2 APU
+  input	Clk,		  // Clock
+  input	ACLK1,            // Phase  1 APU
+  input	nACLK2,	          // Phase /2 APU
   //Inputs
-  input PAL,           // PAL mode 		
+  input PAL,              // PAL mode 		
   input	Reset,		  // Reset signal
-  input [7:0]DB,		  // Data bus
+  input [7:0]DB,          // Data bus
   input	W400C,		  // Port $W400C
   input	W400E,		  // Port $W400E
   input	W400F,		  // Port $W400F
   input	NORND,		  // Suspend input from channel length counter
-  input nLFO1,         // Low Frequency Oscillator /LFO1
+  input nLFO1,            // Low Frequency Oscillator /LFO1
   // Outputs
-  output RND_n_LC,     // HALT output (channel length counter disable flag)
-  output [3:0]RND      // Channel output
+  output RND_n_LC,        // HALT output (channel length counter disable flag)
+  output [3:0]RND         // Channel output
 );
 // Variables
 reg [3:0]F;          // Frequency setting register
@@ -1164,14 +1165,16 @@ reg [3:0]DDCNT;
 reg [3:0]DDCNT2;
 reg [3:0]ENV;
 reg [3:0]ENV2;
-reg [5:0]IN_REG;            // Control register
+reg [3:0]VOL;            // Volume control register
+reg ENVDIS;              // ENVELOPE Disable Register
+reg CH_LC                // Length Counter Disable Flag Control Register	
 reg ECO_LATCH;
 reg RELOAD_LATCH;        
 reg RCO_LATCH;
-reg ENV_RELOAD_FF;          // ENV counter reset trigger
+reg ENV_RELOAD_FF;       // ENV counter reset trigger
 // Combinatorics
 wire EIN;
-assign EIN = ~( CH_n_LC & ECO_LATCH );
+assign EIN   = ~( CH_n_LC & ECO_LATCH );
 wire ERES;
 assign ERES  = ~( ~RLOAD | ~( ECO_LATCH | RELOAD_LATCH ));
 wire ESTEP;
@@ -1184,8 +1187,8 @@ wire [3:0]DCout;
 assign DCout[3:0] = ~DDCNT[3:0] & { DCout[2:0],  1'b1 }; 
 wire [3:0]ENCout;
 assign ENCout[3:0] =  ~ENV[3:0] & { ENCout[2:0], 1'b1 };
-assign V[3:0] = ~( { 4 { CH_IN }}  | ~( IN_REG[4] ? IN_REG[3:0] : ENV[3:0] ));
-assign CH_n_LC = ~IN_REG[5];
+assign V[3:0] = ~( { 4 { CH_IN }}  | ~( ENVDIS ? VOL[3:0] : ENV[3:0] ));
+assign CH_n_LC = ~CH_LC;
 // Logics
 always @(posedge Clk) begin
        if ( ~( nLFO1 | ~RELOAD_LATCH )) ENV_RELOAD_FF <= 1'b0;
@@ -1197,8 +1200,8 @@ always @(posedge Clk) begin
 		 DDCNT2[3:0]  <= DDCNT[3:0]  ^ { DCout[2:0],  1'b1 };
 		 ENV2[3:0]    <= ENV[3:0]    ^ { ENCout[2:0], 1'b1 };
 		          end
-		 if ( W400x ) IN_REG[5:0] <= DB[5:0];                      
-		 if ( RLOAD | RSTEP | Reset ) DDCNT[3:0] <= Reset ? 4'h0 : RLOAD ? IN_REG[3:0] : DDCNT2[3:0];								  
+	         if ( W400x ) { CH_LC, ENVDIS, VOL[3:0] } <= DB[5:0];                      
+	         if ( RLOAD | RSTEP | Reset ) DDCNT[3:0] <= Reset ? 4'h0 : RLOAD ? VOL[3:0] : DDCNT2[3:0];								  
 		 if ( ERES  | ESTEP | Reset )   ENV[3:0] <= Reset ? 4'h0 : ERES ? { 4 { EIN }} : ENV2[3:0];
                       end
 // End of the envelope generator module
