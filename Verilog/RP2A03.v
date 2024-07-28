@@ -1167,7 +1167,7 @@ reg [3:0]ENV;
 reg [3:0]ENV2;
 reg [3:0]VOL;            // Volume control register
 reg ENVDIS;              // ENVELOPE Disable Register
-reg CH_LC                // Length Counter Disable Flag Control Register	
+reg CH_LC;               // Length Counter Disable Flag Control Register	
 reg ECO_LATCH;
 reg RELOAD_LATCH;        
 reg RCO_LATCH;
