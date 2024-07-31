@@ -1689,9 +1689,9 @@ always @(posedge Clk) begin
 				       LATCH_C7  <= COUT[7];
 					    //LATCH_DC7 <= DC7;
 								 AVR <=  ( COUT[6] & ORo[7] ) | ( ~COUT[6] & ~ANDo[7] );
-				       //DAAL  <=  ( DCOUT[3] & ~nDAA );
+				       //DAAL  <=  ( DCOUT3 & ~nDAA );
 						     //DAAHR <= ~nDAA;
-				       //DSAL  <= ~( DCOUT[3] |  nDSA );
+				       //DSAL  <= ~( DCOUT3 |  nDSA );
 						     //DSAHR <=  nDSA;
 		                         end
                       end
