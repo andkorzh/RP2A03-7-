@@ -1641,7 +1641,7 @@ assign RESULT[7:0] = ({8{ANDS}} & ANDo[7:0]) | ({8{ORS}} & ORo [7:0]) | ({8{EORS
 wire [7:0]CIN;	
 assign CIN[7:0] = { COUT[6:0], ~nACIN };	// assign CIN[7:0] = { COUT[6:4], DCOUT3, COUT[2:0], ~nACIN };	
 wire [7:0]COUT;
-assign COUT[7:0] = ( CIN[7:0] & ORo[7:0] ) | ANDo[7:0] ;
+assign COUT[7:0] = ( CIN[7:0] & XORo[7:0] ) | ANDo[7:0];
 wire DCOUT3;
 //assign DCOUT3 = COUT[3] & ~DC3;
 assign ACR = LATCH_C7;	               //	ACR = LATCH_C7 | LATCH_DC7;
@@ -1672,7 +1672,7 @@ wire a,b,c,d,e,f,g; // intermediate signals BCD CARRY
 assign a   = ~( ~ORo[0] | ( nACIN & ~ANDo[0] ));
 assign b   = ~( a & ANDo[1] );
 assign c   = ~( ANDo[2] | XORo[3] );
-assign d   = ~( a | ~( ANDo[0] | ~ORo[2] ) | ANDo[1] | XORo[1] );
+assign d   = ~( a | ~( ANDo[2] | ~ORo[2] ) | ANDo[1] | XORo[1] );
 assign e   = ~( ANDo[5] & COUT[4] );
 assign f   = ~( ANDo[6] | XORo[7] );
 assign g   = ~( XORo[5] | XORo[6] | ANDo[5] | COUT[4] );
