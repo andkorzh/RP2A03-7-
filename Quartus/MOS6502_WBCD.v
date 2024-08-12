@@ -1643,7 +1643,7 @@ assign CIN[7:0] = { COUT[6:0], ~nACIN };	// assign CIN[7:0] = { COUT[6:4], DCOUT
 wire [7:0]COUT;
 assign COUT[7:0] = ( CIN[7:0] & XORo[7:0] ) | ANDo[7:0];
 wire DCOUT3;
-//assign DCOUT3 = COUT[3] & ~DC3;
+//assign DCOUT3 = COUT[3] | DC3;
 assign ACR = LATCH_C7;	               //	ACR = LATCH_C7 | LATCH_DC7;
 //BCD
 /* 
