@@ -153,7 +153,7 @@ MOS6502_WBCD MOD_MOS6502_WBCD(
   RW,               
   DB[7:0],        
   CPU_A[15:0],          
-  SYNC	                // NC     
+  SYNC	                 // NC     
 );
 
 REG_SEL MOD_REG_SEL(
@@ -390,9 +390,9 @@ endmodule
 //===============================================================================================
 module CDIV(
   // Clocks
-  input	Clk,			          // Clock
+  input	Clk,		       // Clock
   //Inputs	
-  input	Reset,		          // Reset signal  
+  input	Reset,		       // Reset signal  
   input PAL,                   // PAL mode
   input PHI2,                  // Phase PHI2 CPU
   // Outputs
@@ -437,9 +437,9 @@ endmodule
 //===============================================================================================
 module REG_SEL(
   // Clocks
-  input	PHI1,			  // Phase PHI1 CPU 
+  input	PHI1,	       // Phase PHI1 CPU 
   //Inputs
-  input	RW,           // CPU read/write
+  input	RW,            // CPU read/write
   input [4:0]ADR,      // APU address space
   input [15:5]CPU_A,   // CPU address space
   // Outputs
