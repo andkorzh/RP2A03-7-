@@ -552,14 +552,14 @@ wire [4:0]NTSC_PLA;
 assign PLA[4:0] = PAL ? PAL_PLA[4:0] : NTSC_PLA[4:0];    
 assign PLA[5] = ~( | SOUT[14:0]) ;                       // NOR from all LFSR outputs, LFSR null protection
 // NTSC PLA 
-assign NTSC_PLA[4] = ~(~SOUT[0]|  SOUT[1]| ~SOUT[2]|  SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]| ~SOUT[7]| ~SOUT[8]|  SOUT[9]|  SOUT[10]|  SOUT[11]| ~SOUT[12]| ~SOUT[13]| ~SOUT[14]);
-assign NTSC_PLA[3] = ~(~SOUT[0]| ~SOUT[1]| ~SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]| ~MODE_LATCH );
-assign NTSC_PLA[2] = ~(~SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]| ~SOUT[4]|  SOUT[5]| ~SOUT[6]| ~SOUT[7]|  SOUT[8]|  SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]| ~SOUT[13]|  SOUT[14]);
-assign NTSC_PLA[1] = ~(~SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]| ~SOUT[10]|  SOUT[11]| ~SOUT[12]| ~SOUT[13]|  SOUT[14]);
-assign NTSC_PLA[0] = ~(~SOUT[0]|  SOUT[1]|  SOUT[2]|  SOUT[3]|  SOUT[4]| ~SOUT[5]| ~SOUT[6]|  SOUT[7]|  SOUT[8]|  SOUT[9]|  SOUT[10]|  SOUT[11]| ~SOUT[12]|  SOUT[13]|  SOUT[14]);
+assign NTSC_PLA[4] = ~( ~SOUT[0]|  SOUT[1]| ~SOUT[2]|  SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]| ~SOUT[7]| ~SOUT[8]|  SOUT[9]|  SOUT[10]|  SOUT[11]| ~SOUT[12]| ~SOUT[13]| ~SOUT[14]);
+assign NTSC_PLA[3] = ~( ~SOUT[0]| ~SOUT[1]| ~SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14] | ~MODE_LATCH );
+assign NTSC_PLA[2] = ~( ~SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]| ~SOUT[4]|  SOUT[5]| ~SOUT[6]| ~SOUT[7]|  SOUT[8]|  SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]| ~SOUT[13]|  SOUT[14]);
+assign NTSC_PLA[1] = ~( ~SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]| ~SOUT[10]|  SOUT[11]| ~SOUT[12]| ~SOUT[13]|  SOUT[14]);
+assign NTSC_PLA[0] = ~( ~SOUT[0]|  SOUT[1]|  SOUT[2]|  SOUT[3]|  SOUT[4]| ~SOUT[5]| ~SOUT[6]|  SOUT[7]|  SOUT[8]|  SOUT[9]|  SOUT[10]|  SOUT[11]| ~SOUT[12]|  SOUT[13]|  SOUT[14]);
 // PAL PLA 
 assign  PAL_PLA[4] = ~(~SOUT[0]|  SOUT[1]| ~SOUT[2]| ~SOUT[3]| ~SOUT[4]| ~SOUT[5]| ~SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]|  SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]);
-assign  PAL_PLA[3] = ~( SOUT[0]|  SOUT[1]|  SOUT[2]| ~SOUT[3]|  SOUT[4]| ~SOUT[5]| ~SOUT[6]| ~SOUT[7]| ~SOUT[8]| ~SOUT[9]|  SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]| ~MODE_LATCH );
+assign  PAL_PLA[3] = ~( SOUT[0]|  SOUT[1]|  SOUT[2]| ~SOUT[3]|  SOUT[4]| ~SOUT[5]| ~SOUT[6]| ~SOUT[7]| ~SOUT[8]| ~SOUT[9]|  SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14] | ~MODE_LATCH );
 assign  PAL_PLA[2] = ~( SOUT[0]| ~SOUT[1]|  SOUT[2]| ~SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]|  SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]| ~SOUT[13]|  SOUT[14]);
 assign  PAL_PLA[1] = ~( SOUT[0]|  SOUT[1]|  SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]|  SOUT[11]|  SOUT[12]| ~SOUT[13]| ~SOUT[14]);
 assign  PAL_PLA[0] = ~( SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]| ~SOUT[4]|  SOUT[5]| ~SOUT[6]| ~SOUT[7]| ~SOUT[8]| ~SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]);
@@ -899,7 +899,7 @@ reg DMC_PCM_LATCH;       // PCM flag intermediate latch
 reg DMC_STOP_FF;         // STOP flag
 reg DMC_STOP_LATCH;      // Intermediate STOP flag latch
 reg DMC_STEP_FF;         // STEP flag
-reg DMC_DSTEP_LATCH;     // Intermediate STEP flag latch
+reg DMC_DMSTEP_LATCH;    // Intermediate STEP flag latch
 reg DMC_START_FF;        // START flag
 reg RUN_LATCH;           // Intermediate latch for START flag
 reg NOUT_LATCH;          // Sample bit counter overflow latch
@@ -945,8 +945,8 @@ assign DMCSLCout[11:0] = { DMCSLCout[10:0], 1'b1 } & ~DMCSLCNT[11:0];
 wire [14:0]DMCACout;
 assign DMCACout[14:0]  = { DMCACout[13:0],  1'b1 } &  DMC_A[14:0];
 //Output up/down counter control
-wire DSTEP;
-assign DSTEP = ~( ~DFLOAD | DOUT_LATCH | DMC_DSTEP_LATCH );
+wire DMSTEP;
+assign DMSTEP = ~( ~DFLOAD | DOUT_LATCH | DMC_DMSTEP_LATCH );
 wire [5:0]DMCOCout;
 assign DMCOCout[5:0] = { DMCOCout[4:0], 1'b1 } & ( DMC_OUT[5:0] ^ { 6 { ~SHIFT_REG[0] }});     // BOUT = ~SHIFT_REG[0]
 //Controlling the sample shift register DMC_SHIFT_REG and the sample read buffer DMC_SAMPLE
@@ -969,24 +969,24 @@ assign DMC[6:0] = { DMC_OUT[5:0], DMC_0 };
 // Logics
 always @(posedge Clk) begin
        if ( W4015 | ~ENIRQ | Reset ) DMC_INT_FF <= 1'b0;
-  else if ( ED1 ) DMC_INT_FF <= 1'b1;
+  else if ( ED1 )                    DMC_INT_FF <= 1'b1;
        if ( PCMDONE | Reset ) DMC_PCM_FF <= 1'b0;
-  else if ( PCM )     DMC_PCM_FF <= 1'b1;
+  else if ( PCM )             DMC_PCM_FF <= 1'b1;
        if ( BLOAD | Reset )  DMC_STOP_FF <= 1'b0; 
-  else if ( PCM )	   DMC_STOP_FF <= 1'b1;
-       if ( ~( DMC_STOP_LATCH | ~NOUT_LATCH | ~DFLOAD ) | Reset ) DMC_STEP_FF  <= 1'b0;
-  else if ( BLOAD )  DMC_STEP_FF <= 1'b1;	 
-       if ( DMC_STOP_FF | ~EN_LATCH3 | Reset ) DMC_START_FF  <= 1'b0;
-  else if ( ~( DMC_STOP_FF | ~EN_LATCH3 | ~( ~PHI1 & RW ))) DMC_START_FF  <= 1'b1;
+  else if ( PCM )	     DMC_STOP_FF <= 1'b1;
+       if ( ~( DMC_STOP_LATCH | ~NOUT_LATCH | ~DFLOAD ) | Reset ) DMC_STEP_FF <= 1'b0;
+  else if ( BLOAD )                                               DMC_STEP_FF <= 1'b1;	 
+       if ( DMC_STOP_FF | ~EN_LATCH3 | Reset )              DMC_START_FF <= 1'b0;
+  else if ( ~( DMC_STOP_FF | ~EN_LATCH3 | ~( ~PHI1 & RW ))) DMC_START_FF <= 1'b1;
+       if ( ~nACLK2 )           nDMC_AB  <=  1'b1;
+  else if ( ACLK1 & RUN_LATCH ) nDMC_AB	 <=  1'b0;
+       if ( Reset | ED1 )  DMC_EN <=  1'b0;
+  else if ( W4015 ) DMC_EN        <=  DB[4];
        if ( W4010 ) { ENIRQ, LOOP, FS[3:0] } <= { DB[7:6], DB[3:0] };
-       if ( W4011 ) DMC_0         <=   DB[0];
-       if ( W4012 ) DMC_ADR[7:0]  <=   DB[7:0];
-       if ( W4013 ) DMC_LEN[7:0]  <=   DB[7:0];
-       if ( PCM )    SAMPLE[7:0]  <=   DB[7:0];
-       if ( Reset | ED1 )  DMC_EN <=   1'b0;
-  else if ( W4015 ) DMC_EN        <=   DB[4];
-       if ( ~nACLK2 ) nDMC_AB     <=   1'b1;
-  else if ( ACLK1 & RUN_LATCH ) nDMC_AB	 <=   1'b0;	 
+       if ( W4011 ) DMC_0         <=  DB[0];
+       if ( W4012 ) DMC_ADR[7:0]  <=  DB[7:0];
+       if ( W4013 ) DMC_LEN[7:0]  <=  DB[7:0];
+       if ( PCM )    SAMPLE[7:0]  <=  DB[7:0];
        if ( DFSTEP | DFLOAD ) DLFSR1[8:0]  <= ( DFLOAD ? LP[8:0] : { DLFSROUT[7:0], DLFSR_IN }); 
        if ( DFLOAD | Reset ) DMCSBCNT[2:0] <= ( Reset  ? 3'b000  :  DMCSBCNT1[2:0] );
        if ( W4011 | DSTEP | Reset ) DMC_OUT[5:0]   <= ( Reset ? 6'h00 : W4011 ? DB[6:1] : DMC_OUT1[5:0] );
@@ -996,21 +996,21 @@ always @(posedge Clk) begin
        DMC_A[14:0]    <= ( Reset ? 15'h0000 : DSLOAD ? { 1'b1, DMC_ADR[7:0], 6'h00 } : DMC_A1[14:0] );
                                       end
        if ( ACLK1 ) begin
-       EN_LATCH1 <=  DMC_EN;
-       EN_LATCH3 <= ~EN_LATCH2;
-       DMC_PCM_LATCH   <= ~DMC_PCM_FF;
-       DMC_STOP_LATCH  <=  DMC_STOP_FF;
-       DMC_DSTEP_LATCH <= ~DMC_STEP_FF;
-       RUNDMC          <= RUN_LATCH;
-       DLFSROUT[8:0]   <= DLFSR1[8:0];
-       DMCSBCNT1[2:0]  <= DMCSBCNT[2:0]  ^ { DMCSBCout[1:0], 1'b1 };       
-       NOUT_LATCH      <= DMCSBCout[2];                                // Sample bit counter overflow latch  
-       DMCSLCNT1[11:0] <= DMCSLCNT[11:0] ^ { DMCSLCout[10:0], 1'b1 }; 
-       SOUT_LATCH      <= DMCSLCout[11];                               // Sample length counter overflow latch
-       DMC_A1[14:0]    <= DMC_A[14:0]    ^ { DMCACout[13:0], 1'b1 } ; 
-       DMC_OUT1[5:0]   <= DMC_OUT[5:0]   ^ { DMCOCout[4:0], 1'b1 };  
-       DOUT_LATCH      <= DMCOCout[5];                                 // Output counter overflow latch
-       SHIFT_REG1[6:0] <= SHIFT_REG[7:1];             
+       EN_LATCH1        <=  DMC_EN;
+       EN_LATCH3        <= ~EN_LATCH2;
+       DMC_PCM_LATCH    <= ~DMC_PCM_FF;
+       DMC_STOP_LATCH   <=  DMC_STOP_FF;
+       DMC_DMSTEP_LATCH <= ~DMC_STEP_FF;
+       RUNDMC           <=  RUN_LATCH;
+       DLFSROUT[8:0]    <=  DLFSR1[8:0];
+       DMCSBCNT1[2:0]   <=  DMCSBCNT[2:0]  ^ { DMCSBCout[1:0], 1'b1 };       
+       NOUT_LATCH       <=  DMCSBCout[2];                                // Sample bit counter overflow latch  
+       DMCSLCNT1[11:0]  <=  DMCSLCNT[11:0] ^ { DMCSLCout[10:0], 1'b1 }; 
+       SOUT_LATCH       <=  DMCSLCout[11];                               // Sample length counter overflow latch
+       DMC_A1[14:0]     <=  DMC_A[14:0]    ^ { DMCACout[13:0], 1'b1 } ; 
+       DMC_OUT1[5:0]    <=  DMC_OUT[5:0]   ^ { DMCOCout[4:0], 1'b1 };  
+       DOUT_LATCH       <=  DMCOCout[5];                                 // Output counter overflow latch
+       SHIFT_REG1[6:0]  <=  SHIFT_REG[7:1];             
                     end
        if ( ~nACLK2 ) begin 
 		 EN_LATCH2  <= ~EN_LATCH1;
