@@ -5,6 +5,15 @@ All information about the internal structure can be found here: https://github.c
 This core is multi-regional, switching between NTSC and PAL regions is available, with changes in the corresponding operating timings.
 All PLAs are packaged in m4k (m9k) blocks with mif initialization files.
 
+Logisim circuit
+
+![log_apu](https://github.com/user-attachments/assets/78ef75a8-97a3-4940-8f28-53695477715c)
+
+Quartus circuit
+
+![2A03](https://github.com/user-attachments/assets/31d92e60-9c2b-4456-b290-45323d3bd1c8)
+
+
 photo of the prototype
 ![IMG_3721](https://github.com/user-attachments/assets/31153b5e-ec24-44a8-aef4-3f64d3672bc4)
 
