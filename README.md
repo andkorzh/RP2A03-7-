@@ -11,7 +11,7 @@ Logisim circuit
 
 Quartus circuit
 
-![2A03](https://github.com/user-attachments/assets/31d92e60-9c2b-4456-b290-45323d3bd1c8)
+![2A03](https://github.com/user-attachments/assets/e8e01169-2a0a-4783-9857-be901dfbe9ec)
 
 
 photo of the prototype
