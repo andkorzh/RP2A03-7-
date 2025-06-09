@@ -13,6 +13,10 @@ Quartus circuit
 
 ![2A03](https://github.com/user-attachments/assets/e8e01169-2a0a-4783-9857-be901dfbe9ec)
 
+Schematic diagram of the APU substitute for the FPGA.
+
+![APU_FPGA](https://github.com/user-attachments/assets/d63bcfd0-773c-49eb-b175-5b1d69fcbff0)
+
 
 photo of the prototype
 ![IMG_3721](https://github.com/user-attachments/assets/31153b5e-ec24-44a8-aef4-3f64d3672bc4)
