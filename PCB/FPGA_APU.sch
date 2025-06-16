@@ -7127,6 +7127,59 @@ http://www.bccomponents.com/</description>
 <text x="0" y="1.27" size="1.27" layer="25">&gt;NAME</text>
 <text x="0" y="-8.89" size="1.27" layer="27">&gt;VALUE</text>
 </package>
+<package name="DIP-40">
+<pad name="1" x="0" y="0" drill="1" shape="long"/>
+<pad name="2" x="0" y="-2.54" drill="1" shape="long"/>
+<pad name="3" x="0" y="-5.08" drill="1" shape="long"/>
+<pad name="4" x="0" y="-7.62" drill="1" shape="long"/>
+<pad name="5" x="0" y="-10.16" drill="1" shape="long"/>
+<pad name="6" x="0" y="-12.7" drill="1" shape="long"/>
+<pad name="7" x="0" y="-15.24" drill="1" shape="long"/>
+<pad name="8" x="0" y="-17.78" drill="1" shape="long"/>
+<pad name="9" x="0" y="-20.32" drill="1" shape="long"/>
+<pad name="10" x="0" y="-22.86" drill="1" shape="long"/>
+<pad name="11" x="0" y="-25.4" drill="1" shape="long"/>
+<pad name="12" x="0" y="-27.94" drill="1" shape="long"/>
+<pad name="13" x="0" y="-30.48" drill="1" shape="long"/>
+<pad name="14" x="0" y="-33.02" drill="1" shape="long"/>
+<pad name="15" x="0" y="-35.56" drill="1" shape="long"/>
+<pad name="16" x="0" y="-38.1" drill="1" shape="long"/>
+<pad name="17" x="0" y="-40.64" drill="1" shape="long"/>
+<pad name="18" x="0" y="-43.18" drill="1" shape="long"/>
+<pad name="19" x="0" y="-45.72" drill="1" shape="long"/>
+<pad name="20" x="0" y="-48.26" drill="1" shape="long"/>
+<pad name="40" x="15.24" y="0" drill="1" shape="long"/>
+<pad name="39" x="15.24" y="-2.54" drill="1" shape="long"/>
+<pad name="38" x="15.24" y="-5.08" drill="1" shape="long"/>
+<pad name="37" x="15.24" y="-7.62" drill="1" shape="long"/>
+<pad name="36" x="15.24" y="-10.16" drill="1" shape="long"/>
+<pad name="35" x="15.24" y="-12.7" drill="1" shape="long"/>
+<pad name="34" x="15.24" y="-15.24" drill="1" shape="long"/>
+<pad name="33" x="15.24" y="-17.78" drill="1" shape="long"/>
+<pad name="32" x="15.24" y="-20.32" drill="1" shape="long"/>
+<pad name="31" x="15.24" y="-22.86" drill="1" shape="long"/>
+<pad name="30" x="15.24" y="-25.4" drill="1" shape="long"/>
+<pad name="29" x="15.24" y="-27.94" drill="1" shape="long"/>
+<pad name="28" x="15.24" y="-30.48" drill="1" shape="long"/>
+<pad name="27" x="15.24" y="-33.02" drill="1" shape="long"/>
+<pad name="26" x="15.24" y="-35.56" drill="1" shape="long"/>
+<pad name="25" x="15.24" y="-38.1" drill="1" shape="long"/>
+<pad name="24" x="15.24" y="-40.64" drill="1" shape="long"/>
+<pad name="23" x="15.24" y="-43.18" drill="1" shape="long"/>
+<pad name="22" x="15.24" y="-45.72" drill="1" shape="long"/>
+<pad name="21" x="15.24" y="-48.26" drill="1" shape="long"/>
+<wire x1="2.54" y1="0" x2="6.35" y2="0" width="0.127" layer="21"/>
+<wire x1="6.35" y1="0" x2="8.89" y2="0" width="0.127" layer="21"/>
+<wire x1="8.89" y1="0" x2="12.7" y2="0" width="0.127" layer="21"/>
+<wire x1="12.7" y1="0" x2="12.7" y2="-48.26" width="0.127" layer="21"/>
+<wire x1="12.7" y1="-48.26" x2="2.54" y2="-48.26" width="0.127" layer="21"/>
+<wire x1="2.54" y1="-48.26" x2="2.54" y2="0" width="0.127" layer="21"/>
+<wire x1="6.35" y1="0" x2="6.35" y2="-1.27" width="0.127" layer="21"/>
+<wire x1="6.35" y1="-1.27" x2="8.89" y2="-1.27" width="0.127" layer="21"/>
+<wire x1="8.89" y1="-1.27" x2="8.89" y2="0" width="0.127" layer="21"/>
+<text x="5.08" y="1.27" size="1.27" layer="21">&gt;NAME</text>
+<text x="5.08" y="-50.8" size="1.27" layer="21">&gt;VALUE</text>
+</package>
 <package name="SOP65P640X110-24N">
 <wire x1="-1.9304" y1="-3.9624" x2="1.9304" y2="-3.9624" width="0.1524" layer="21"/>
 <wire x1="1.9304" y1="3.9624" x2="0.3048" y2="3.9624" width="0.1524" layer="21"/>
@@ -7263,59 +7316,6 @@ http://www.bccomponents.com/</description>
 <smd name="23" x="2.921" y="2.921" dx="1.4732" dy="0.3556" layer="1"/>
 <smd name="24" x="2.921" y="3.5814" dx="1.4732" dy="0.3556" layer="1"/>
 </package>
-<package name="DIP-40">
-<pad name="1" x="0" y="0" drill="1" shape="long"/>
-<pad name="2" x="0" y="-2.54" drill="1" shape="long"/>
-<pad name="3" x="0" y="-5.08" drill="1" shape="long"/>
-<pad name="4" x="0" y="-7.62" drill="1" shape="long"/>
-<pad name="5" x="0" y="-10.16" drill="1" shape="long"/>
-<pad name="6" x="0" y="-12.7" drill="1" shape="long"/>
-<pad name="7" x="0" y="-15.24" drill="1" shape="long"/>
-<pad name="8" x="0" y="-17.78" drill="1" shape="long"/>
-<pad name="9" x="0" y="-20.32" drill="1" shape="long"/>
-<pad name="10" x="0" y="-22.86" drill="1" shape="long"/>
-<pad name="11" x="0" y="-25.4" drill="1" shape="long"/>
-<pad name="12" x="0" y="-27.94" drill="1" shape="long"/>
-<pad name="13" x="0" y="-30.48" drill="1" shape="long"/>
-<pad name="14" x="0" y="-33.02" drill="1" shape="long"/>
-<pad name="15" x="0" y="-35.56" drill="1" shape="long"/>
-<pad name="16" x="0" y="-38.1" drill="1" shape="long"/>
-<pad name="17" x="0" y="-40.64" drill="1" shape="long"/>
-<pad name="18" x="0" y="-43.18" drill="1" shape="long"/>
-<pad name="19" x="0" y="-45.72" drill="1" shape="long"/>
-<pad name="20" x="0" y="-48.26" drill="1" shape="long"/>
-<pad name="40" x="15.24" y="0" drill="1" shape="long"/>
-<pad name="39" x="15.24" y="-2.54" drill="1" shape="long"/>
-<pad name="38" x="15.24" y="-5.08" drill="1" shape="long"/>
-<pad name="37" x="15.24" y="-7.62" drill="1" shape="long"/>
-<pad name="36" x="15.24" y="-10.16" drill="1" shape="long"/>
-<pad name="35" x="15.24" y="-12.7" drill="1" shape="long"/>
-<pad name="34" x="15.24" y="-15.24" drill="1" shape="long"/>
-<pad name="33" x="15.24" y="-17.78" drill="1" shape="long"/>
-<pad name="32" x="15.24" y="-20.32" drill="1" shape="long"/>
-<pad name="31" x="15.24" y="-22.86" drill="1" shape="long"/>
-<pad name="30" x="15.24" y="-25.4" drill="1" shape="long"/>
-<pad name="29" x="15.24" y="-27.94" drill="1" shape="long"/>
-<pad name="28" x="15.24" y="-30.48" drill="1" shape="long"/>
-<pad name="27" x="15.24" y="-33.02" drill="1" shape="long"/>
-<pad name="26" x="15.24" y="-35.56" drill="1" shape="long"/>
-<pad name="25" x="15.24" y="-38.1" drill="1" shape="long"/>
-<pad name="24" x="15.24" y="-40.64" drill="1" shape="long"/>
-<pad name="23" x="15.24" y="-43.18" drill="1" shape="long"/>
-<pad name="22" x="15.24" y="-45.72" drill="1" shape="long"/>
-<pad name="21" x="15.24" y="-48.26" drill="1" shape="long"/>
-<wire x1="2.54" y1="0" x2="6.35" y2="0" width="0.127" layer="21"/>
-<wire x1="6.35" y1="0" x2="8.89" y2="0" width="0.127" layer="21"/>
-<wire x1="8.89" y1="0" x2="12.7" y2="0" width="0.127" layer="21"/>
-<wire x1="12.7" y1="0" x2="12.7" y2="-48.26" width="0.127" layer="21"/>
-<wire x1="12.7" y1="-48.26" x2="2.54" y2="-48.26" width="0.127" layer="21"/>
-<wire x1="2.54" y1="-48.26" x2="2.54" y2="0" width="0.127" layer="21"/>
-<wire x1="6.35" y1="0" x2="6.35" y2="-1.27" width="0.127" layer="21"/>
-<wire x1="6.35" y1="-1.27" x2="8.89" y2="-1.27" width="0.127" layer="21"/>
-<wire x1="8.89" y1="-1.27" x2="8.89" y2="0" width="0.127" layer="21"/>
-<text x="5.08" y="1.27" size="1.27" layer="21">&gt;NAME</text>
-<text x="5.08" y="-50.8" size="1.27" layer="21">&gt;VALUE</text>
-</package>
 </packages>
 <symbols>
 <symbol name="C">
@@ -7363,38 +7363,6 @@ http://www.bccomponents.com/</description>
 <wire x1="25.4" y1="-38.1" x2="5.08" y2="-38.1" width="0.4064" layer="94"/>
 <text x="10.16" y="5.08" size="1.778" layer="95">&gt;NAME</text>
 <text x="10.16" y="-40.64" size="1.778" layer="96">&gt;VALUE</text>
-</symbol>
-<symbol name="74LVC4245APW,112">
-<wire x1="-12.7" y1="25.4" x2="-12.7" y2="-30.48" width="0.4064" layer="94"/>
-<wire x1="-12.7" y1="-30.48" x2="12.7" y2="-30.48" width="0.4064" layer="94"/>
-<wire x1="12.7" y1="-30.48" x2="12.7" y2="25.4" width="0.4064" layer="94"/>
-<wire x1="12.7" y1="25.4" x2="-12.7" y2="25.4" width="0.4064" layer="94"/>
-<text x="-5.117040625" y="27.4945" size="2.08755" layer="95" ratio="10" rot="SR0">&gt;NAME</text>
-<text x="-3.659790625" y="-34.9713" size="2.08405" layer="96" ratio="10" rot="SR0">&gt;VALUE</text>
-<pin name="VCCA" x="-17.78" y="20.32" length="middle" direction="pwr"/>
-<pin name="VCCB@2" x="-17.78" y="17.78" length="middle" direction="pwr"/>
-<pin name="VCCB@1" x="-17.78" y="15.24" length="middle" direction="pwr"/>
-<pin name="DIR" x="-17.78" y="10.16" length="middle" direction="in"/>
-<pin name="~OE" x="-17.78" y="7.62" length="middle" direction="in" function="dot"/>
-<pin name="A0" x="-17.78" y="2.54" length="middle"/>
-<pin name="A1" x="-17.78" y="0" length="middle"/>
-<pin name="A2" x="-17.78" y="-2.54" length="middle"/>
-<pin name="A3" x="-17.78" y="-5.08" length="middle"/>
-<pin name="A4" x="-17.78" y="-7.62" length="middle"/>
-<pin name="A5" x="-17.78" y="-10.16" length="middle"/>
-<pin name="A6" x="-17.78" y="-12.7" length="middle"/>
-<pin name="A7" x="-17.78" y="-15.24" length="middle"/>
-<pin name="GND@2" x="-17.78" y="-20.32" length="middle" direction="pas"/>
-<pin name="GND@3" x="-17.78" y="-22.86" length="middle" direction="pas"/>
-<pin name="GND@1" x="-17.78" y="-25.4" length="middle" direction="pas"/>
-<pin name="B0" x="17.78" y="20.32" length="middle" rot="R180"/>
-<pin name="B1" x="17.78" y="17.78" length="middle" rot="R180"/>
-<pin name="B2" x="17.78" y="15.24" length="middle" rot="R180"/>
-<pin name="B3" x="17.78" y="12.7" length="middle" rot="R180"/>
-<pin name="B4" x="17.78" y="10.16" length="middle" rot="R180"/>
-<pin name="B5" x="17.78" y="7.62" length="middle" rot="R180"/>
-<pin name="B6" x="17.78" y="5.08" length="middle" rot="R180"/>
-<pin name="B7" x="17.78" y="2.54" length="middle" rot="R180"/>
 </symbol>
 <symbol name="DIP-40APU">
 <pin name="AUX1" x="-17.78" y="22.86" length="middle"/>
@@ -7446,6 +7414,38 @@ http://www.bccomponents.com/</description>
 <text x="-2.54" y="27.94" size="1.778" layer="95">&gt;NAME</text>
 <text x="-2.54" y="-30.48" size="1.778" layer="96">&gt;VALUE</text>
 <text x="2.54" y="-5.08" size="1.778" layer="94" rot="R90">40pin</text>
+</symbol>
+<symbol name="SN74LVC8T245">
+<wire x1="-12.7" y1="27.94" x2="-12.7" y2="-27.94" width="0.4064" layer="94"/>
+<wire x1="-12.7" y1="-27.94" x2="12.7" y2="-27.94" width="0.4064" layer="94"/>
+<wire x1="12.7" y1="-27.94" x2="12.7" y2="27.94" width="0.4064" layer="94"/>
+<wire x1="12.7" y1="27.94" x2="-12.7" y2="27.94" width="0.4064" layer="94"/>
+<text x="-5.117040625" y="30.0345" size="2.08755" layer="95" ratio="10" rot="SR0">&gt;NAME</text>
+<text x="-3.659790625" y="-32.4313" size="2.08405" layer="96" ratio="10" rot="SR0">&gt;VALUE</text>
+<pin name="VCCA" x="-17.78" y="22.86" length="middle" direction="pwr"/>
+<pin name="VCCB@2" x="-17.78" y="20.32" length="middle" direction="pwr"/>
+<pin name="VCCB@1" x="-17.78" y="17.78" length="middle" direction="pwr"/>
+<pin name="DIR" x="-17.78" y="12.7" length="middle" direction="in"/>
+<pin name="/OE" x="-17.78" y="10.16" length="middle" direction="in" function="dot"/>
+<pin name="A0" x="-17.78" y="5.08" length="middle"/>
+<pin name="A1" x="-17.78" y="2.54" length="middle"/>
+<pin name="A2" x="-17.78" y="0" length="middle"/>
+<pin name="A3" x="-17.78" y="-2.54" length="middle"/>
+<pin name="A4" x="-17.78" y="-5.08" length="middle"/>
+<pin name="A5" x="-17.78" y="-7.62" length="middle"/>
+<pin name="A6" x="-17.78" y="-10.16" length="middle"/>
+<pin name="A7" x="-17.78" y="-12.7" length="middle"/>
+<pin name="GND@2" x="-17.78" y="-17.78" length="middle" direction="pas"/>
+<pin name="GND@3" x="-17.78" y="-20.32" length="middle" direction="pas"/>
+<pin name="GND@1" x="-17.78" y="-22.86" length="middle" direction="pas"/>
+<pin name="B0" x="17.78" y="22.86" length="middle" rot="R180"/>
+<pin name="B1" x="17.78" y="20.32" length="middle" rot="R180"/>
+<pin name="B2" x="17.78" y="17.78" length="middle" rot="R180"/>
+<pin name="B3" x="17.78" y="15.24" length="middle" rot="R180"/>
+<pin name="B4" x="17.78" y="12.7" length="middle" rot="R180"/>
+<pin name="B5" x="17.78" y="10.16" length="middle" rot="R180"/>
+<pin name="B6" x="17.78" y="7.62" length="middle" rot="R180"/>
+<pin name="B7" x="17.78" y="5.08" length="middle" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -7518,50 +7518,6 @@ http://www.bccomponents.com/</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="74LVC4245APW,112" prefix="U">
-<gates>
-<gate name="A" symbol="74LVC4245APW,112" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SOP65P640X110-24N">
-<connects>
-<connect gate="A" pin="A0" pad="3"/>
-<connect gate="A" pin="A1" pad="4"/>
-<connect gate="A" pin="A2" pad="5"/>
-<connect gate="A" pin="A3" pad="6"/>
-<connect gate="A" pin="A4" pad="7"/>
-<connect gate="A" pin="A5" pad="8"/>
-<connect gate="A" pin="A6" pad="9"/>
-<connect gate="A" pin="A7" pad="10"/>
-<connect gate="A" pin="B0" pad="21"/>
-<connect gate="A" pin="B1" pad="20"/>
-<connect gate="A" pin="B2" pad="19"/>
-<connect gate="A" pin="B3" pad="18"/>
-<connect gate="A" pin="B4" pad="17"/>
-<connect gate="A" pin="B5" pad="16"/>
-<connect gate="A" pin="B6" pad="15"/>
-<connect gate="A" pin="B7" pad="14"/>
-<connect gate="A" pin="DIR" pad="2"/>
-<connect gate="A" pin="GND@1" pad="12"/>
-<connect gate="A" pin="GND@2" pad="11"/>
-<connect gate="A" pin="GND@3" pad="13"/>
-<connect gate="A" pin="VCCA" pad="1"/>
-<connect gate="A" pin="VCCB@1" pad="23"/>
-<connect gate="A" pin="VCCB@2" pad="24"/>
-<connect gate="A" pin="~OE" pad="22"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="MPN" value="74LVC4245APW,112"/>
-<attribute name="OC_FARNELL" value="1631648"/>
-<attribute name="OC_NEWARK" value="03P2784"/>
-<attribute name="PACKAGE" value="TSSOP-24"/>
-<attribute name="SUPPLIER" value="NXP"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="DIP40APU" prefix="CON">
 <gates>
 <gate name="G$1" symbol="DIP-40APU" x="0" y="0"/>
@@ -7609,6 +7565,44 @@ http://www.bccomponents.com/</description>
 <connect gate="G$1" pin="OUT2" pad="37"/>
 <connect gate="G$1" pin="R/W" pad="34"/>
 <connect gate="G$1" pin="VCC" pad="40"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="SN74LVC8T245" prefix="U">
+<gates>
+<gate name="G$1" symbol="SN74LVC8T245" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOP65P640X110-24N">
+<connects>
+<connect gate="G$1" pin="/OE" pad="22"/>
+<connect gate="G$1" pin="A0" pad="3"/>
+<connect gate="G$1" pin="A1" pad="4"/>
+<connect gate="G$1" pin="A2" pad="5"/>
+<connect gate="G$1" pin="A3" pad="6"/>
+<connect gate="G$1" pin="A4" pad="7"/>
+<connect gate="G$1" pin="A5" pad="8"/>
+<connect gate="G$1" pin="A6" pad="9"/>
+<connect gate="G$1" pin="A7" pad="10"/>
+<connect gate="G$1" pin="B0" pad="21"/>
+<connect gate="G$1" pin="B1" pad="20"/>
+<connect gate="G$1" pin="B2" pad="19"/>
+<connect gate="G$1" pin="B3" pad="18"/>
+<connect gate="G$1" pin="B4" pad="17"/>
+<connect gate="G$1" pin="B5" pad="16"/>
+<connect gate="G$1" pin="B6" pad="15"/>
+<connect gate="G$1" pin="B7" pad="14"/>
+<connect gate="G$1" pin="DIR" pad="2"/>
+<connect gate="G$1" pin="GND@1" pad="11"/>
+<connect gate="G$1" pin="GND@2" pad="12"/>
+<connect gate="G$1" pin="GND@3" pad="13"/>
+<connect gate="G$1" pin="VCCA" pad="1"/>
+<connect gate="G$1" pin="VCCB@1" pad="24"/>
+<connect gate="G$1" pin="VCCB@2" pad="23"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -11840,7 +11834,6 @@ Source: EP2C5T144.BSD</description>
 <part name="VR1" library="LD1117DT33" deviceset="LD1117DT33" device=""/>
 <part name="U1" library="SnapEDA-Library" deviceset="SN74LVC541A" device=""/>
 <part name="U2" library="SnapEDA-Library" deviceset="SN74LVC541A" device=""/>
-<part name="U5" library="SnapEDA-Library" deviceset="74LVC4245APW,112" device=""/>
 <part name="GND8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -11987,6 +11980,7 @@ Source: EP2C5T144.BSD</description>
 <part name="V4" library="supply" deviceset="+5V" device=""/>
 <part name="V5" library="supply" deviceset="+5V" device=""/>
 <part name="V19" library="supply" deviceset="+5V" device=""/>
+<part name="U5" library="SnapEDA-Library" deviceset="SN74LVC8T245" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12336,10 +12330,6 @@ Source: EP2C5T144.BSD</description>
 <instance part="U2" gate="G$1" x="-170.18" y="60.96" smashed="yes">
 <attribute name="NAME" x="-156.16" y="64.59" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-162.56" y="20.32" size="1.778" layer="96"/>
-</instance>
-<instance part="U5" gate="A" x="-73.66" y="68.58" smashed="yes">
-<attribute name="NAME" x="-78.777040625" y="96.0745" size="2.08755" layer="95" ratio="10" rot="SR0"/>
-<attribute name="VALUE" x="-86.829790625" y="34.9687" size="2.08405" layer="96" ratio="10" rot="SR0"/>
 </instance>
 <instance part="GND8" gate="1" x="-175.26" y="73.66" smashed="yes" rot="R270">
 <attribute name="VALUE" x="-177.8" y="76.2" size="1.778" layer="96" rot="R270"/>
@@ -12893,6 +12883,10 @@ Source: EP2C5T144.BSD</description>
 <instance part="V19" gate="1" x="-193.04" y="78.74" smashed="yes" rot="R90">
 <attribute name="VALUE" x="-194.93" y="79.55" size="1.778" layer="96" rot="R180"/>
 </instance>
+<instance part="U5" gate="G$1" x="-73.66" y="66.04" smashed="yes">
+<attribute name="NAME" x="-75.047040625" y="95.1545" size="2.08755" layer="95" ratio="10" rot="SR0"/>
+<attribute name="VALUE" x="-84.299790625" y="35.1387" size="2.08405" layer="96" ratio="10" rot="SR0"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -13022,9 +13016,9 @@ Source: EP2C5T144.BSD</description>
 <junction x="-96.52" y="45.72"/>
 <wire x1="-91.44" y1="43.18" x2="-96.52" y2="43.18" width="0.1524" layer="91"/>
 <junction x="-96.52" y="43.18"/>
-<pinref part="U5" gate="A" pin="GND@2"/>
-<pinref part="U5" gate="A" pin="GND@3"/>
-<pinref part="U5" gate="A" pin="GND@1"/>
+<pinref part="U5" gate="G$1" pin="GND@2"/>
+<pinref part="U5" gate="G$1" pin="GND@3"/>
+<pinref part="U5" gate="G$1" pin="GND@1"/>
 </segment>
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
@@ -13218,7 +13212,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="78.74" x2="-106.68" y2="78.74" width="0.1524" layer="91"/>
 <label x="-106.68" y="78.74" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="DIR"/>
+<pinref part="U5" gate="G$1" pin="DIR"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO144"/>
@@ -13242,7 +13236,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-106.68" y1="76.2" x2="-91.44" y2="76.2" width="0.1524" layer="91"/>
 <label x="-106.68" y="76.2" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="~OE"/>
+<pinref part="U5" gate="G$1" pin="/OE"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="/OE1"/>
@@ -13525,14 +13519,14 @@ Source: EP2C5T144.BSD</description>
 <wire x1="-96.52" y1="83.82" x2="-96.52" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="-96.52" y1="86.36" x2="-91.44" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="-91.44" y1="83.82" x2="-96.52" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="U5" gate="A" pin="VCCB@2"/>
-<pinref part="U5" gate="A" pin="VCCB@1"/>
 <pinref part="V21" gate="1" pin="+5V"/>
 <wire x1="-96.52" y1="83.82" x2="-116.84" y2="83.82" width="0.1524" layer="91"/>
 <junction x="-96.52" y="83.82"/>
 <pinref part="C15" gate="G$1" pin="P$2"/>
 <wire x1="-116.84" y1="83.82" x2="-119.38" y2="83.82" width="0.1524" layer="91"/>
 <junction x="-116.84" y="83.82"/>
+<pinref part="U5" gate="G$1" pin="VCCB@2"/>
+<pinref part="U5" gate="G$1" pin="VCCB@1"/>
 </segment>
 <segment>
 <wire x1="-190.5" y1="-17.78" x2="-185.42" y2="-17.78" width="0.1524" layer="91"/>
@@ -13620,9 +13614,9 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-119.38" y1="88.9" x2="-116.84" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="V17" gate="G$1" pin="+3V3"/>
-<pinref part="U5" gate="A" pin="VCCA"/>
 <junction x="-116.84" y="88.9"/>
 <wire x1="-116.84" y1="88.9" x2="-91.44" y2="88.9" width="0.1524" layer="91"/>
+<pinref part="U5" gate="G$1" pin="VCCA"/>
 </segment>
 <segment>
 <wire x1="251.46" y1="134.62" x2="248.92" y2="134.62" width="0.1524" layer="91"/>
@@ -13903,9 +13897,9 @@ Source: EP2C5T144.BSD</description>
 <pinref part="CON1" gate="G$1" pin="DB0"/>
 </segment>
 <segment>
-<pinref part="U5" gate="A" pin="B7"/>
 <wire x1="-55.88" y1="71.12" x2="-43.18" y2="71.12" width="0.1524" layer="91"/>
 <label x="-53.34" y="71.12" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="B7"/>
 </segment>
 </net>
 <net name="DB1" class="0">
@@ -13915,9 +13909,9 @@ Source: EP2C5T144.BSD</description>
 <pinref part="CON1" gate="G$1" pin="DB1"/>
 </segment>
 <segment>
-<pinref part="U5" gate="A" pin="B6"/>
 <wire x1="-55.88" y1="73.66" x2="-43.18" y2="73.66" width="0.1524" layer="91"/>
 <label x="-53.34" y="73.66" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="B6"/>
 </segment>
 </net>
 <net name="DB2" class="0">
@@ -13927,9 +13921,9 @@ Source: EP2C5T144.BSD</description>
 <pinref part="CON1" gate="G$1" pin="DB2"/>
 </segment>
 <segment>
-<pinref part="U5" gate="A" pin="B5"/>
 <wire x1="-55.88" y1="76.2" x2="-43.18" y2="76.2" width="0.1524" layer="91"/>
 <label x="-53.34" y="76.2" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="B5"/>
 </segment>
 </net>
 <net name="DB3" class="0">
@@ -13939,9 +13933,9 @@ Source: EP2C5T144.BSD</description>
 <pinref part="CON1" gate="G$1" pin="DB3"/>
 </segment>
 <segment>
-<pinref part="U5" gate="A" pin="B4"/>
 <wire x1="-55.88" y1="78.74" x2="-43.18" y2="78.74" width="0.1524" layer="91"/>
 <label x="-53.34" y="78.74" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="B4"/>
 </segment>
 </net>
 <net name="DB4" class="0">
@@ -13951,9 +13945,9 @@ Source: EP2C5T144.BSD</description>
 <pinref part="CON1" gate="G$1" pin="DB4"/>
 </segment>
 <segment>
-<pinref part="U5" gate="A" pin="B3"/>
 <wire x1="-55.88" y1="81.28" x2="-43.18" y2="81.28" width="0.1524" layer="91"/>
 <label x="-53.34" y="81.28" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="B3"/>
 </segment>
 </net>
 <net name="DB5" class="0">
@@ -13963,9 +13957,9 @@ Source: EP2C5T144.BSD</description>
 <pinref part="CON1" gate="G$1" pin="DB5"/>
 </segment>
 <segment>
-<pinref part="U5" gate="A" pin="B2"/>
 <wire x1="-55.88" y1="83.82" x2="-43.18" y2="83.82" width="0.1524" layer="91"/>
 <label x="-53.34" y="83.82" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="B2"/>
 </segment>
 </net>
 <net name="DB6" class="0">
@@ -13975,9 +13969,9 @@ Source: EP2C5T144.BSD</description>
 <pinref part="CON1" gate="G$1" pin="DB6"/>
 </segment>
 <segment>
-<pinref part="U5" gate="A" pin="B1"/>
 <wire x1="-55.88" y1="86.36" x2="-43.18" y2="86.36" width="0.1524" layer="91"/>
 <label x="-53.34" y="86.36" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="B1"/>
 </segment>
 </net>
 <net name="DB7" class="0">
@@ -13987,9 +13981,9 @@ Source: EP2C5T144.BSD</description>
 <pinref part="CON1" gate="G$1" pin="DB7"/>
 </segment>
 <segment>
-<pinref part="U5" gate="A" pin="B0"/>
 <wire x1="-55.88" y1="88.9" x2="-43.18" y2="88.9" width="0.1524" layer="91"/>
 <label x="-53.34" y="88.9" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="B0"/>
 </segment>
 </net>
 <net name="M2" class="0">
@@ -14104,7 +14098,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="71.12" x2="-106.68" y2="71.12" width="0.1524" layer="91"/>
 <label x="-106.68" y="71.12" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="A0"/>
+<pinref part="U5" gate="G$1" pin="A0"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO26"/>
@@ -14116,7 +14110,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="68.58" x2="-106.68" y2="68.58" width="0.1524" layer="91"/>
 <label x="-106.68" y="68.58" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="A1"/>
+<pinref part="U5" gate="G$1" pin="A1"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO25"/>
@@ -14128,7 +14122,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="66.04" x2="-106.68" y2="66.04" width="0.1524" layer="91"/>
 <label x="-106.68" y="66.04" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="A2"/>
+<pinref part="U5" gate="G$1" pin="A2"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO24"/>
@@ -14140,7 +14134,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="53.34" x2="-106.68" y2="53.34" width="0.1524" layer="91"/>
 <label x="-106.68" y="53.34" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="A7"/>
+<pinref part="U5" gate="G$1" pin="A7"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO3"/>
@@ -14152,7 +14146,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="55.88" x2="-106.68" y2="55.88" width="0.1524" layer="91"/>
 <label x="-106.68" y="55.88" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="A6"/>
+<pinref part="U5" gate="G$1" pin="A6"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO4"/>
@@ -14164,7 +14158,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="58.42" x2="-106.68" y2="58.42" width="0.1524" layer="91"/>
 <label x="-106.68" y="58.42" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="A5"/>
+<pinref part="U5" gate="G$1" pin="A5"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO7"/>
@@ -14176,7 +14170,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="60.96" x2="-106.68" y2="60.96" width="0.1524" layer="91"/>
 <label x="-106.68" y="60.96" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="A4"/>
+<pinref part="U5" gate="G$1" pin="A4"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO8"/>
@@ -14188,7 +14182,7 @@ Source: EP2C5T144.BSD</description>
 <segment>
 <wire x1="-91.44" y1="63.5" x2="-106.68" y2="63.5" width="0.1524" layer="91"/>
 <label x="-106.68" y="63.5" size="1.778" layer="95"/>
-<pinref part="U5" gate="A" pin="A3"/>
+<pinref part="U5" gate="G$1" pin="A3"/>
 </segment>
 <segment>
 <pinref part="U8" gate="G$1" pin="IO9"/>
