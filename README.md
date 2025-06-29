@@ -11,7 +11,7 @@ Logisim circuit
 
 Quartus circuit
 
-![2A03](https://github.com/user-attachments/assets/e8e01169-2a0a-4783-9857-be901dfbe9ec)
+![2A03](https://github.com/user-attachments/assets/6d21fde4-4b3e-4f83-aa6c-f0468a5b12f3)
 
 Schematic diagram of the APU substitute for the FPGA.
 
