@@ -59,7 +59,7 @@
  -- Pin directions (input, output or bidir) are based on device operating in user mode.
  ---------------------------------------------------------------------------------
 
-Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+Quartus II 32-bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 CHIP  "RP2A03"  ASSIGNED TO AN: EP2C5T144C8
 
 Pin Name/Usage               : Location  : Dir.   : I/O Standard      : Voltage : I/O Bank  : User Assignment
@@ -81,10 +81,10 @@ DATA0                        : 14        : input  :                   :         
 DCLK                         : 15        :        :                   :         : 1         :                
 nCE                          : 16        :        :                   :         : 1         :                
 GND+                         : 17        :        :                   :         : 1         :                
-Clk                          : 18        : input  : 3.3-V LVTTL       :         : 1         : Y              
+GND+                         : 18        :        :                   :         : 1         :                
 GND                          : 19        : gnd    :                   :         :           :                
 nCONFIG                      : 20        :        :                   :         : 1         :                
-GND+                         : 21        :        :                   :         : 1         :                
+Clk                          : 21        : input  : 3.3-V LVTTL       :         : 1         : Y              
 GND+                         : 22        :        :                   :         : 1         :                
 VCCIO1                       : 23        : power  :                   : 3.3V    : 1         :                
 DB[5]                        : 24        : bidir  : 3.3-V LVTTL       :         : 1         : Y              
@@ -162,12 +162,12 @@ VCCIO3                       : 95        : power  :                   : 3.3V    
 RESERVED_INPUT_WITH_WEAK_PULLUP : 96        :        :                   :         : 3         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : 97        :        :                   :         : 3         :                
 GND                          : 98        : gnd    :                   :         :           :                
-nRES                         : 99        : input  : 3.3-V LVTTL       :         : 3         : Y              
-RESERVED_INPUT_WITH_WEAK_PULLUP : 100       :        :                   :         : 3         :                
-nNMI                         : 101       : input  : 3.3-V LVTTL       :         : 3         : Y              
+RES                          : 99        : input  : 3.3-V LVTTL       :         : 3         : Y              
+OE                           : 100       : output : 3.3-V LVTTL       :         : 3         : Y              
+NMI                          : 101       : input  : 3.3-V LVTTL       :         : 3         : Y              
 VCCIO3                       : 102       : power  :                   : 3.3V    : 3         :                
-nIRQ_EXT                     : 103       : input  : 3.3-V LVTTL       :         : 3         : Y              
-ADDR_BUS[0]                  : 104       : output : 3.3-V LVTTL       :         : 3         : Y              
+IRQ_EXT                      : 103       : input  : 3.3-V LVTTL       :         : 3         : Y              
+ADR[0]                       : 104       : output : 3.3-V LVTTL       :         : 3         : Y              
 GND                          : 105       : gnd    :                   :         :           :                
 GND_PLL2                     : 106       : gnd    :                   :         :           :                
 VCCD_PLL2                    : 107       : power  :                   : 1.2V    :           :                
@@ -175,15 +175,15 @@ GND_PLL2                     : 108       : gnd    :                   :         
 VCCA_PLL2                    : 109       : power  :                   : 1.2V    :           :                
 GNDA_PLL2                    : 110       : gnd    :                   :         :           :                
 GND                          : 111       : gnd    :                   :         :           :                
-ADDR_BUS[1]                  : 112       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[2]                  : 113       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[3]                  : 114       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[4]                  : 115       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[1]                       : 112       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[2]                       : 113       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[3]                       : 114       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[4]                       : 115       : output : 3.3-V LVTTL       :         : 2         : Y              
 VCCIO2                       : 116       : power  :                   : 3.3V    : 2         :                
 GND                          : 117       : gnd    :                   :         :           :                
-ADDR_BUS[5]                  : 118       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[6]                  : 119       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[7]                  : 120       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[5]                       : 118       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[6]                       : 119       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[7]                       : 120       : output : 3.3-V LVTTL       :         : 2         : Y              
 OUT[0]                       : 121       : output : 3.3-V LVTTL       :         : 2         : Y              
 OUT[1]                       : 122       : output : 3.3-V LVTTL       :         : 2         : Y              
 GND                          : 123       : gnd    :                   :         :           :                
@@ -192,19 +192,19 @@ OUT[2]                       : 125       : output : 3.3-V LVTTL       :         
 RnW                          : 126       : output : 3.3-V LVTTL       :         : 2         : Y              
 VCCIO2                       : 127       : power  :                   : 3.3V    : 2         :                
 GND                          : 128       : gnd    :                   :         :           :                
-M2_out                       : 129       : output : 3.3-V LVTTL       :         : 2         : Y              
+M2                           : 129       : output : 3.3-V LVTTL       :         : 2         : Y              
 GND                          : 130       : gnd    :                   :         :           :                
 VCCINT                       : 131       : power  :                   : 1.2V    :           :                
 nIN[1]                       : 132       : output : 3.3-V LVTTL       :         : 2         : Y              
 nIN[0]                       : 133       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[8]                  : 134       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[9]                  : 135       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[10]                 : 136       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[11]                 : 137       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[8]                       : 134       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[9]                       : 135       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[10]                      : 136       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[11]                      : 137       : output : 3.3-V LVTTL       :         : 2         : Y              
 VCCIO2                       : 138       : power  :                   : 3.3V    : 2         :                
-ADDR_BUS[12]                 : 139       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[12]                      : 139       : output : 3.3-V LVTTL       :         : 2         : Y              
 GND                          : 140       : gnd    :                   :         :           :                
-ADDR_BUS[13]                 : 141       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[14]                 : 142       : output : 3.3-V LVTTL       :         : 2         : Y              
-ADDR_BUS[15]                 : 143       : output : 3.3-V LVTTL       :         : 2         : Y              
-DIR                          : 144       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[13]                      : 141       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[14]                      : 142       : output : 3.3-V LVTTL       :         : 2         : Y              
+ADR[15]                      : 143       : output : 3.3-V LVTTL       :         : 2         : Y              
+nDIR                         : 144       : output : 3.3-V LVTTL       :         : 2         : Y              

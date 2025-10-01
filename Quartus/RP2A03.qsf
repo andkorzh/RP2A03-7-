@@ -18,14 +18,14 @@
 #
 # Quartus II 64-Bit
 # Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-# Date created = 21:53:34  September 17, 2023
+# Date created = 17:58:46  November 26, 2023
 #
 # -------------------------------------------------------------------------- #
 #
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		PR2A03_assignment_defaults.qdf
+#		RP2A03_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -40,42 +40,43 @@ set_global_assignment -name FAMILY "Cyclone II"
 set_global_assignment -name DEVICE EP2C5T144C8
 set_global_assignment -name TOP_LEVEL_ENTITY RP2A03
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "21:53:34  SEPTEMBER 17, 2023"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "17:58:46  NOVEMBER 26, 2023"
 set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
-set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 1
-set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
-set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name USE_CONFIGURATION_DEVICE ON
-set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
 set_global_assignment -name DEVICE_FILTER_PACKAGE TQFP
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 144
 set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 8
-set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED WITH WEAK PULL-UP"
-set_global_assignment -name OUTPUT_PIN_LOAD 6 -section_id "3.3-V LVTTL"
-set_global_assignment -name OUTPUT_PIN_LOAD 6 -section_id "3.3-V LVCMOS"
-set_global_assignment -name OUTPUT_PIN_LOAD 10 -section_id "3.3-V PCI"
-set_global_assignment -name OUTPUT_PIN_LOAD 10 -section_id "3.3-V PCI-X"
-set_location_assignment PIN_18 -to Clk
-set_location_assignment PIN_143 -to ADDR_BUS[15]
-set_location_assignment PIN_142 -to ADDR_BUS[14]
-set_location_assignment PIN_141 -to ADDR_BUS[13]
-set_location_assignment PIN_139 -to ADDR_BUS[12]
-set_location_assignment PIN_137 -to ADDR_BUS[11]
-set_location_assignment PIN_136 -to ADDR_BUS[10]
-set_location_assignment PIN_135 -to ADDR_BUS[9]
-set_location_assignment PIN_134 -to ADDR_BUS[8]
-set_location_assignment PIN_120 -to ADDR_BUS[7]
-set_location_assignment PIN_119 -to ADDR_BUS[6]
-set_location_assignment PIN_118 -to ADDR_BUS[5]
-set_location_assignment PIN_115 -to ADDR_BUS[4]
-set_location_assignment PIN_114 -to ADDR_BUS[3]
-set_location_assignment PIN_113 -to ADDR_BUS[2]
-set_location_assignment PIN_112 -to ADDR_BUS[1]
-set_location_assignment PIN_104 -to ADDR_BUS[0]
-set_location_assignment PIN_129 -to M2_out
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 1
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_location_assignment PIN_21 -to Clk
+set_location_assignment PIN_99 -to RES
+set_location_assignment PIN_143 -to ADR[15]
+set_location_assignment PIN_142 -to ADR[14]
+set_location_assignment PIN_141 -to ADR[13]
+set_location_assignment PIN_139 -to ADR[12]
+set_location_assignment PIN_137 -to ADR[11]
+set_location_assignment PIN_136 -to ADR[10]
+set_location_assignment PIN_135 -to ADR[9]
+set_location_assignment PIN_134 -to ADR[8]
+set_location_assignment PIN_120 -to ADR[7]
+set_location_assignment PIN_119 -to ADR[6]
+set_location_assignment PIN_118 -to ADR[5]
+set_location_assignment PIN_115 -to ADR[4]
+set_location_assignment PIN_114 -to ADR[3]
+set_location_assignment PIN_113 -to ADR[2]
+set_location_assignment PIN_112 -to ADR[1]
+set_location_assignment PIN_104 -to ADR[0]
+set_location_assignment PIN_100 -to OE
+set_location_assignment PIN_144 -to nDIR
+set_location_assignment PIN_103 -to IRQ_EXT
+set_location_assignment PIN_101 -to NMI
+set_location_assignment PIN_129 -to M2
 set_location_assignment PIN_126 -to RnW
 set_location_assignment PIN_121 -to OUT[0]
 set_location_assignment PIN_122 -to OUT[1]
@@ -104,12 +105,13 @@ set_location_assignment PIN_52 -to SOUT[3]
 set_location_assignment PIN_53 -to SOUT[2]
 set_location_assignment PIN_55 -to SOUT[1]
 set_location_assignment PIN_57 -to SOUT[0]
-set_location_assignment PIN_144 -to DIR
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to PAL
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
 set_global_assignment -name VERILOG_FILE MOS6502_WBCD.v
+set_global_assignment -name VERILOG_FILE RP2A03.v
+set_global_assignment -name SDC_FILE RP2A03.sdc
+set_global_assignment -name SOURCE_FILE RP2A03.qsf
+set_global_assignment -name SOURCE_FILE RP2A03.qpf
 set_global_assignment -name VERILOG_FILE NOISE_TABLE.v
 set_global_assignment -name QIP_FILE NOISE_TABLE.qip
 set_global_assignment -name MIF_FILE NOISE_TABLE.mif
@@ -121,8 +123,11 @@ set_global_assignment -name BSF_FILE LENGTH_TABLE.bsf
 set_global_assignment -name VERILOG_FILE DPCM_TABLE.v
 set_global_assignment -name QIP_FILE DPCM_TABLE.qip
 set_global_assignment -name MIF_FILE DPCM_TABLE.mif
-set_global_assignment -name VERILOG_FILE RP2A03.v
-set_location_assignment PIN_103 -to nIRQ_EXT
-set_location_assignment PIN_101 -to nNMI
-set_location_assignment PIN_99 -to nRES
+set_global_assignment -name BSF_FILE DPCM_TABLE.bsf
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED WITH WEAK PULL-UP"
+set_global_assignment -name OUTPUT_PIN_LOAD 6 -section_id "3.3-V LVTTL"
+set_global_assignment -name OUTPUT_PIN_LOAD 6 -section_id "3.3-V LVCMOS"
+set_global_assignment -name OUTPUT_PIN_LOAD 10 -section_id "3.3-V PCI"
+set_global_assignment -name OUTPUT_PIN_LOAD 10 -section_id "3.3-V PCI-X"
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to PAL
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

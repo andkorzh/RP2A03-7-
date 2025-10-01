@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP4CE6E22) Path("D:/RadioSoft/VIDEO GAME/DENDY/SRC/RP2A03/output_files/") File("RP2A03.sof") MfrSpec(OpMask(1));
+		Device PartName(EP2C5T144) Path("D:/RadioSoft/VIDEO GAME/DENDY/SRC/RP2A03/output_files/") File("RP2A03.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
