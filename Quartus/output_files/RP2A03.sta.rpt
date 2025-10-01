@@ -1,5 +1,5 @@
 TimeQuest Timing Analyzer report for RP2A03
-Wed Oct 01 17:41:26 2025
+Wed Oct 01 17:50:01 2025
 Quartus II 32-bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -113,7 +113,7 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------+--------+--------------------------+
 ; SDC File Path ; Status ; Read at                  ;
 +---------------+--------+--------------------------+
-; RP2A03.sdc    ; OK     ; Wed Oct 01 17:41:26 2025 ;
+; RP2A03.sdc    ; OK     ; Wed Oct 01 17:50:01 2025 ;
 +---------------+--------+--------------------------+
 
 
@@ -1602,7 +1602,7 @@ No dedicated SERDES Receiver circuitry present in device or used in design
 Info: *******************************************************************
 Info: Running Quartus II 32-bit TimeQuest Timing Analyzer
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Wed Oct 01 17:41:26 2025
+    Info: Processing started: Wed Oct 01 17:50:01 2025
 Info: Command: quartus_sta RP2A03 -c RP2A03
 Info: qsta_default_script.tcl version: #1
 Info (21077): Low junction temperature is 0 degrees C
@@ -1646,7 +1646,7 @@ Info (332102): Design is not fully constrained for hold requirements
 Info (144001): Generated suppressed messages file D:/RadioSoft/VIDEO GAME/DENDY/SRC/RP2A03/output_files/RP2A03.sta.smsg
 Info: Quartus II 32-bit TimeQuest Timing Analyzer was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 330 megabytes
-    Info: Processing ended: Wed Oct 01 17:41:26 2025
+    Info: Processing ended: Wed Oct 01 17:50:01 2025
     Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:01
 

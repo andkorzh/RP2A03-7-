@@ -1,5 +1,5 @@
 Analysis & Synthesis report for RP2A03
-Wed Oct 01 17:41:19 2025
+Wed Oct 01 17:49:54 2025
 Quartus II 32-bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -183,7 +183,7 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Oct 01 17:41:18 2025           ;
+; Analysis & Synthesis Status        ; Successful - Wed Oct 01 17:49:54 2025           ;
 ; Quartus II 32-bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; RP2A03                                          ;
 ; Top-level Entity Name              ; RP2A03                                          ;
@@ -2267,7 +2267,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:02     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -2277,7 +2277,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II 32-bit Analysis & Synthesis
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Wed Oct 01 17:41:14 2025
+    Info: Processing started: Wed Oct 01 17:49:49 2025
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off RP2A03 -c RP2A03
 Info (12021): Found 15 design units, including 15 entities, in source file mos6502_wbcd.v
     Info (12023): Found entity 1: MOS6502_WBCD
@@ -2414,10 +2414,10 @@ Info (21057): Implemented 1862 device resources after synthesis - the final reso
     Info (21061): Implemented 1783 logic cells
     Info (21064): Implemented 28 RAM segments
 Info: Quartus II 32-bit Analysis & Synthesis was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 373 megabytes
-    Info: Processing ended: Wed Oct 01 17:41:19 2025
+    Info: Peak virtual memory: 377 megabytes
+    Info: Processing ended: Wed Oct 01 17:49:54 2025
     Info: Elapsed time: 00:00:05
-    Info: Total CPU time (on all processors): 00:00:04
+    Info: Total CPU time (on all processors): 00:00:05
 
 
 +------------------------------------------+
