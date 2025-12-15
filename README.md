@@ -21,3 +21,5 @@ photo of the prototype
 ![IMG_3721](https://github.com/user-attachments/assets/31153b5e-ec24-44a8-aef4-3f64d3672bc4)
 
 Video on YouTube https://www.youtube.com/watch?v=RvPh_PWV7ng
+
+Attention! The board only has a JTAG configuration interface. Please upload only the jic file. If you try to upload the pof file, you will receive an error.
