@@ -1,6 +1,6 @@
 Assembler report for RP2A03
-Wed Oct 01 17:50:00 2025
-Quartus II 32-bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+Sun Feb 15 14:47:46 2026
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
 ---------------------
@@ -10,7 +10,7 @@ Quartus II 32-bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edit
   2. Assembler Summary
   3. Assembler Settings
   4. Assembler Generated Files
-  5. Assembler Device Options: D:/RadioSoft/VIDEO GAME/DENDY/SRC/RP2A03/output_files/RP2A03.sof
+  5. Assembler Device Options: D:/APU_REVERSE/FPGA/RP2A03-7--main/RP2A03-7--main/Quartus/output_files/RP2A03.sof
   6. Assembler Messages
 
 
@@ -37,7 +37,7 @@ applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Wed Oct 01 17:50:00 2025 ;
+; Assembler Status      ; Successful - Sun Feb 15 14:47:46 2026 ;
 ; Revision Name         ; RP2A03                                ;
 ; Top-level Entity Name ; RP2A03                                ;
 ; Family                ; Cyclone II                            ;
@@ -77,39 +77,39 @@ applicable agreement for further details.
 +-----------------------------------------------------------------------------+----------+---------------+
 
 
-+------------------------------------------------------------------+
-; Assembler Generated Files                                        ;
-+------------------------------------------------------------------+
-; File Name                                                        ;
-+------------------------------------------------------------------+
-; D:/RadioSoft/VIDEO GAME/DENDY/SRC/RP2A03/output_files/RP2A03.sof ;
-+------------------------------------------------------------------+
++-----------------------------------------------------------------------------------+
+; Assembler Generated Files                                                         ;
++-----------------------------------------------------------------------------------+
+; File Name                                                                         ;
++-----------------------------------------------------------------------------------+
+; D:/APU_REVERSE/FPGA/RP2A03-7--main/RP2A03-7--main/Quartus/output_files/RP2A03.sof ;
++-----------------------------------------------------------------------------------+
 
 
-+--------------------------------------------------------------------------------------------+
-; Assembler Device Options: D:/RadioSoft/VIDEO GAME/DENDY/SRC/RP2A03/output_files/RP2A03.sof ;
-+----------------+---------------------------------------------------------------------------+
-; Option         ; Setting                                                                   ;
-+----------------+---------------------------------------------------------------------------+
-; Device         ; EP2C5T144C8                                                               ;
-; JTAG usercode  ; 0x0018A238                                                                ;
-; Checksum       ; 0x0018A238                                                                ;
-+----------------+---------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------------------------------+
+; Assembler Device Options: D:/APU_REVERSE/FPGA/RP2A03-7--main/RP2A03-7--main/Quartus/output_files/RP2A03.sof ;
++----------------+--------------------------------------------------------------------------------------------+
+; Option         ; Setting                                                                                    ;
++----------------+--------------------------------------------------------------------------------------------+
+; Device         ; EP2C5T144C8                                                                                ;
+; JTAG usercode  ; 0x001895B5                                                                                 ;
+; Checksum       ; 0x001895B5                                                                                 ;
++----------------+--------------------------------------------------------------------------------------------+
 
 
 +--------------------+
 ; Assembler Messages ;
 +--------------------+
 Info: *******************************************************************
-Info: Running Quartus II 32-bit Assembler
+Info: Running Quartus II 64-Bit Assembler
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Wed Oct 01 17:49:59 2025
+    Info: Processing started: Sun Feb 15 14:47:45 2026
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off RP2A03 -c RP2A03
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
-Info: Quartus II 32-bit Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 347 megabytes
-    Info: Processing ended: Wed Oct 01 17:50:00 2025
+Info: Quartus II 64-Bit Assembler was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 418 megabytes
+    Info: Processing ended: Sun Feb 15 14:47:46 2026
     Info: Elapsed time: 00:00:01
     Info: Total CPU time (on all processors): 00:00:01
 
