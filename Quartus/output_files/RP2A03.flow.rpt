@@ -1,5 +1,5 @@
 Flow report for RP2A03
-Sun Feb 15 14:47:48 2026
+Sun Feb 15 19:08:17 2026
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -40,15 +40,15 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Flow Summary                                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Flow Status                        ; Successful - Sun Feb 15 14:47:46 2026           ;
+; Flow Status                        ; Successful - Sun Feb 15 19:08:16 2026           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; RP2A03                                          ;
 ; Top-level Entity Name              ; RP2A03                                          ;
 ; Family                             ; Cyclone II                                      ;
 ; Device                             ; EP2C5T144C8                                     ;
 ; Timing Models                      ; Final                                           ;
-; Total logic elements               ; 1,569 / 4,608 ( 34 % )                          ;
-;     Total combinational functions  ; 1,450 / 4,608 ( 31 % )                          ;
+; Total logic elements               ; 1,566 / 4,608 ( 34 % )                          ;
+;     Total combinational functions  ; 1,448 / 4,608 ( 31 % )                          ;
 ;     Dedicated logic registers      ; 947 / 4,608 ( 21 % )                            ;
 ; Total registers                    ; 947                                             ;
 ; Total pins                         ; 51 / 89 ( 57 % )                                ;
@@ -64,7 +64,7 @@ applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 02/15/2026 14:47:30 ;
+; Start date & time ; 02/15/2026 19:08:01 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; RP2A03              ;
 +-------------------+---------------------+
@@ -75,7 +75,7 @@ applicable agreement for further details.
 +-------------------------------------+---------------------------------------+---------------+-------------+--------------+
 ; Assignment Name                     ; Value                                 ; Default Value ; Entity Name ; Section Id   ;
 +-------------------------------------+---------------------------------------+---------------+-------------+--------------+
-; COMPILER_SIGNATURE_ID               ; 1096118306196.177115605006720         ; --            ; --          ; --           ;
+; COMPILER_SIGNATURE_ID               ; 1096118306196.177117168007344         ; --            ; --          ; --           ;
 ; IP_TOOL_NAME                        ; ROM: 1-PORT                           ; --            ; --          ; --           ;
 ; IP_TOOL_NAME                        ; ROM: 1-PORT                           ; --            ; --          ; --           ;
 ; IP_TOOL_NAME                        ; ROM: 1-PORT                           ; --            ; --          ; --           ;
@@ -108,7 +108,7 @@ applicable agreement for further details.
 ; Analysis & Synthesis      ; 00:00:06     ; 1.0                     ; 471 MB              ; 00:00:05                           ;
 ; Fitter                    ; 00:00:07     ; 1.0                     ; 602 MB              ; 00:00:06                           ;
 ; Assembler                 ; 00:00:01     ; 1.0                     ; 418 MB              ; 00:00:01                           ;
-; TimeQuest Timing Analyzer ; 00:00:01     ; 1.0                     ; 409 MB              ; 00:00:01                           ;
+; TimeQuest Timing Analyzer ; 00:00:01     ; 1.0                     ; 411 MB              ; 00:00:01                           ;
 ; Total                     ; 00:00:15     ; --                      ; --                  ; 00:00:13                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
