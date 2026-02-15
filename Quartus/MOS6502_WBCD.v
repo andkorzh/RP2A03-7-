@@ -147,7 +147,7 @@ assign A[15:0] = { ABH_LATCH[7:0], ABL_LATCH[7:0] };  //
 assign DL[7:0] = DL_LATCH[7:0] & { 8 { PHI1 }} ; 
 assign SYNC = T1;
 assign RW = ~WRPHI1;                                  // Control signal for outputting the data bus externally
-assign DOUT[7:0] = ~( RW | PHI1) ? DOR_LATCH[7:0] : 8'hZZ;      // Data bus output control
+assign DOUT[7:0] = ( ~RW ) ? DOR_LATCH[7:0] : 8'hZZ;      // Data bus output control
 // Logics
 always @(posedge Clk) begin 
        if (PHI1) begin
@@ -1748,4 +1748,5 @@ always @(posedge Clk) begin
                       end
 // End of module Program Counter (PC)
 endmodule
+
 
