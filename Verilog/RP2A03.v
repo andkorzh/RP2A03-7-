@@ -19,24 +19,24 @@
  *	NMOS processor Ricoh 2A03(7) as much as possible. The Logsim 2A03 model was taken as the basis
  * for the design of the circuit diagram
  *
- *  author andkorzh 
+ *  author andkorzh
  *  Thanks:
  *      HardWareMan: author of the concept of synchronously core NES PPU, help & support.
- *        
- *      Org (ogamespec): help & support, C++ Cycle accurate model NES, Author: Wiki BREAKNES 
- *          
+ *
+ *      Org (ogamespec): help & support, C++ Cycle accurate model NES, Author: Wiki BREAKNES
+ *
  *      Nukeykt: help & support
- *                     
+ *
  ===============================================================================================
 */
 
 // Module 2A03(7)
 module RP2A03(
    // Clocks
-   input Clk,               // Clock             
+   input Clk,               // Clock
    // Inputs
-   input PAL,               // PAL mode 	
-   input nNMI,              // Non-maskable interrupt input	
+   input PAL,               // PAL mode
+   input nNMI,              // Non-maskable interrupt input
    input nIRQ_EXT,          // Interrupt request input
    input nRES,              // Reset signal
    // Outputs
@@ -49,70 +49,70 @@ module RP2A03(
    output [3:0]RND, 	    // Noise channel output
    output [3:0]TRIA, 	    // Triangular channel output
    output [6:0]DMC, 	    // Delta Modulation Channel Output
-   output [5:0]SOUT, 	    // Channel sum output SQA + SQB + RND + TRIA 
+   output [5:0]SOUT, 	    // Channel sum output SQA + SQB + RND + TRIA
    output [2:0]OUT, 	    // Peripheral port output
-   output [1:0]nIN 	    // Peripheral port output
+   output [1:0]nIN 	        // Peripheral port output
 );
 // Module connections
-wire PHI0;           
-wire PHI1;           
-wire PHI2;            
-wire ACLK1;          
-wire nACLK2;	      
-wire M2;             
-wire Reset;          
-wire SYNC;           
-wire RW;             
-wire W4000;          
-wire W4001;          
-wire W4002;          
-wire W4003;        
-wire W4004;          
-wire W4005;          
-wire W4006;          
-wire W4007;          
-wire W4008;          
-wire W400A;          
-wire W400B;          
-wire W400C;          
-wire W400E;          
-wire W400F;          
-wire W4010;          
-wire W4011;          
-wire W4012;          
-wire W4013;          
-wire W4014;          
-wire W4015;         
-wire W4016;          
-wire W4017;          
-wire nR4015;         
-wire nR4016;         
-wire nR4017;         
-wire nLFO1;          
-wire nLFO2;          
-wire NOSQA;          
-wire NOSQB;          
-wire NOTRI;          
-wire NORND;          
-wire SQA_n_LC;       
-wire SQB_n_LC;       
-wire TRI_n_LC;       
-wire RND_n_LC;       
-wire [7:0]DBIN;      
-wire [7:0]LC;        
-wire [7:0]R4015DB;   
-wire [15:0]ADR;      
-wire [15:0]CPU_A;    
-wire [14:0]DMC_A;    
-wire INT;            
-wire DMC_INT;        
-wire nDMC_AB;        
-wire RDY;             
-wire DMCRDY;         
-wire RUNDMC;         
+wire PHI0;
+wire PHI1;
+wire PHI2;
+wire ACLK1;
+wire nACLK2;
+wire M2;
+wire Reset;
+wire SYNC;
+wire RW;
+wire W4000;
+wire W4001;
+wire W4002;
+wire W4003;
+wire W4004;
+wire W4005;
+wire W4006;
+wire W4007;
+wire W4008;
+wire W400A;
+wire W400B;
+wire W400C;
+wire W400E;
+wire W400F;
+wire W4010;
+wire W4011;
+wire W4012;
+wire W4013;
+wire W4014;
+wire W4015;
+wire W4016;
+wire W4017;
+wire nR4015;
+wire nR4016;
+wire nR4017;
+wire nLFO1;
+wire nLFO2;
+wire NOSQA;
+wire NOSQB;
+wire NOTRI;
+wire NORND;
+wire SQA_n_LC;
+wire SQB_n_LC;
+wire TRI_n_LC;
+wire RND_n_LC;
+wire [7:0]DBIN;
+wire [7:0]LC;
+wire [7:0]R4015DB;
+wire [15:0]ADR;
+wire [15:0]CPU_A;
+wire [14:0]DMC_A;
+wire INT;
+wire DMC_INT;
+wire nDMC_AB;
+wire RDY;
+wire DMCRDY;
+wire RUNDMC;
 // Variables
-reg [2:0]OUTR;       //
-reg [2:0]OUTR1;      //
+reg [2:0]OUTR;
+reg [2:0]OUTR1;
 // Combinatorics
 assign Reset = ~nRES;
 assign M2_out = nRES ? M2 : 1'hZ;
@@ -126,194 +126,194 @@ always @(posedge Clk) begin
          if ( W4016 )   OUTR1[2:0] <= DB[2:0];
 	 if ( ~nACLK2 ) OUTR[2:0]  <= OUTR1[2:0];
                       end
-							 
+ 
 // Internal modules
 CDIV MOD_CDIV(
-  Clk,			          
-  Reset,		          
-  PAL,                 
-  PHI2,                
-  ACLK1,           
-  nACLK2,          
-  PHI0,                
-  M2              
+  Clk,
+  Reset,
+  PAL,
+  PHI2,
+  ACLK1,
+  nACLK2,
+  PHI0,
+  M2
 );
 
 MOS6502_WBCD MOD_MOS6502_WBCD(
-  Clk,               
-  PHI0,              
-  1'b1,                  // SO              		
-  nNMI,              
-  ~( INT | ~nIRQ_EXT ),  // nIRQ            
-  nRES,              
-  RDY,               	
-  DBIN[7:0],          
-  PHI1,             
-  PHI2,             
-  RW,               
-  DB[7:0],        
-  CPU_A[15:0],          
+  Clk,
+  PHI0,
+  1'b1,                  // SO
+  nNMI,
+  ~( INT | ~nIRQ_EXT ),  // nIRQ   
+  nRES,
+  RDY,	
+  DBIN[7:0],
+  PHI1,
+  PHI2,
+  RW,
+  DB[7:0],
+  CPU_A[15:0],
   SYNC	                 // NC     
 );
 
 REG_SEL MOD_REG_SEL(
-  PHI1,			  			   
-  RW,          
-  ADR[4:0],      
+  PHI1,
+  RW,
+  ADR[4:0],
   CPU_A[15:5],
-  W4000,        
-  W4001,        
-  W4002,       
-  W4003,        
-  W4004,        
-  W4005,       
-  W4006,        
-  W4007,        
-  W4008,       
-  W400A,        
-  W400B,       
-  W400C,        
-  W400E,        
-  W400F,        
-  W4010,        
-  W4011,        
-  W4012,        
-  W4013,        
-  W4014,        
-  W4015,        
-  W4016,        
-  W4017,        
-  nR4015,       
-  nR4016,       
-  nR4017        
+  W4000,
+  W4001,
+  W4002,
+  W4003,
+  W4004,
+  W4005,
+  W4006,
+  W4007,
+  W4008,
+  W400A,
+  W400B,
+  W400C,
+  W400E,
+  W400F,
+  W4010,
+  W4011,
+  W4012,
+  W4013,
+  W4014,
+  W4015,
+  W4016,
+  W4017,
+  nR4015,
+  nR4016,
+  nR4017 
 );
 
 LFO MOD_LFO(
-  Clk,			  
-  PHI1,             
-  ACLK1,	
+  Clk,
+  PHI1,
+  ACLK1,
   nACLK2,
-  DB[7:0],      
-  W4017,        
-  Reset,		  
-  nR4015,       
-  DMC_INT,      
-  PAL,		     
-  nLFO1,       
-  nLFO2,       
-  INT,         
-  R4015DB[6]             
+  DB[7:0],
+  W4017,
+  Reset,
+  nR4015,
+  DMC_INT,
+  PAL,
+  nLFO1,
+  nLFO2,
+  INT,
+  R4015DB[6]
 );
 
 SQUARE_CHANNEL MOD_SQUARE_CHANNEL_A(
-  Clk,			 
-  ACLK1,	
-  nACLK2,		
-  Reset,		  
-  nLFO1,        
-  nLFO2,        
-  DB[7:0],		  
-  W4002,		  
-  W4003,		  
-  W4001,		  
-  NOSQA,        
-  W4000,		  		     
-  1'b1,		     
-  SQA_n_LC,     
-  SQA[3:0] 
+  Clk,
+  ACLK1,
+  nACLK2,
+  Reset,
+  nLFO1,
+  nLFO2,
+  DB[7:0],
+  W4002,
+  W4003,
+  W4001,
+  NOSQA,
+  W4000,
+  1'b1,
+  SQA_n_LC,
+  SQA[3:0]
 );
 
 SQUARE_CHANNEL MOD_SQUARE_CHANNEL_B(
-  Clk,			 
-  ACLK1,	
-  nACLK2,		
-  Reset,		  
-  nLFO1,        
-  nLFO2,        
-  DB[7:0],		  
-  W4006,		  
-  W4007,		  
-  W4005,		  
-  NOSQB,        
-  W4004,		  		     
-  1'b0,		     
-  SQB_n_LC,     
-  SQB[3:0] 
+  Clk,
+  ACLK1,
+  nACLK2,
+  Reset,
+  nLFO1,
+  nLFO2,
+  DB[7:0],
+  W4006,
+  W4007,
+  W4005,
+  NOSQB,
+  W4004,
+  1'b0,
+  SQB_n_LC,
+  SQB[3:0]
 );
 
 TRIANGLE_CHANNEL MOD_TRIANGLE_CHANNEL(
-  Clk,			  
-  PHI1,        
-  ACLK1,	    		
-  Reset,		 
-  DB[7:0],		 
-  W400A,		  
-  W400B,		  
-  W4008,		  
-  nLFO1,        		    
-  NOTRI,		 
-  TRIA[3:0],   
-  TRI_n_LC     
+  Clk,
+  PHI1,
+  ACLK1,
+  Reset,
+  DB[7:0],
+  W400A,
+  W400B,
+  W4008,
+  nLFO1,	    
+  NOTRI,
+  TRIA[3:0],
+  TRI_n_LC
 );
 
 NOISE_CHANNEL MOD_NOISE_CHANNEL(
-  Clk,			  
-  ACLK1,        
-  nACLK2,	    
-  PAL,          		
-  Reset,		  
-  DB[7:0],		  
-  W400C,		  
-  W400E,		  
-  W400F,		  
-  NORND,		   
-  nLFO1,       		     
-  RND_n_LC,    
-  RND[3:0]     
+  Clk,
+  ACLK1,
+  nACLK2,
+  PAL,
+  Reset,
+  DB[7:0],
+  W400C,
+  W400E,
+  W400F,
+  NORND,
+  nLFO1,
+  RND_n_LC,
+  RND[3:0]
 );
 
 DPCM_CHANNEL MOD_DPCM_CHANNEL(
-  Clk,			   
-  PHI1,          
-  ACLK1,         
-  nACLK2,	       
-  Reset,		   
-  PAL,            	
-  W4010,		    
-  W4011,		    
-  W4012,		    
-  W4013,		    
-  W4015,		    
-  DB[7:0],		      
-  RW,             		       
-  DMC[6:0],      
-  DMC_INT,       
-  nDMC_AB,   
-  DMCRDY,        
-  RUNDMC,    
-  R4015DB[4],     
-  R4015DB[7],   
+  Clk,
+  PHI1,
+  ACLK1,
+  nACLK2,
+  Reset,
+  PAL,
+  W4010,
+  W4011,
+  W4012,
+  W4013,
+  W4015,
+  DB[7:0],
+  RW,
+  DMC[6:0],
+  DMC_INT,
+  nDMC_AB,
+  DMCRDY,
+  RUNDMC,
+  R4015DB[4],
+  R4015DB[7],
   DMC_A[14:0]
 );
 
 SPRITE_DMA MOD_SPRITE_DMA(
-  Clk,			    
+  Clk,	    
   PHI1,
-  PHI2,   
-  ACLK1,           
-  nACLK2,	       	
-  Reset,		     
-  W4014,		     
-  RW,		        
-  DB[7:0],		    
-  DMCRDY,		     
-  RUNDMC,		     
-  nDMC_AB,         
-  CPU_A[15:0],     
-  DMC_A[14:0],         
-  RDY,            
-  ADR[15:0],      
-  RnW               
+  PHI2,
+  ACLK1,
+  nACLK2,
+  Reset,
+  W4014,
+  RW,
+  DB[7:0],
+  DMCRDY,
+  RUNDMC,
+  nDMC_AB,
+  CPU_A[15:0],
+  DMC_A[14:0],
+  RDY,
+  ADR[15:0],
+  RnW
 );
 
 LENGTH_TABLE MOD_LENGTH_TABLE(
@@ -323,63 +323,63 @@ LENGTH_TABLE MOD_LENGTH_TABLE(
 );
 
 LENGTH_COUNTER LENGTH_COUNTER_SQA(
-  Clk,               
+  Clk,
   ACLK1,
-  nACLK2,	
-  SQA_n_LC,              	
-  nLFO2,              
-  Reset,              
-  LC[7:0],           
-  W4003,             
-  DB[0],                   
-  W4015,              
-  NOSQA,             
-  R4015DB[0]            
+  nACLK2,
+  SQA_n_LC,
+  nLFO2,
+  Reset,
+  LC[7:0],
+  W4003,
+  DB[0],
+  W4015,
+  NOSQA,     
+  R4015DB[0]  
 );
 
 LENGTH_COUNTER LENGTH_COUNTER_SQB(
-  Clk,               
+  Clk,         
   ACLK1,
-  nACLK2,	
-  SQB_n_LC,              	
-  nLFO2,              
-  Reset,              
-  LC[7:0],           
-  W4007,             
-  DB[1],                   
-  W4015,              
-  NOSQB,             
-  R4015DB[1]            
+  nACLK2,
+  SQB_n_LC,
+  nLFO2,
+  Reset, 
+  LC[7:0],
+  W4007,
+  DB[1],      
+  W4015, 
+  NOSQB,
+  R4015DB[1]        
 );
 
 LENGTH_COUNTER LENGTH_COUNTER_TRI(
-  Clk,               
+  Clk,
   ACLK1,
-  nACLK2,	
-  TRI_n_LC,              	
-  nLFO2,              
-  Reset,              
-  LC[7:0],           
-  W400B,             
-  DB[2],                   
-  W4015,              
-  NOTRI,             
-  R4015DB[2]  
+  nACLK2,
+  TRI_n_LC,	
+  nLFO2,
+  Reset,
+  LC[7:0],
+  W400B,
+  DB[2],
+  W4015,
+  NOTRI,
+  R4015DB[2]
 );
 
 LENGTH_COUNTER LENGTH_COUNTER_RND(
-  Clk,               
+  Clk,
   ACLK1,
-  nACLK2,	
-  RND_n_LC,              	
-  nLFO2,              
-  Reset,              
-  LC[7:0],           
-  W400F,             
-  DB[3],                   
-  W4015,              
-  NORND,             
-  R4015DB[3]  
+  nACLK2,
+  RND_n_LC,
+  nLFO2,
+  Reset,
+  LC[7:0],
+  W400F,
+  DB[3],
+  W4015,
+  NORND,
+  R4015DB[3]
 );
 
 // End of module 2A03(7)
@@ -391,14 +391,14 @@ endmodule
 module CDIV(
   // Clocks
   input	Clk,		       // Clock
-  //Inputs	
-  input	Reset,		       // Reset signal  
+  //Inputs
+  input	Reset,		       // Reset signal
   input PAL,                   // PAL mode
   input PHI2,                  // Phase PHI2 CPU
   // Outputs
   output ACLK1,                // Phase  1 APU output
   output nACLK2,               // Phase /2 APU output
-  output PHI0,                 // Phase PHI0 CPU 
+  output PHI0,                 // Phase PHI0 CPU
   output M2                    // Output M2
 );
 // Variables
@@ -425,19 +425,19 @@ always @(posedge Clk) begin
        DIV7  <= PHI0 & PAL ;
        if ( ~PHI2) DIVACLK1 <= ~( Reset | DIVACLK2 );
        if (  PHI2) DIVACLK2 <= DIVACLK1;
-                       end							  
+                       end				  
 always @(negedge Clk) begin
        DIVM2 <= DIV2 & LOCK;
-                      end								  
-// End of the clock divider module 
-endmodule 
+                      end					  
+// End of the clock divider module
+endmodule
  
 //===============================================================================================
 // Register Operations Decoder Module
 //===============================================================================================
 module REG_SEL(
   // Clocks
-  input	PHI1,	       // Phase PHI1 CPU 
+  input	PHI1,	       // Phase PHI1 CPU
   //Inputs
   input	RW,            // CPU read/write
   input [4:0]ADR,      // APU address space
@@ -476,7 +476,7 @@ assign REGRD = ~RW | CPU_A[5] | CPU_A[6] | CPU_A[7] | CPU_A[8] | CPU_A[9] | CPU_
 assign REGWR =  RW | CPU_A[5] | CPU_A[6] | CPU_A[7] | CPU_A[8] | CPU_A[9] | CPU_A[10] | CPU_A[11] | CPU_A[12] | CPU_A[13] | ~CPU_A[14] | CPU_A[15];
 //write port decoder
 assign  W4000 = ~( PHI1 | ( REGWR |  ADR[0] |  ADR[1] |  ADR[2] |  ADR[3] |  ADR[4]));
-assign  W4001 = ~( PHI1 | ( REGWR | ~ADR[0] |  ADR[1] |  ADR[2] |  ADR[3] |  ADR[4]));	
+assign  W4001 = ~( PHI1 | ( REGWR | ~ADR[0] |  ADR[1] |  ADR[2] |  ADR[3] |  ADR[4]));
 assign  W4002 = ~( PHI1 | ( REGWR |  ADR[0] | ~ADR[1] |  ADR[2] |  ADR[3] |  ADR[4]));
 assign  W4003 = ~( PHI1 | ( REGWR | ~ADR[0] | ~ADR[1] |  ADR[2] |  ADR[3] |  ADR[4]));
 assign  W4004 = ~( PHI1 | ( REGWR |  ADR[0] |  ADR[1] | ~ADR[2] |  ADR[3] |  ADR[4]));
@@ -502,7 +502,7 @@ assign nR4015 =   REGRD | ~ADR[0] |  ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4] ;
 assign nR4016 =   REGRD |  ADR[0] | ~ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4] ;
 assign nR4017 =   REGRD | ~ADR[0] | ~ADR[1] | ~ADR[2] |  ADR[3] | ~ADR[4] ;
 // End of register decoder module
-endmodule	
+endmodule
 
 //===============================================================================================
 // Low Frequency Oscillator module (LFO)
@@ -510,10 +510,10 @@ endmodule
 module LFO(
   // Clocks
   input	Clk,	     // Clock
-  input PHI1,        // Phase PHI1 CPU    
+  input PHI1,        // Phase PHI1 CPU 
   input	ACLK1,	     // Phase  1 APU
   input	nACLK2,      // Phase /2 APU
-  //Inputs 
+  //Inputs
   input [7:0]DB,      // Data bus
   input W4017,        // Port $W4017
   input	Reset,	      // Reset signal
@@ -524,7 +524,7 @@ module LFO(
   output nLFO1,       // Low Frequency Oscillator output /LFO1
   output nLFO2,       // Low Frequency Oscillator output /LFO2
   output INT,         // APU interrupt output
-  output DB_OUT       // LFO Interrupt Flag Data Output       
+  output DB_OUT       // LFO Interrupt Flag Data Output  
 );
 // Variables
 reg [14:0]LFSR1;
@@ -534,12 +534,12 @@ reg IRQDIS;
 reg CLEAR_FF;
 reg CLEAR_LATCH;
 reg MODE_LATCH;
-reg INT_FLAG_FF;
+reg INT_DFF;
 reg INT_LATCH;
 // Combinatorics
 //LFSR Control
 wire LFSR_IN;
-assign LFSR_IN = ~(( SOUT[13] & SOUT[14] ) | ~( SOUT[13] | SOUT[14] | PLA[5] )); //
+assign LFSR_IN = ~(( SOUT[13] & SOUT[14] ) | ~( SOUT[13] | SOUT[14] | PLA[5] ));
 wire LFSTEP;
 wire LFRELOAD;
 assign LFSTEP   = ~( nACLK2 |  ( PLA[4] | PLA[3] | ~CLEAR_LATCH ));
@@ -549,41 +549,44 @@ wire [5:0]PLA;
 wire [4:0]PAL_PLA;
 wire [4:0]NTSC_PLA;
 // PLA mode multiplexer
-assign PLA[4:0] = PAL ? PAL_PLA[4:0] : NTSC_PLA[4:0];    
-assign PLA[5] = ~( | SOUT[14:0]) ;                       // NOR from all LFSR outputs, LFSR null protection
-// NTSC PLA 
+assign PLA[4:0] = PAL ? PAL_PLA[4:0] : NTSC_PLA[4:0];
+assign PLA[5] = ~( | SOUT[14:0]) ;                   // NOR from all LFSR outputs, LFSR null protection
+// NTSC PLA
 assign NTSC_PLA[4] = ~( ~SOUT[0]|  SOUT[1]| ~SOUT[2]|  SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]| ~SOUT[7]| ~SOUT[8]|  SOUT[9]|  SOUT[10]|  SOUT[11]| ~SOUT[12]| ~SOUT[13]| ~SOUT[14]);
 assign NTSC_PLA[3] = ~( ~SOUT[0]| ~SOUT[1]| ~SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14] | ~MODE_LATCH );
 assign NTSC_PLA[2] = ~( ~SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]| ~SOUT[4]|  SOUT[5]| ~SOUT[6]| ~SOUT[7]|  SOUT[8]|  SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]| ~SOUT[13]|  SOUT[14]);
 assign NTSC_PLA[1] = ~( ~SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]| ~SOUT[10]|  SOUT[11]| ~SOUT[12]| ~SOUT[13]|  SOUT[14]);
 assign NTSC_PLA[0] = ~( ~SOUT[0]|  SOUT[1]|  SOUT[2]|  SOUT[3]|  SOUT[4]| ~SOUT[5]| ~SOUT[6]|  SOUT[7]|  SOUT[8]|  SOUT[9]|  SOUT[10]|  SOUT[11]| ~SOUT[12]|  SOUT[13]|  SOUT[14]);
-// PAL PLA 
+// PAL PLA
 assign  PAL_PLA[4] = ~(~SOUT[0]|  SOUT[1]| ~SOUT[2]| ~SOUT[3]| ~SOUT[4]| ~SOUT[5]| ~SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]|  SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]);
 assign  PAL_PLA[3] = ~( SOUT[0]|  SOUT[1]|  SOUT[2]| ~SOUT[3]|  SOUT[4]| ~SOUT[5]| ~SOUT[6]| ~SOUT[7]| ~SOUT[8]| ~SOUT[9]|  SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14] | ~MODE_LATCH );
 assign  PAL_PLA[2] = ~( SOUT[0]| ~SOUT[1]|  SOUT[2]| ~SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]|  SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]| ~SOUT[13]|  SOUT[14]);
 assign  PAL_PLA[1] = ~( SOUT[0]|  SOUT[1]|  SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]|  SOUT[11]|  SOUT[12]| ~SOUT[13]| ~SOUT[14]);
 assign  PAL_PLA[0] = ~( SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]| ~SOUT[4]|  SOUT[5]| ~SOUT[6]| ~SOUT[7]| ~SOUT[8]| ~SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]);
 wire Z2;
-assign Z2 = ~( MODE_LATCH | CLEAR_LATCH ); 
+assign Z2 = ~( MODE_LATCH | CLEAR_LATCH );
+//LFO INT RS_FF
+wire INT_FF, nINT_FF;
+assign  INT_FF = ~( Reset | IRQDIS | ~( PHI1 | nR4015 ) | INT_DFF );
+assign nINT_FF = ~(( PLA[3] & ~MODE5 ) | INT_FF );
 //LFO Output
 assign nLFO1 = nACLK2 | ~( PLA[4] | PLA[3] | PLA[2] | PLA[1] | PLA[0] | Z2 );
 assign nLFO2 = nACLK2 | ~( PLA[4] | PLA[3] | PLA[1] | Z2 );
-assign INT = DMC_INT | INT_FLAG_FF;
+assign INT = DMC_INT | INT_FF;
 assign DB_OUT = INT_LATCH;
 // Logics
 always @(posedge Clk) begin
        if ( W4017 | Reset )            CLEAR_FF <= 1'b1;
   else if ( ~( nACLK2 | CLEAR_LATCH )) CLEAR_FF <= 1'b0;
-       if ( Reset | IRQDIS | ~( PHI1 | nR4015 )) INT_FLAG_FF <= 1'b0;
-  else if ( PLA[3] & ~MODE5 )                    INT_FLAG_FF <= 1'b1;
+       INT_DFF <= nINT_FF;
        if ( LFRELOAD ) LFSR1[14:0] <= 15'h7FFF;
-  else if ( LFSTEP )   LFSR1[14:0] <= { SOUT[13:0], LFSR_IN }; 
+  else if ( LFSTEP )   LFSR1[14:0] <= { SOUT[13:0], LFSR_IN };
        if ( W4017 ) { MODE5, IRQDIS } <= DB[7:6];
        if ( ACLK1 ) begin
        SOUT[14:0]  <= LFSR1[14:0];
        CLEAR_LATCH <= ~CLEAR_FF;
-       MODE_LATCH  <= ~MODE5; 
-       INT_LATCH   <= INT_FLAG_FF;
+       MODE_LATCH  <= ~MODE5;
+       INT_LATCH   <= ~nINT_FF;
 		    end
                       end
 // Low Frequency Oscillator module End
@@ -597,7 +600,7 @@ module SQUARE_CHANNEL(
   input	Clk,	       // Clock
   input	ACLK1,	       // Phase  1 APU
   input	nACLK2,        // Phase /2 APU
-  //Inputs 		
+  //Inputs
   input	Reset,	       // Reset signal
   input nLFO1,         // Low Frequency Oscillator /LFO1
   input nLFO2,         // Low Frequency Oscillator /LFO2
@@ -608,7 +611,7 @@ module SQUARE_CHANNEL(
   input NOSQx,         // Suspend input from channel length counter
   input	W4000_4,       // Port $W4000(4)
   input	MODE,	       // Adder input carry mode
-  // Outputs 
+  // Outputs
   output SQ_n_LC,      // HALT output (channel length counter disable flag)
   output [3:0]SQ_OUT   // Channel output
 );
@@ -617,8 +620,8 @@ reg [10:0]F;        // Frequency setting register
 reg [10:0]SUMR;     // Adder output value latch
 reg [2:0]SR;        // SWEEP Initial Frequency Shift Magnitude Register
 reg DEC;            // SWEEP Frequency Increment Direction Register
-reg [2:0]P;         // SWEEP change period	
-reg SWDIS;          // SWEEP Enable Register	
+reg [2:0]P;         // SWEEP change period
+reg SWDIS;          // SWEEP Enable Register
 reg [7:0]SWEEP_CTR; // SWEEP control register
 reg [1:0]DT;        // Duty register
 reg SWRELOAD_FF;    // SWEEP counter reload trigger
@@ -630,7 +633,7 @@ reg [2:0]DUCNT;     // Duty counter
 reg [2:0]DUCNT2;    // Duty counter
 reg [2:0]SWCNT;     // Period counter SWEEP
 reg [2:0]SWCNT2;    // Period counter SWEEP
-reg SQR;            // Промежуточный латч выхода 
+reg SQR;            // Промежуточный латч выхода
 // Combinatorics
 // BARREL SHIFTER
 wire [10:0]BS;      // Input  BARREL SHIFTER
@@ -639,21 +642,21 @@ assign BS[10:0] = DEC ?  ~F[10:0] : F[10:0];
 wire [10:0]ST1,ST2; // Two intermediate 11-bit shifter buses
 //First stage of the shifter
 assign ST1  = SR[0] ? {DEC,BS[10:1]} : BS;
-//Second stage of the shifter  
+//Second stage of the shifter
 assign ST2  = SR[1] ? {DEC,DEC,ST1[10:2]} : ST1;
-//The third stage of the shifter 
+//The third stage of the shifter
 assign   S  = SR[2] ? {DEC,DEC,DEC,DEC,ST2[10:4]} : ST2;
 // Adder
 wire [10:0]SUM;
 assign SUM[10:0] = ( F[10:0] ^ S[10:0] ) ^ { ADDCARRY[9:0], ADD_CINP };
 wire [10:0]ADDCARRY;                                                                                             // Adder carry bus
 assign ADDCARRY[10:0] = ( F[10:0] & S[10:0] ) | (( F[10:0] ^ S[10:0] ) & { ADDCARRY[9:0], ADD_CINP } );
-wire ADD_CINP; 
+wire ADD_CINP;
 assign ADD_CINP = MODE ? 1'b0 : DEC; // SWEEP Adder Input Carry Mode Multiplexer
 // SWEEP
 wire DO_SWEEP;
 assign DO_SWEEP = ~( ~SCO | NOSQx | nLFO2 | ~( | SR[2:0] ) | ~SWDIS | ~( | F[10:2] ) | ( ~DEC & ADDCARRY[10] ));  // Checking the conditions for SWEEP mode activation
-//Duty control 
+//Duty control
 wire [3:0]DUTY;
 assign DUTY[0] = ~( ~DUCNT[0] | ~( DUCNT[1] & DUCNT[2] ));
 assign DUTY[1] =     DUCNT[1] &   DUCNT[2];
@@ -677,7 +680,7 @@ assign DUCout[2:0]  = ~DUCNT[2:0]  & { DUCout[1:0], FQCout[10] };
 wire [2:0]SWCout;                                                            // Length counter overflow bus SWEEP
 assign SWCout[2:0]  = ~SWCNT[2:0]  & { SWCout[1:0], 1'b1 };
 //Internal envelope generator module
-ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W4000_4, ~SQR , W4003_7, nLFO1, SQ_n_LC, SQ_OUT[3:0] ); 
+ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W4000_4, ~SQR , W4003_7, nLFO1, SQ_n_LC, SQ_OUT[3:0] );
 // Logics
 always @(posedge Clk) begin
                  if ( ~( nLFO2 | SWRELOAD_LATCH )) SWRELOAD_FF <= 1'b0;
@@ -688,15 +691,15 @@ always @(posedge Clk) begin
 		 SWRELOAD_LATCH <= ~SWRELOAD_FF;
 		 SUMR[10:0]     <= SUM[10:0];
 		 SQR            <= ~( ~DUTY_MUX | ( ~DEC & ADDCARRY[10] ) | NOSQx | ~( | F[10:2] ));
-	         FQCNT2[10:0]   <= FQCNT[10:0] ^ { FQCout[9:0], 1'b1 }; 
+	         FQCNT2[10:0]   <= FQCNT[10:0] ^ { FQCout[9:0], 1'b1 };
 	         DUCNT2[2:0]    <= DUCNT[2:0]  ^ { DUCout[1:0], FQCout[10] };
 		 SWCNT2[2:0]    <= SWCNT[2:0]  ^ { SWCout[1:0], 1'b1 };
-		              end  
+		              end
 		 if ( W4002_6 | DO_SWEEP ) F[7:0]  <= (( { 8 { DO_SWEEP }} & SUMR[7:0]  ) | ( { 8 { W4002_6 }} & DB[7:0] ));
-		 if ( W4003_7 | DO_SWEEP ) F[10:8] <= (( { 3 { DO_SWEEP }} & SUMR[10:8] ) | ( { 3 { W4003_7 }} & DB[2:0] ));							  
+		 if ( W4003_7 | DO_SWEEP ) F[10:8] <= (( { 3 { DO_SWEEP }} & SUMR[10:8] ) | ( { 3 { W4003_7 }} & DB[2:0] ));
 		 if ( W4001_5 ) { SWDIS, P[2:0], DEC, SR[2:0] } <= DB[7:0];
-                 if ( W4000_4 ) DT[1:0]        <= DB[7:6];		 
-                 if ( FQSTEP | FQLOAD | Reset ) FQCNT[10:0] <= ( Reset ? 11'h000 : FQLOAD ? F[10:0] : FQCNT2[10:0] );	 
+                 if ( W4000_4 ) DT[1:0]        <= DB[7:6];
+                 if ( FQSTEP | FQLOAD | Reset ) FQCNT[10:0] <= ( Reset ? 11'h000 : FQLOAD ? F[10:0] : FQCNT2[10:0] );
 		 if ( Reset  | W4003_7 ) DUCNT[2:0] <= 3'h0;
             else if ( FQLOAD ) DUCNT[2:0] <= DUCNT2[2:0];
                  if ( SWSTEP | SWLOAD | Reset )  SWCNT[2:0] <= ( Reset ? 3'h0 : SWLOAD ? P[2:0] : SWCNT2[2:0] );
@@ -712,7 +715,7 @@ module TRIANGLE_CHANNEL(
   input	Clk,	          // Clock
   input	PHI1,             // Phase PHI1 CPU 
   input	ACLK1,	          // Phase 1 APU
-  //Inputs 		
+  //Inputs
   input	Reset,		  // Reset signal
   input [7:0]DB,          // Data bus
   input	W400A,		  // Port $W400A
@@ -720,14 +723,14 @@ module TRIANGLE_CHANNEL(
   input	W4008,		  // Port $W4008
   input nLFO1,            // Low Frequency Oscillator /LFO1
   input	NOTRI,		  // Suspend input from channel length counter
-  // Outputs 
+  // Outputs
   output [3:0]TRIA,       // Channel output
   output TRI_n_LC         // HALT output (channel length counter disable flag)
 );
 // Variables
-reg [10:0]FR;       // Frequency setting register 
-reg [6:0]LIN;       // Linear Counter Control Register 
-reg TRILC;          // Length Counter Control Register	
+reg [10:0]FR;       // Frequency setting register
+reg [6:0]LIN;       // Linear Counter Control Register
+reg TRILC;          // Length Counter Control Register
 reg FCOLATCH;       // Frequency counter overflow circuit latch
 reg TCOLATCH;       // Linear counter overflow circuit latch
 reg RELOAD;         // Linear counter reload circuit latch
@@ -753,12 +756,12 @@ assign TTSTEP =  ~( PHI1 | TLCout[6] | NOTRI | ~FCOLATCH );
 wire [10:0]TFCout;
 assign TFCout[10:0] = ~TFCNT[10:0] & { TFCout[9:0], 1'b1 };
 wire [6:0]TLCout;
-assign TLCout[6:0]  = ~TLCNT[6:0]  & { TLCout[5:0], 1'b1 }; 
+assign TLCout[6:0]  = ~TLCNT[6:0]  & { TLCout[5:0], 1'b1 };
 wire [4:0]TTCout;
 assign TTCout[4:0]  =  TTCNT[4:0]  & { TTCout[3:0], 1'b1 };
 // Output
 assign TRIA[3:0] = ~( TTCNT[3:0] ^ { 4 { TTCNT[4] }});
-assign TRI_n_LC = ~TRILC; 
+assign TRI_n_LC = ~TRILC;
 // Logics
 always @(posedge Clk) begin
                  if ( ~( nLFO1 | TRILC | ~RELOAD )) RELOAD_FF <= 1'b0;
@@ -766,19 +769,19 @@ always @(posedge Clk) begin
 		 if ( PHI1 ) begin
                  FCOLATCH <= TFCout[10];
                  TFCNT2[10:0] <=  TFCNT[10:0] ^ { TFCout[9:0], 1'b1 };
-		 TTCNT2[4:0]  <=  TTCNT[4:0]  ^ { TTCout[3:0], 1'b1 }; 
+		 TTCNT2[4:0]  <=  TTCNT[4:0]  ^ { TTCout[3:0], 1'b1 };
                              end
 		 if ( W400A ) FR[7:0]  <= DB[7:0];
-		 if ( W400B ) FR[10:8] <= DB[2:0];		 				 
+		 if ( W400B ) FR[10:8] <= DB[2:0];
 		 if ( W4008 ) {TRILC, LIN[6:0]} <= DB[7:0];
-		 if ( Reset | TFLOAD | TFSTEP ) TFCNT[10:0] <= ( Reset ? 11'h000 : TFLOAD ? FR[10:0] : TFCNT2[10:0] );  //
-		 if ( Reset | TLLOAD | TLSTEP ) TLCNT[6:0]  <= ( Reset ? 7'h00   : TLLOAD ? LIN[6:0] : TLCNT2[6:0]  );  //
-		 if ( Reset | TTSTEP ) TTCNT[4:0] <= ( Reset ? 5'h00 : TTCNT2[4:0] );				 
+		 if ( Reset | TFLOAD | TFSTEP ) TFCNT[10:0] <= ( Reset ? 11'h000 : TFLOAD ? FR[10:0] : TFCNT2[10:0] );
+		 if ( Reset | TLLOAD | TLSTEP ) TLCNT[6:0]  <= ( Reset ? 7'h00   : TLLOAD ? LIN[6:0] : TLCNT2[6:0]  );
+		 if ( Reset | TTSTEP ) TTCNT[4:0] <= ( Reset ? 5'h00 : TTCNT2[4:0] );			 
 		 if ( ACLK1 ) begin
                  TCOLATCH    <= TLCout[6];
 		 RELOAD      <= RELOAD_FF;
 		 TLCNT2[6:0] <= TLCNT[6:0] ^ { TLCout[5:0], 1'b1 };
-                              end		 
+                              end 
                       end
 // End of triangular channel module
 endmodule
@@ -792,7 +795,7 @@ module NOISE_CHANNEL(
   input	ACLK1,            // Phase  1 APU
   input	nACLK2,	          // Phase /2 APU
   //Inputs
-  input PAL,              // PAL mode 		
+  input PAL,              // PAL mode	
   input	Reset,		  // Reset signal
   input [7:0]DB,          // Data bus
   input	W400C,		  // Port $W400C
@@ -806,13 +809,13 @@ module NOISE_CHANNEL(
 );
 // Variables
 reg [3:0]F;          // Frequency setting register
-reg RMODE;           // Periodic / non-periodic noise	
+reg RMODE;           // Periodic / non-periodic noise
 reg [10:0]SOUT;      // FREQ LFSR
 reg [10:0]NLFSR1;    // FREQ LFSR
 reg [14:0]RSOUT;     // RANDOM LFSR
 reg [14:0]RLFSR1;    // RANDOM LFSR
 // Combinatorics
-// FREQ LFSR Control 
+// FREQ LFSR Control
 wire NPLAZ;
 assign NPLAZ    = ~( | SOUT[10:0] );                   // NOR from all LFSR outputs (LFSR null protection)
 wire NPLALS;
@@ -823,7 +826,7 @@ wire   NFSTEP;
 assign NFSTEP   = ~( nACLK2 | ~( Reset | NPLALS ));
 wire   NFLOAD;
 assign NFLOAD   = ~( nACLK2 |  ( Reset | NPLALS ));
-// RANDOM LFSR Control 
+// RANDOM LFSR Control
 wire RLFSR_IN;
 assign RLFSR_IN = ~(( RMODE_MUX & RSOUT[14] ) | ~( NRPLA | RMODE_MUX | RSOUT[14] ));
 wire NRPLA;
@@ -837,15 +840,15 @@ NOISE_TABLE MOD_NOISE_TABLE ( { PAL, F[3:0] }, Clk, NNF[10:0] );
 ENVELOPE_GEN MOD_ENVELOPE_GEN( Clk, ACLK1, Reset, DB[7:0], W400C, ( NORND | RSOUT[14] ), W400F, nLFO1, RND_n_LC, RND[3:0] );
 // Logics
 always @(posedge Clk) begin
-       if ( Reset ) {RMODE, F[3:0]} <= 5'h0 ; 
-  else if ( W400E ) {RMODE, F[3:0]} <= { DB[7], DB[3:0] };		 
+       if ( Reset ) {RMODE, F[3:0]} <= 5'h0 ;
+  else if ( W400E ) {RMODE, F[3:0]} <= { DB[7], DB[3:0] };
        if ( ACLK1 ) begin
        SOUT[10:0]  <= NLFSR1[10:0];
        RSOUT[14:0] <= RLFSR1[14:0];
                     end
-       if ( NFLOAD ) NLFSR1[10:0] <= NNF[10:0] ; 
+       if ( NFLOAD ) NLFSR1[10:0] <= NNF[10:0] ;
   else if ( NFSTEP ) NLFSR1[10:0] <= { SOUT[9:0], NLFSR_IN};
-       if ( NFLOAD ) RLFSR1[14:0] <= { RSOUT[13:0], RLFSR_IN };			
+       if ( NFLOAD ) RLFSR1[14:0] <= { RSOUT[13:0], RLFSR_IN };
                        end
 // End of noise channel module
 endmodule
@@ -856,18 +859,18 @@ endmodule
 module DPCM_CHANNEL(
   // Clocks
   input	Clk,		   // Clock
-  input PHI1,              // Phase PHI1 CPU 
+  input PHI1,              // Phase PHI1 CPU
   input	ACLK1,             // Phase  1 APU
   input	nACLK2,	           // Phase /2 APU
   //Inputs
   input	Reset,		   // Reset signal
-  input PAL,               // PAL mode 		
+  input PAL,               // PAL mode
   input	W4010,		   // Port $W4010
   input	W4011,		   // Port $W4011
   input	W4012,		   // Port $W4012
   input	W4013,		   // Port $W4013
   input	W4015,		   // Port $W4015
-  input [7:0]DB,	   // Data bus    
+  input [7:0]DB,	   // Data bus
   input RW,                // CPU Read/Write
   // Outputs
   output [6:0]DMC,         // DMC channel output
@@ -914,7 +917,7 @@ reg [11:0]DMCSLCNT1;     // Sample byte counter
 reg [14:0]DMC_A1;        // Sample byte address counter
 reg [5:0]DMC_OUT;        // Output up/down counter
 reg [5:0]DMC_OUT1;       // Output up/down counter
-// Combinatorics   
+// Combinatorics
 wire ED1;
 assign ED1 = ~( ~PCMDONE | ~SOUT_LATCH | LOOP );
 wire PCMDONE;
@@ -923,11 +926,11 @@ assign PCMDONE = ~( nACLK2 | DMC_PCM_LATCH );
 wire DFPLAZ;
 assign DFPLAZ = ~( | DLFSROUT[8:0] );               // NOR from all FREQUENCY LFSR outputs (LFSR null protection)
 wire DFPLAF;
-assign DFPLAF =  ( | DLFSROUT[7:0] | ~DLFSROUT[8]); // OR from outputs (MSB inverse) FREQUENCY LFSR 
+assign DFPLAF =  ( | DLFSROUT[7:0] | ~DLFSROUT[8]); // OR from outputs (MSB inverse) FREQUENCY LFSR
 wire DLFSR_IN;
 assign DLFSR_IN = ~( Reset | ( DLFSROUT[4] & DLFSROUT[8] ) | ~( DFPLAZ | DLFSROUT[4] | DLFSROUT[8] ));
 wire   DFSTEP;
-assign DFSTEP  = ~( nACLK2 | ~( Reset | DFPLAF )); 
+assign DFSTEP  = ~( nACLK2 | ~( Reset | DFPLAF ));
 wire   DFLOAD;
 assign DFLOAD  = ~( nACLK2 |  ( Reset | DFPLAF ));
 //Control SAMPLE BIT COUNTER
@@ -950,8 +953,8 @@ assign DMSTEP = ~( ~DFLOAD | DOUT_LATCH | DMC_DMSTEP_LATCH );
 wire [5:0]DMCOCout;
 assign DMCOCout[5:0] = { DMCOCout[4:0], 1'b1 } & ( DMC_OUT[5:0] ^ { 6 { ~SHIFT_REG[0] }});     // BOUT = ~SHIFT_REG[0]
 //Controlling the sample shift register DMC_SHIFT_REG and the sample read buffer DMC_SAMPLE
-wire PCM;    // Strobe loading sample from data bus 
-assign PCM = ~( PHI1 | nDMC_AB ); 
+wire PCM;    // Strobe loading sample from data bus
+assign PCM = ~( PHI1 | nDMC_AB );
 wire BLOAD;
 wire BSTEP;
 assign BLOAD = ~( ~NOUT_LATCH | ~DFLOAD | ~DMC_STOP_LATCH );
@@ -972,10 +975,10 @@ always @(posedge Clk) begin
   else if ( ED1 )                    DMC_INT_FF <= 1'b1;
        if ( PCMDONE | Reset ) DMC_PCM_FF <= 1'b0;
   else if ( PCM )             DMC_PCM_FF <= 1'b1;
-       if ( BLOAD | Reset )  DMC_STOP_FF <= 1'b0; 
+       if ( BLOAD | Reset )  DMC_STOP_FF <= 1'b0;
   else if ( PCM )	     DMC_STOP_FF <= 1'b1;
        if ( ~( DMC_STOP_LATCH | ~NOUT_LATCH | ~DFLOAD ) | Reset ) DMC_STEP_FF <= 1'b0;
-  else if ( BLOAD )                                               DMC_STEP_FF <= 1'b1;	 
+  else if ( BLOAD )                                               DMC_STEP_FF <= 1'b1;
        if ( DMC_STOP_FF | ~EN_LATCH3 | Reset )              DMC_START_FF <= 1'b0;
   else if ( ~( DMC_STOP_FF | ~EN_LATCH3 | ~( ~PHI1 & RW ))) DMC_START_FF <= 1'b1;
        if ( ~nACLK2 )           nDMC_AB  <=  1'b1;
@@ -987,7 +990,7 @@ always @(posedge Clk) begin
        if ( W4012 ) DMC_ADR[7:0]  <=  DB[7:0];
        if ( W4013 ) DMC_LEN[7:0]  <=  DB[7:0];
        if ( PCM )    SAMPLE[7:0]  <=  DB[7:0];
-       if ( DFSTEP | DFLOAD ) DLFSR1[8:0]  <= ( DFLOAD ? LP[8:0] : { DLFSROUT[7:0], DLFSR_IN }); 
+       if ( DFSTEP | DFLOAD ) DLFSR1[8:0]  <= ( DFLOAD ? LP[8:0] : { DLFSROUT[7:0], DLFSR_IN });
        if ( DFLOAD | Reset ) DMCSBCNT[2:0] <= ( Reset  ? 3'b000  :  DMCSBCNT1[2:0] );
        if ( W4011 | DSTEP | Reset ) DMC_OUT[5:0]   <= ( Reset ? 6'h00 : W4011 ? DB[6:1] : DMC_OUT1[5:0] );
        if ( BSTEP | BLOAD | Reset ) SHIFT_REG[7:0] <= ( Reset ? 8'h00 : BLOAD ? SAMPLE[7:0] : { 1'b0, SHIFT_REG1[6:0] }); // 1'b1
@@ -1003,19 +1006,19 @@ always @(posedge Clk) begin
        DMC_DMSTEP_LATCH <= ~DMC_STEP_FF;
        RUNDMC           <=  RUN_LATCH;
        DLFSROUT[8:0]    <=  DLFSR1[8:0];
-       DMCSBCNT1[2:0]   <=  DMCSBCNT[2:0]  ^ { DMCSBCout[1:0], 1'b1 };       
-       NOUT_LATCH       <=  DMCSBCout[2];                                // Sample bit counter overflow latch  
-       DMCSLCNT1[11:0]  <=  DMCSLCNT[11:0] ^ { DMCSLCout[10:0], 1'b1 }; 
+       DMCSBCNT1[2:0]   <=  DMCSBCNT[2:0]  ^ { DMCSBCout[1:0], 1'b1 };
+       NOUT_LATCH       <=  DMCSBCout[2];                                // Sample bit counter overflow latch
+       DMCSLCNT1[11:0]  <=  DMCSLCNT[11:0] ^ { DMCSLCout[10:0], 1'b1 };
        SOUT_LATCH       <=  DMCSLCout[11];                               // Sample length counter overflow latch
-       DMC_A1[14:0]     <=  DMC_A[14:0]    ^ { DMCACout[13:0], 1'b1 } ; 
-       DMC_OUT1[5:0]    <=  DMC_OUT[5:0]   ^ { DMCOCout[4:0], 1'b1 };  
+       DMC_A1[14:0]     <=  DMC_A[14:0]    ^ { DMCACout[13:0], 1'b1 } ;
+       DMC_OUT1[5:0]    <=  DMC_OUT[5:0]   ^ { DMCOCout[4:0], 1'b1 };
        DOUT_LATCH       <=  DMCOCout[5];                                 // Output counter overflow latch
-       SHIFT_REG1[6:0]  <=  SHIFT_REG[7:1];             
+       SHIFT_REG1[6:0]  <=  SHIFT_REG[7:1];        
                     end
-       if ( ~nACLK2 ) begin 
+       if ( ~nACLK2 ) begin
 		 EN_LATCH2  <= ~EN_LATCH1;
 		 RUN_LATCH  <= DMC_START_FF;
-		      end						  
+		      end
                     end
 // End of Delta Modulation Channel module
 endmodule
@@ -1026,22 +1029,22 @@ endmodule
 module SPRITE_DMA(
   // Clocks
   input	Clk,	           // Clock
-  input PHI1,              // Phase PHI1 CPU 
-  input PHI2,              // Phase PHI2 CPU 
+  input PHI1,              // Phase PHI1 CPU
+  input PHI2,              // Phase PHI2 CPU
   input	ACLK1,             // Phase  1 APU
   input	nACLK2,	           // Phase /2 APU
-  //Inputs		
+  //Inputs
   input	Reset,		   // Reset signal
   input	W4014,		   // Port $W4014
   input	RW,		   // CPU Read/Write
   inout [7:0]DB,	   // Data bus
   input	DMCRDY,		   // Stopping the processor with the DMC circuit
-  input	RUNDMC,		   // Pause sprite DMA 
+  input	RUNDMC,		   // Pause sprite DMA
   input nDMC_AB,           // DMC address bus capture
   input [15:0]CPU_A,       // CPU address bus
   input [14:0]DMC_A,       // Delta modulation channel address bus
   // Outputs
-  output RDY,              // CPU suspend signal 
+  output RDY,              // CPU suspend signal
   output [15:0]ADR,        // External APU address bus
   output RnW               // External pin Read/Write
 );
@@ -1072,23 +1075,23 @@ assign DB[7:0] =  SPR_PPU ? SPRBUF[7:0] : 8'hZZ;
 assign ADR[15:0] = ~nDMC_AB ? {1'b1, DMC_A[14:0]} : SPR_PPU ? 16'h2004 : SPR_CPU ? { SPR_AD[7:0], SPRA[7:0] } : CPU_A[15:0];
 // Logics
 always @(posedge Clk) begin
-          if (   ACLK1 ) DIR_TOGGLE_FF <= 1'b1;     
-     else if ( ~nACLK2 ) DIR_TOGGLE_FF <= 1'b0;      
-	  if (( SPRE & SPRS) | Reset )       STOP_DMA_FF <= 1'b1; 
+          if (   ACLK1 ) DIR_TOGGLE_FF <= 1'b1;
+     else if ( ~nACLK2 ) DIR_TOGGLE_FF <= 1'b0;
+	  if (( SPRE & SPRS) | Reset )       STOP_DMA_FF <= 1'b1;
      else if ( ~( DO_SPR | ~( ~PHI1 & RW ))) STOP_DMA_FF <= 1'b0;
-          if ( NO_SPR | Reset ) START_DMA_FF <= 1'b0;	 
+          if ( NO_SPR | Reset ) START_DMA_FF <= 1'b0;
      else if ( W4014 )          START_DMA_FF <= 1'b1;
 	  if ( ~nACLK2 ) DO_SPR <= ~START_DMA_FF;
 	  if ( PHI2 ) SPRBUF[7:0] <= DB[7:0];
 	  if ( W4014 ) SPR_AD[7:0] <= DB[7:0];
-	  if ( SPRS | Reset ) SPRA[7:0] <= Reset ? 8'h00 : SPRA1[7:0];            
+	  if ( SPRS | Reset ) SPRA[7:0] <= Reset ? 8'h00 : SPRA1[7:0];
 	  if ( ACLK1 ) begin
 	  SPRE   <= SPRACout[7];
 	  NO_SPR <= ~STOP_DMA_FF;
 	  SPRA1[7:0] <= SPRA[7:0] ^ { SPRACout[6:0], 1'b1 };
                        end
                      end
-// End of sprite DMA module 
+// End of sprite DMA module
 endmodule
 
 //===============================================================================================
@@ -1099,45 +1102,45 @@ module LENGTH_COUNTER (
    input Clk,               // Clock
    input ACLK1,             // Phase  1 APU
    input nACLK2,	    // Phase /2 APU
-   // Inputs	
-   input HALT,              // Length counter disable flag input	
+   // Inputs
+   input HALT,              // Length counter disable flag input
    input nLFO2,             // Low Frequency Oscillator /LFO2
    input Reset,             // Reset signal
    input [7:0]LC,           // Table data bus length
    input W400x,             // Counter activation port
-   input DB_IN,             // Data bus      
+   input DB_IN,             // Data bus
    input W4015,             // Port W4015
    // Outputs
    output NOxxx,            // Channel disable output
    output DB_OUT            // Status flag output to data bus
 );
 // Variables
-reg [7:0]LCNT1;             // 
-reg [7:0]LCNT2;             // 
+reg [7:0]LCNT1;             //
+reg [7:0]LCNT2;             //
 reg ENABLE_FF;              //
 reg ENABLE_REG1;            //
 reg ENABLE_REG2;            //
 reg CARRY_LATCH;            //
-reg STEP_LATCH;             //             
+reg STEP_LATCH;             //      
 // Combinatorics
 wire LCSTEP;
 assign LCSTEP = ~( nLFO2 | STEP_LATCH );
 assign NOxxx = ~ENABLE_FF;
 assign DB_OUT = ENABLE_FF;
 wire [7:0]LCCout;
-assign LCCout[7:0] = ~LCNT1[7:0] & { LCCout[6:0], HALT };                                            
+assign LCCout[7:0] = ~LCNT1[7:0] & { LCCout[6:0], HALT };                                     
 // Logics
 always @(posedge Clk) begin
        if ( Reset | ( ~nACLK2 & ENABLE_REG2 ) | ( LCSTEP & CARRY_LATCH )) ENABLE_FF <= 1'b0;
-  else if ( W400x )  ENABLE_FF <= 1'b1;		 
+  else if ( W400x )  ENABLE_FF <= 1'b1; 
        if ( ACLK1 ) begin
        ENABLE_REG2 <= ~ENABLE_REG1;
        CARRY_LATCH <= LCCout[7];
        STEP_LATCH  <= ~ENABLE_FF;
        LCNT2[7:0]  <= ( LCNT1[7:0] ^ {LCCout[6:0], HALT} );
-		    end				  
-       if ( W4015 | Reset  )         ENABLE_REG1 <= (Reset) ? 1'b0  : DB_IN;                       
-       if ( W400x | LCSTEP | Reset ) LCNT1[7:0]  <= (Reset) ? 8'h00 : (W400x) ? LC[7:0] : LCNT2[7:0]; 
+		    end
+       if ( W4015 | Reset  )         ENABLE_REG1 <= (Reset) ? 1'b0  : DB_IN;
+       if ( W400x | LCSTEP | Reset ) LCNT1[7:0]  <= (Reset) ? 8'h00 : (W400x) ? LC[7:0] : LCNT2[7:0];
                       end
 // End of length counter module
 endmodule
@@ -1145,20 +1148,20 @@ endmodule
 //===============================================================================================
 // Envelope generator module
 //===============================================================================================
-module ENVELOPE_GEN( 
+module ENVELOPE_GEN(
    // Clocks
    input Clk,               // Clock
    input ACLK1,             // Phase 1 APU
-   // Inputs	
+   // Inputs
    input Reset,             // Reset signal
    input [7:0]DB,           // Data bus
    input W400x,             // Activation port
    input CH_IN,             // Channel data input
-   input W400xx,            // Activation port 2	
+   input W400xx,            // Activation port 2
    input nLFO1,             // Low Frequency Oscillator /LFO1
    // Outputs
    output CH_n_LC,          // Length counter disable flag output
-   output [3:0]V            // Channel Volume Data Bus 
+   output [3:0]V            // Channel Volume Data Bus
 );
 // Variables
 reg [3:0]DDCNT;
@@ -1167,9 +1170,9 @@ reg [3:0]ENV;
 reg [3:0]ENV2;
 reg [3:0]VOL;            // Volume control register
 reg ENVDIS;              // ENVELOPE Disable Register
-reg CH_LC;               // Length Counter Disable Flag Control Register	
+reg CH_LC;               // Length Counter Disable Flag Control Register
 reg ECO_LATCH;
-reg RELOAD_LATCH;        
+reg RELOAD_LATCH;
 reg RCO_LATCH;
 reg ENV_RELOAD_FF;       // ENV counter reset trigger
 // Combinatorics
@@ -1184,7 +1187,7 @@ assign RLOAD = ~(  RCO_LATCH | nLFO1 );
 wire RSTEP;
 assign RSTEP = ~( ~RCO_LATCH | nLFO1 );
 wire [3:0]DCout;
-assign DCout[3:0] = ~DDCNT[3:0] & { DCout[2:0],  1'b1 }; 
+assign DCout[3:0] = ~DDCNT[3:0] & { DCout[2:0],  1'b1 };
 wire [3:0]ENCout;
 assign ENCout[3:0] =  ~ENV[3:0] & { ENCout[2:0], 1'b1 };
 assign V[3:0] = ~( { 4 { CH_IN }}  | ~( ENVDIS ? VOL[3:0] : ENV[3:0] ));
@@ -1200,9 +1203,9 @@ always @(posedge Clk) begin
        DDCNT2[3:0]  <= DDCNT[3:0]  ^ { DCout[2:0],  1'b1 };
        ENV2[3:0]    <= ENV[3:0]    ^ { ENCout[2:0], 1'b1 };
 		    end
-       if ( W400x ) { CH_LC, ENVDIS, VOL[3:0] } <= DB[5:0];                      
-       if ( RLOAD | RSTEP | Reset ) DDCNT[3:0] <= Reset ? 4'h0 : RLOAD ? VOL[3:0] : DDCNT2[3:0];								  
+       if ( W400x ) { CH_LC, ENVDIS, VOL[3:0] } <= DB[5:0];
+       if ( RLOAD | RSTEP | Reset ) DDCNT[3:0] <= Reset ? 4'h0 : RLOAD ? VOL[3:0] : DDCNT2[3:0];							  
        if ( ERES  | ESTEP | Reset )   ENV[3:0] <= Reset ? 4'h0 : ERES ? { 4 { EIN }} : ENV2[3:0];
                      end
 // End of the envelope generator module
-endmodule							 
+endmodule
