@@ -532,7 +532,7 @@ reg IRQDIS;
 reg CLEAR_FF;
 reg CLEAR_LATCH;
 reg MODE_LATCH;
-reg INT_FLAG_FF;
+reg INT_DFF;
 reg INT_LATCH;
 // Комбинаторика
 //Управление LFSR
@@ -566,23 +566,26 @@ assign  PAL_PLA[2] = ~( SOUT[0]| ~SOUT[1]|  SOUT[2]| ~SOUT[3]|  SOUT[4]|  SOUT[5
 assign  PAL_PLA[1] = ~( SOUT[0]|  SOUT[1]|  SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]|  SOUT[11]|  SOUT[12]| ~SOUT[13]| ~SOUT[14]);
 assign  PAL_PLA[0] = ~( SOUT[0]| ~SOUT[1]|  SOUT[2]|  SOUT[3]| ~SOUT[4]|  SOUT[5]| ~SOUT[6]| ~SOUT[7]| ~SOUT[8]| ~SOUT[9]| ~SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14]);
 wire Z2;
-assign Z2 = ~( MODE_LATCH | CLEAR_LATCH ); 
+assign Z2 = ~( MODE_LATCH | CLEAR_LATCH );
+//LFO INT RS_FF
+wire INT_FF, nINT_FF;
+assign  INT_FF = ~( Reset | IRQDIS | ~( PHI1 | nR4015 ) | INT_DFF );
+assign nINT_FF = ~(( PLA[3] & ~MODE5 ) | INT_FF );
 //Выход LFO
 assign nLFO1 = nACLK2 | ~( PLA[4] | PLA[3] | PLA[2] | PLA[1] | PLA[0] | Z2 );
 assign nLFO2 = nACLK2 | ~( PLA[4] | PLA[3] | PLA[1] | Z2 );
-assign INT = DMC_INT | INT_FLAG_FF;
+assign INT = DMC_INT | INT_FF;
 assign DB_OUT = INT_LATCH;
 // Логика
 always @(posedge Clk) begin
        if ( W4017 | Reset )            CLEAR_FF <= 1'b1;
   else if ( ~( nACLK2 | CLEAR_LATCH )) CLEAR_FF <= 1'b0;
-       if ( Reset | IRQDIS | ~( PHI1 | nR4015 )) INT_FLAG_FF <= 1'b0;
-  else if ( PLA[3] & ~MODE5 )                    INT_FLAG_FF <= 1'b1;
+       INT_DFF <= nINT_FF;
 		 if ( W4017 ) { MODE5, IRQDIS } <= DB[7:6];
        if ( ACLK1 ) begin
 	    CLEAR_LATCH <= ~CLEAR_FF;
 		 MODE_LATCH  <= ~MODE5; 
-       INT_LATCH   <= INT_FLAG_FF;
+       INT_LATCH   <= ~nINT_FF;
 		              end
                       end
 // Конец модуля низкочастотного осциллятора
