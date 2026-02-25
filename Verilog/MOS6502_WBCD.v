@@ -164,9 +164,9 @@ always @(posedge Clk) begin
 		 DL_LATCH[7:0]  <= DIN[7:0];
 		 S_REG[7:0]     <= S_REG_LATCH1[7:0];
 		           end
-		 if ( SB_S ) 		  S_REG_LATCH1[7:0] <= SB[7:0];			  
-       if ( ADL_ABL & PHI1 ) ABL_LATCH[7:0] <= ADL[7:0];
-	    if ( ADH_ABH & PHI1 ) ABH_LATCH[7:0] <= ADH[7:0];
+		 if ( SB_S | ( S_S & S_SB )) S_REG_LATCH1[7:0] <= SB[7:0];	// BB Hack			  
+         if ( ADL_ABL & PHI1 ) ABL_LATCH[7:0] <= ADL[7:0];
+	     if ( ADH_ABH & PHI1 ) ABH_LATCH[7:0] <= ADH[7:0];
 		 if ( SB_X ) X_REG[7:0] <= SB[7:0];
 		 if ( SB_Y ) Y_REG[7:0] <= SB[7:0];					  
 		                end		 
@@ -1748,5 +1748,6 @@ always @(posedge Clk) begin
                       end
 // End of module Program Counter (PC)
 endmodule
+
 
 
