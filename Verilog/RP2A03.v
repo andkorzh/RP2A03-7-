@@ -992,7 +992,7 @@ always @(posedge Clk) begin
        if ( PCM )    SAMPLE[7:0]  <=  DB[7:0];
        if ( DFSTEP | DFLOAD ) DLFSR1[8:0]  <= ( DFLOAD ? LP[8:0] : { DLFSROUT[7:0], DLFSR_IN });
        if ( DFLOAD | Reset ) DMCSBCNT[2:0] <= ( Reset  ? 3'b000  :  DMCSBCNT1[2:0] );
-       if ( W4011 | DSTEP | Reset ) DMC_OUT[5:0]   <= ( Reset ? 6'h00 : W4011 ? DB[6:1] : DMC_OUT1[5:0] );
+	   if ( W4011 | DMSTEP | Reset ) DMC_OUT[5:0]   <= ( Reset ? 6'h00 : W4011 ? DB[6:1] : DMC_OUT1[5:0] );
        if ( BSTEP | BLOAD | Reset ) SHIFT_REG[7:0] <= ( Reset ? 8'h00 : BLOAD ? SAMPLE[7:0] : { 1'b0, SHIFT_REG1[6:0] }); // 1'b1
        if ( DSSTEP | DSLOAD | Reset ) begin
        DMCSLCNT[11:0] <= ( Reset ? 12'h000  : DSLOAD ? { DMC_LEN[7:0], 4'h0 } : DMCSLCNT1[11:0] );
