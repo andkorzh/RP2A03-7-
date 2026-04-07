@@ -618,7 +618,6 @@ reg [2:0]SR;         // SWEEP Initial Frequency Shift Magnitude Register
 reg DEC;             // SWEEP Frequency Increment Direction Register
 reg [2:0]P;          // SWEEP change period
 reg SWDIS;           // SWEEP Enable Register
-reg [7:0]SWEEP_CTR;  // SWEEP control register
 reg [1:0]DT;         // Duty register
 reg SWRELOAD_FF;     // SWEEP counter reload trigger
 reg SWRELOAD_LATCH;  // SWEEP counter reload latch
