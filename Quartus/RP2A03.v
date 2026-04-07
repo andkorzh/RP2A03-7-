@@ -118,7 +118,9 @@ wire [3:0]RND;
 wire [3:0]TRIA;
 // Variables
 reg [2:0]OUTR1;
+reg [7:0]SPRBUF;
 // Combinatorics
+assign DB[7:0] =  SPR_PPU ? SPRBUF[7:0] : 8'hZZ;
 assign OE = RES;
 assign nDIR = ~RnW;
 assign nIN[1:0]  = { nR4017, nR4016 };
@@ -126,6 +128,7 @@ assign DBIN[7:0] = ~nR4015 ? { R4015DB[7:6], DB[5], R4015DB[4:0] } : DB[7:0]; //
 assign SOUT[5:0] = (SQA[3:0] + SQB[3:0]) + (RND[3:0] + TRIA[3:0]);
 // Logics
 always @(posedge Clk) begin
+         if ( PHI2 ) SPRBUF[7:0]   <= DB[7:0];
          if ( W4016 )   OUTR1[2:0] <= DB[2:0];
          if ( ~nACLK2 )   OUT[2:0] <= OUTR1[2:0];
                       end
