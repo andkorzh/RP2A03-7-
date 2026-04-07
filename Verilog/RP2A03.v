@@ -45,10 +45,10 @@ inout [7:0]DB,        // CPU Data bus OUT
 output [15:0]AB,      // Address Bus
 output RnW,           // External pin Read/Write
 output M2,            // CPU phase M2 (external pin)
-//output [3:0]SQA,    // Square Channel A Output
-//output [3:0]SQB,    // Square Channel B Output
-//output [3:0]RND,    // Noise channel output
-//output [3:0]TRIA,   // Triangular channel output
+output [3:0]SQA,      // Square Channel A Output
+output [3:0]SQB,      // Square Channel B Output
+output [3:0]RND,      // Noise channel output
+output [3:0]TRIA,     // Triangular channel output
 output [6:0]DMC,      // Delta Modulation Channel Output
 output [5:0]SOUT,     // Channel sum output SQA + SQB + RND + TRIA
 output reg [2:0]OUT,  // Peripheral port output
@@ -116,12 +116,15 @@ wire [3:0]RND;
 wire [3:0]TRIA;
 // Variables
 reg [2:0]OUTR1;
+reg [7:0]SPRBUF;
 // Combinatorics
+assign DB[7:0] =  SPR_PPU ? SPRBUF[7:0] : 8'hZZ; 
 assign nIN[1:0]  = { nR4017, nR4016 };
 assign DBIN[7:0] = ~nR4015 ? { R4015DB[7:6], DB[5], R4015DB[4:0] } : DB[7:0]; // Read register R4015
 assign SOUT[5:0] = (SQA[3:0] + SQB[3:0]) + (RND[3:0] + TRIA[3:0]);
 // Logics
 always @(posedge Clk) begin
+         if ( PHI2 ) SPRBUF[7:0]   <= DB[7:0];
          if ( W4016 )   OUTR1[2:0] <= DB[2:0];
          if ( ~nACLK2 )   OUT[2:0] <= OUTR1[2:0];
                       end
