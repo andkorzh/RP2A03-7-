@@ -71,6 +71,7 @@ wire IMPLIED;                             //
 wire nREADY;                              // "Processor not ready" signal
 wire TRES2;                               //
 wire nT0, nT1X, T1, nT2, nT3, nT4, nT5;   // CPU cycles
+wire T1_LATCH;
 wire AVR, ACR;                            //
 wire Z_ADH0;                // Clear bit 0 of the  ADH bus
 wire Z_ADH17;               // Clear bit 1-7 of the  ADH bus
@@ -92,12 +93,9 @@ wire SB_X;                  // SB Bus to register X
 wire SB_S;                  // SB Bus to register S
 wire S_S;                   // Storing a value in a register S
 wire S_ADL;                 // Register S to ADL Bus
-wire Z_ADL0;                // Constant generator control signal bit 0
-wire Z_ADL1;                // Constant generator control signal bit 1
-wire Z_ADL2;                // Constant generator control signal bit 2
+wire [2:0]Z_ADL;            // Constant generator control signal bits 2:0
 wire WRPHI1;                // Processor write signal (phase PHI1)
-wire Z_IR;                  // BRK sequence injection
-wire FETCH;                 // Opcode fetch
+wire B_OUT;                 // B Flag
 wire P_DB;                  // Flag data to DB Bus
 wire PCL_DB;                // PCL to DB
 wire PCH_DB;                // PCH to  DB  Bus
@@ -115,7 +113,7 @@ wire ADL_ADD;               // ADL bus to ALU input
 wire ANDS;                  // Logical AND
 wire EORS;                  // Exclusive OR
 wire ORS;                   // Logical OR
-wire nACIN;                 // ALU input carry
+wire ACIN;                  // ALU input carry
 wire SRS;                   // Shift right
 wire SUMS;                  // the result of the sum A+B
 wire nDAA;                  // Perform correction after addition
@@ -123,7 +121,7 @@ wire ADD_SB7;               // ALU output bit 7 to SB bus
 wire ADD_SB06;              // ALU output bits 0-6 per SB bus
 wire ADD_ADL;               // ALU output to ADL bus
 wire nDSA;                  // Perform correction after subtraction
-wire n1_PC;                 // PC input carry
+wire I_PC;                  // PC input carry
 
 // Variables
 reg nNMIP, nIRQPR1, nIRQP, RESPR1, RESPR2;            //
@@ -138,17 +136,17 @@ reg [7:0]S_REG_LATCH1;                                // Stack pointer input lat
 reg [7:0]S_REG;                                       // Stack pointer
 reg [2:0]PHI2_DELAY;
 // Combinatorics
-assign PHI1  = ~PHI0;                                 //
-assign PHI2  =  PHI0;                                 //
+assign PHI1  = ~PHI0;
+assign PHI2  =  PHI0;
 assign RESP  = ~RESPR2;
 assign nPRDY = ~nPRDYR2;
-assign AB[15:0] = { ABH_LATCH[7:0], ABL_LATCH[7:0] }; //
+assign AB[15:0] = { ABH_LATCH[7:0], ABL_LATCH[7:0] };
 //Data output from input latch
-assign DL[7:0] = DL_LATCH[7:0] & {8{ PHI1 }} ;
+assign DL[7:0] = DL_LATCH[7:0] & {8{ PHI1 }};
 assign SYNC = T1;
 assign RW = ~WRPHI1;
 wire OE;
-assign OE = ~( RW | ~( PHI2| PHI2_DELAY[1]));
+assign OE =  ~RW & PHI2;
 assign DOUT[7:0] = OE ? DOR_LATCH[7:0] : 8'hZZ;  // Data bus output control
 // Logics
 always @(posedge Clk) begin
@@ -178,21 +176,23 @@ always @(posedge Clk) begin
 PREDECODE_IR MOD_PREDECODE_IR(
 Clk,
 PHI1,
-Z_IR,
+nREADY,
+B_OUT,
 DL_LATCH[7:0],
-FETCH,
+T1_LATCH,
 IMPLIED,
 nTWOCYCLE,
 IR[7:0]
 );
 
-EXTRA_COUNTER MOD_EXTRA_COUNTER(
+EXTENDED_COUNTER MOD_EXTENDED_COUNTER(
 Clk,
 PHI1,
 PHI2,
 T1,
 nREADY,
 TRES2,
+T1_LATCH,
 nT2,
 nT3,
 nT4,
@@ -248,17 +248,14 @@ SB_X,
 SB_S,
 S_S,
 S_ADL,
-Z_ADL0,
-Z_ADL1,
-Z_ADL2,
+Z_ADL[2:0],
 WRPHI1,
 nT0,
 T1,
 nT1X,
 TRES2,
 nREADY,
-Z_IR,
-FETCH,
+B_OUT,
 P_DB,
 PCL_DB,
 PCH_DB,
@@ -274,49 +271,21 @@ Z_ADD,
 SB_ADD,
 ADL_ADD,
 ANDS,
-EORS,
 ORS,
-nACIN,
 SRS,
+EORS,
 SUMS,
+ACIN,
 nDAA,
 ADD_SB7,
 ADD_SB06,
 ADD_ADL,
 nDSA,
-n1_PC
-);
-
-ALU MOD_ALU(
-Clk,
-PHI2,
-Z_ADD,
-SB[7:0],
-SB_ADD,
-DB[7:0],
-NDB_ADD,
-DB_ADD,
-ADL[7:0],
-ADL_ADD,
-nACIN,
-ANDS,
-ORS,
-EORS,
-SRS,
-SUMS,
-SB_AC,
-BCD_OFF ? 1'b1 : nDAA,
-BCD_OFF ? 1'b1 : nDSA,
-ACC[7:0],
-ADD[7:0],
-ACR,
-AVR
+I_PC
 );
 
 BUS_MUX MOD_BUS_MUX(
-Z_ADL0,
-Z_ADL1,
-Z_ADL2,
+Z_ADL[2:0],
 Z_ADH0,
 Z_ADH17,
 SB_DB,
@@ -354,10 +323,36 @@ ADL[7:0],
 ADH[7:0]
 );
 
+ALU MOD_ALU(
+Clk,
+PHI2,
+Z_ADD,
+SB[7:0],
+SB_ADD,
+DB[7:0],
+NDB_ADD,
+DB_ADD,
+ADL[7:0],
+ADL_ADD,
+ACIN,
+ANDS,
+ORS,
+EORS,
+SRS,
+SUMS,
+SB_AC,
+BCD_OFF ? 1'b1 : nDAA,
+BCD_OFF ? 1'b1 : nDSA,
+ACC[7:0],
+ADD[7:0],
+ACR,
+AVR
+);
+
 PC MOD_PC(
 Clk,
 PHI2,
-n1_PC,
+I_PC,
 PCL_PCL,
 ADL_PCL,
 ADL[7:0],
@@ -375,25 +370,28 @@ endmodule
 //===============================================================================================
 module PREDECODE_IR(
 // Clocks
-input Clk,
-input PHI1,
+input Clk,               // Clock
+input PHI1,              // phase PHI1
 // Inputs
-input Z_IR,              // BRK sequence injection
+input nREADY,            // "Processor not ready" signal
+input B_OUT,             // B Flag
 input [7:0]DL_LATCH,     // Input latch data input
-input FETCH,             // Opcode fetch
+input T1_LATCH,          // 
 // Outputs
 output IMPLIED,          // Instruction in 1 cycle
 output nTWOCYCLE,        // 2-cycle instruction
 output reg [7:0]IR       // Instruction register
 );
 // Combinatorics
+wire Z_IR;
 wire [7:0]PD;
+assign Z_IR = ~( ~T1_LATCH | nREADY ) & B_OUT;
 assign PD[7:0]   =  DL_LATCH[7:0] & { 8 { ~Z_IR }};
 assign IMPLIED   = ~( PD[0] | PD[2] | ~PD[3] );
 assign nTWOCYCLE = ~(( IMPLIED & ( PD[1] | PD[4] | PD[7] )) | ~( ~PD[0] | PD[2] | ~PD[3] | PD[4] ) | ~( PD[0] | PD[2] | PD[3] | PD[4] | ~PD[7] ));
 // Logics
 always @(posedge Clk) begin
-       if (PHI1 & FETCH) IR[7:0] <= PD[7:0];
+       if (PHI1 & ~( ~T1_LATCH | nREADY )) IR[7:0] <= PD[7:0];
                       end
 // End of instruction pre-decoding module and instruction register
 endmodule
@@ -401,39 +399,31 @@ endmodule
 //===============================================================================================
 // Extended cycle counter module
 //===============================================================================================
-module EXTRA_COUNTER(
+module EXTENDED_COUNTER(
 // Clocks
-input Clk,
-input PHI1,
-input PHI2,
+input Clk,      // Clock
+input PHI1,     // phase PHI1
+input PHI2,     // phase PHI2
 // Inputs
 input T1,
-input nREADY,
+input nREADY,   // "Processor not ready" signal
 input TRES2,
 // Outputs
+output reg T1_LATCH,
 output nT2,
 output nT3,
 output nT4,
 output nT5
 );
 // Variables
-reg T1_LATCH;      // Latch T1
 reg [3:0]LATCH1;   // 1st shift register bit latch
 reg [3:0]LATCH2;   // 2nd shift register bit latch
 // Combinatorics
-assign nT2 = TRES2 | LATCH1[0];
-assign nT3 = TRES2 | LATCH1[1];
-assign nT4 = TRES2 | LATCH1[2];
-assign nT5 = TRES2 | LATCH1[3];
+assign {nT5, nT4, nT3, nT2} = {4{ TRES2 }} | LATCH1[3:0];
 // Logics
 always @(posedge Clk) begin
-       if (PHI1) begin
-       LATCH1[0]  <= ( ~nREADY & T1_LATCH  )|( nREADY & ( LATCH2[0]));
-       LATCH1[1]  <= ( ~nREADY & LATCH2[0] )|( nREADY & ( LATCH2[1]));
-       LATCH1[2]  <= ( ~nREADY & LATCH2[1] )|( nREADY & ( LATCH2[2]));
-       LATCH1[3]  <= ( ~nREADY & LATCH2[2] )|( nREADY & ( LATCH2[3]));
-                 end
-       if (PHI2) {LATCH2[3:0], T1_LATCH} <= { nT5, nT4, nT3, nT2, ~T1 };
+       if (PHI1)  LATCH1[3:0] <= nREADY ? LATCH2[3:0] : {LATCH2[2:0], ~T1_LATCH};
+       if (PHI2) {LATCH2[3:0], T1_LATCH} <= { nT5, nT4, nT3, nT2, T1 };
                       end
 // End of the extended cycle counter module
 endmodule
@@ -486,7 +476,7 @@ assign X[26]  = ~(  nT5   |  IR[7] | ~IR[6] |  IR[5] |  IR[4] |  IR[3] |  IR[2] 
 assign X[27]  = ~(  IR[7] | ~IR[6] | ~IR[5] | ~IR[1] );                                        // Tx ROR_RORA
 assign X[28]  = ~   nT2;                                                                       // T2
 assign X[29]  = ~(  nT0   |  IR[7] | ~IR[6] |  IR[5] | ~IR[0] );                               // T0 EOR
-assign X[30]  = ~(  IR[7] | ~IR[6] |  IR[4] | ~IR[3] | ~IR[2] |  IR01  );                      // Tx JPM
+assign X[30]  = ~(  IR[7] | ~IR[6] |  IR[4] | ~IR[3] | ~IR[2] |  IR01  );                      // Tx JMP
 assign X[31]  = ~(  nT2   |  IR[4] | ~IR[3] | ~IR[2] );                                        // T2 EXT
 assign X[32]  = ~(  nT0   |  IR[7] |  IR[6] |  IR[5] | ~IR[0] );                               // T0 ORA
 assign X[33]  = ~(  nT2   |  IR[3] );                                                          // T2 ANY_ABS_N
@@ -594,7 +584,7 @@ endmodule
 //===============================================================================================
 module RANDOM_LOGIC (
 // Clocks
-input Clk,
+input Clk,          // Clock
 input PHI1,         // phase PHI1
 input PHI2,         // phase PHI2
 // Inputs
@@ -632,17 +622,14 @@ output SB_X,        // SB Bus to register X
 output SB_S,        // SB Bus to register S
 output S_S,         // Storing a value in a register S
 output S_ADL,       // Register S to ADL Bus
-output Z_ADL0,      // Constant generator control signal bit 0
-output Z_ADL1,      // Constant generator control signal bit 1
-output Z_ADL2,      // Constant generator control signal bit 2
+output [2:0]Z_ADL,  // Constant generator control signal bits 2:0
 output WRPHI1,      // Processor write signal (phase PHI1)
 output nT0,         // Cycle ~0
 output T1,          // Cycle  1
 output nT1X,        // Cycle ~T1X
 output TRES2,       // Clearing the extended cycle counter
 output nREADY,      // "Processor not ready" signal
-output Z_IR,        // BRK sequence injection
-output FETCH,       // Opcode fetch
+output B_OUT,       // Flag B
 output P_DB,        // Flag data to DB Bus
 output PCL_DB,      // PCL to DB  Bus
 output PCH_DB,      // PCH to DB  Bus
@@ -658,21 +645,20 @@ output Z_ADD,       // Reset input A of ALU
 output SB_ADD,      // SB bus to ALU input
 output ADL_ADD,     // ADL bus to ALU input
 output ANDS,        // Logical AND
-output EORS,        // Exclusive OR
 output ORS,         // Logical OR
-output nACIN,       // ALU input carry
 output SRS,         // Shift right
+output EORS,        // Exclusive OR
 output SUMS,        // the result of the sum A+B
+output ACIN,        // ALU input carry
 output nDAA,        // Perform correction after addition
 output ADD_SB7,     // ALU output bit 7 to SB bus
 output ADD_SB06,    // ALU output bits 0-6 per SB bus
 output ADD_ADL,     // ALU output to ADL bus
 output nDSA,        // Perform correction after subtraction
-output n1_PC        // PC input carry
+output I_PC         // PC input carry
 );
 // Module connections
 wire BRK6E;
-wire B_OUT;
 wire BRFW;
 wire nBRTAKEN;
 wire nC_OUT;
@@ -733,7 +719,7 @@ AND,
 STXY,
 STOR,
 DL_PCH,
-Z_ADL0,
+Z_ADL[0],
 nPCH_PCH,
 ACRL2,
 nREADY,
@@ -806,10 +792,10 @@ ADL_ADD,
 AND,
 ANDS,
 ORS,
-nACIN,
 SRS,
-SUMS,
 EORS,
+SUMS,
+ACIN,
 ADD_SB06,
 ADD_SB7,
 ADD_ADL,
@@ -842,8 +828,6 @@ T6,
 T7,
 STOR,
 TRES2,
-FETCH,
-Z_IR,
 nREADY,
 nREADYR,
 WRPHI1,
@@ -851,7 +835,7 @@ T1,
 nT0,
 T0,
 nT1X,
-n1_PC
+I_PC
 );
 
 // FLAGS module
@@ -893,9 +877,7 @@ nI_OUT,
 nIRQP,
 T0,
 BRK6E,
-Z_ADL0,
-Z_ADL1,
-Z_ADL2,
+Z_ADL[2:0],
 DORES,
 B_OUT
 );
@@ -908,7 +890,7 @@ endmodule
 //===============================================================================================
 module REGS_CONTROL(
 // Clocks
-input Clk,         // Clock signal
+input Clk,         // Clock
 input PHI2,        // phase PHI2
 // Inputs
 input [128:0]X,    // Instruction decoder bus
@@ -962,7 +944,7 @@ endmodule
 //===============================================================================================
 module BUS_CONTROL(
 // Clocks
-input Clk,
+input Clk,        // Clock
 input PHI2,       // phase PHI2
 // Inputs
 input [128:0]X,   // Instruction decoder bus
@@ -1002,17 +984,13 @@ output DL_DB      // DL latch value per DB Bus
 reg Z_ADH0R, Z_ADH17R, SB_ACR, ADL_ABLR, AC_SBR, SB_DBR;
 reg  AC_DBR, SB_ADHR, DL_ADHR, ADH_ABHR, DL_DBR;
 // Combinatorics
-wire nSB_AC;
+wire nSB_AC, IND, a, b, SBA;
 assign nSB_AC = ~( X[58] | X[59] | X[60] | X[61] | X[62] | X[63] | X[64] );
 assign ZTST = T7 | AND | nSBXY | ~nSB_AC ;
 assign PGX = ~( ~X[73] & ~( X[71] | X[72] ));
-wire IND;
 assign IND = X[89] | X[90] | X[91] | X[84];
-wire a;
 assign a = ~( nREADY | ~( IND | X[28] | X[56] | nPCH_PCH ));
-wire b;
 assign b = X[45] | X[46] | X[47] | X[48] | BRK6E | INC_SB;
-wire SBA;
 assign SBA = ~( ~( ~nREADYR & ACRL2 ) | ~( X[93] | PGX ));
 //Output signals
 assign Z_ADH0  = ~Z_ADH0R;
@@ -1079,13 +1057,11 @@ reg PCL_DBR,  PCH_DBR,  PCL_ADLR, PCH_ADHR; // Module output latches
 reg ADL_PCLR, ADH_PCHR;                     // Module output latches
 reg PCL_DBR1;
 // Combinatorics
-wire JB;
+wire JB, nPCL_ADL, nADH_PCH;
 assign JB = ~( X[94] | X[95] | X[96] );
 assign DL_PCH = ~( ~T0 | JB ); 
-wire nPCL_ADL;
 assign nPCL_ADL = ~( T1 | X[80] | X[56] | X[83] | ~( ~T0 | ~( nREADYR | JB )));
 assign nADL_PCL = ~( T0 | X[84] | ( X[93] & ~nREADYR ) | ~nPCL_ADL );
-wire nADH_PCH;
 assign nADH_PCH = ~( T0 | T1 | X[80] | X[93] | X[83] | X[84] );
 assign nPCH_PCH =    T0 | T1 | X[80] | X[93] | X[83] | X[84];
 assign PC_DB = ~( ~PCL_DBR1 & ~( X[77] | X[78] ));
@@ -1144,10 +1120,10 @@ output ADL_ADD,       // ADL bus to ALU input
 output AND,           // Logical AND
 output reg ANDS,      // Logical AND
 output reg ORS,       // Logical OR
-output reg nACIN,     // ALU input carry
 output reg SRS,       // Shift right
-output reg SUMS,      // the result of the sum A+B
 output reg EORS,      // Exclusive OR
+output reg SUMS,      // the result of the sum A+B
+output reg ACIN,      // ALU input carry
 output ADD_SB06,      // ALU output bits 0-6 per SB bus
 output reg ADD_SB7,   // ALU output bit 7 to SB bus
 output ADD_ADL,       // ALU output to ADL bus
@@ -1160,16 +1136,14 @@ output SR             // Shift right
 reg Z_ADDR, NDB_ADDR, DB_ADDR, ADL_ADDR;           // ALU input latches control signal latches
 reg ADD_SB06R, ADD_ADLR;                           // Module output latches
 reg ANDS1, SUMS1, ORS1, SRS1, EORS1, nDSA1, nDAA1; // ALU mode control signal latches
-reg ACIN1, ACIN2, ACIN3, ACIN4;                    // ALU input carry circuit latches
+reg ACIN_IN;                                       // ALU input carry circuit latch
 reg MUX_LATCH, COUT_LATCH;                         // ADDSB7 circuit latches
 reg FFLATCH1, FFLATCH2;                            // ADDSB7 circuit register latches
 // Combinatorics
-wire BRX;
+wire BRX, nADL_ADD, OR;
 assign BRX =  X[49] | X[50] | ~( ~X[93] | BRFW );
-wire nADL_ADD;
 assign nADL_ADD = ~( nREADY | X[35] | X[36] | X[37] | X[38] | X[39] | ( X[33] & ~X[34] ));
 assign AND =  X[69] | X[70];
-wire OR;
 assign OR  =  X[32] | nREADY;
 assign SR  =  X[75] | ( T6 & X[76] );
 assign INC_SB = X[39] | X[40] | X[41] | X[42] | X[43] | ( T6 & X[44] );
@@ -1184,7 +1158,7 @@ assign ADD_ADL  = ~ADD_ADLR;
 // Logics
 always @(posedge Clk) begin
        if (PHI1) begin
-       nACIN      <= ~( ACIN1 | ACIN2 | ACIN3 | ACIN4 );
+       ACIN       <= ACIN_IN;
        FFLATCH1   <= ( MUX_LATCH & COUT_LATCH )|( ~MUX_LATCH & FFLATCH2 );
        ANDS       <= ANDS1;
        SUMS       <= SUMS1;
@@ -1195,10 +1169,7 @@ always @(posedge Clk) begin
        nDAA       <= nDAA1;
                  end
        if (PHI2) begin
-       ACIN1      <= ~( nADL_ADD | ~X[47] );
-       ACIN2      <= INC_SB;
-       ACIN3      <= BRX;
-       ACIN4      <= ~( ~X[54] & ~(( X[52] | X[53] ) & ~( nC_OUT | ~( T0 | T6 ))));
+       ACIN_IN    <= ~( nADL_ADD | ~X[47] ) | INC_SB | BRX | ~( ~X[54] & ~(( X[52] | X[53] ) & ~( nC_OUT | ~( T0 | T6 ))));
        Z_ADDR     <= ~( STKOP | X[30] | X[31] | X[45] | X[47] | X[48] | nREADY | BRK6E | INC_SB );
        NDB_ADDR   <= ~( ~nREADY & ( X[51] | X[56] | BRX ));
        DB_ADDR    <= ~( nADL_ADD & ~( ~nREADY & ( X[51] | X[56] | BRX )));
@@ -1249,8 +1220,6 @@ output T6,           // Cycle  6
 output reg T7,       // Cycle  7
 output STOR,         //
 output TRES2,        //
-output FETCH,        //
-output Z_IR,         //
 output reg nREADY,   // "Processor not ready" signal
 output nREADYR,      // Signal "Processor is not ready" latch PHI1
 output WRPHI1,       // Processor write signal (phase PHI1)
@@ -1258,41 +1227,32 @@ output T1,           // Cycle  1
 output nT0,          // Cycle ~0
 output T0,           // Cycle  0
 output nT1X,         // Cycle ~T1X
-output n1_PC         // PC input carry
+output I_PC          // PC input carry
 );
 // Variables
-reg RDYDELAY1, RDYDELAY2, nREADY2, WRLATCH; //
-reg ACRL_LATCH1;                            //
-reg T61, T62, T67, T71;                     //
-reg TRESXLATCH1, TRESXLATCH2, TRES2LATCH;   //
-reg FETCHLATCH;                             //
-reg ENDS1LATCH, ENDS2LATCH;                 //
-reg STEPLATCH1, STEPLATCH2;                 //
-reg BRLATCH1, BRLATCH2;                     //
-reg COMPLATCH2;                             //
-reg T0LATCH, T1LATCH, T1XLATCH;             //
-reg IPC1, IPC2, IPC3;                       //
+reg RDYDELAY1, RDYDELAY2, nREADY2, WRLATCH;
+reg ACRL_LATCH1;
+reg T61, T62, T67, T71;
+reg TRESXLATCH1, TRESXLATCH2, TRES2LATCH;
+reg FETCHLATCH;
+reg ENDS1LATCH, ENDS2LATCH;
+reg STEPLATCH1, STEPLATCH2;
+reg BRLATCH1, BRLATCH2;
+reg COMPLATCH2;
+reg T0LATCH, T1LATCH, T1XLATCH;
+reg [2:0]IPC;
 // Combinatorics
-wire nMEMOP;
+wire nMEMOP, nSHIFT, ENDX, ENDS, REST, ACRL1, nTRESX, BRA;
 assign nMEMOP = ~( X[111] | X[122] | X[123] | X[124] | X[125] );
-wire nSHIFT;
 assign nSHIFT = ~( X[106] | X[107] );
-wire ENDX;
 assign ENDX = ~( X[93] | T7 | ( X[100] | X[101] | X[102] | X[103] | X[104] | X[105] ) | ~( X[96] | nMEMOP | ~nSHIFT ));
-wire ENDS;
 assign ENDS = ~( ENDS1LATCH | ENDS2LATCH );
-wire REST;
 assign REST = ~( nSHIFT & ~X[97] );
-wire ACRL1;
 assign ACRL1 = ( ~RDYDELAY2 & ACR )|( RDYDELAY2 & ACRL2 );
-wire nTRESX;
 assign nTRESX = ~( BRK6E | ~TRESXLATCH2 | ~( ACRL1 | nREADY | REST | TRESXLATCH1 ));
-wire i2;
-assign i2 = BRLATCH2 & ( ~ACR ^ BRFW );
+assign BRA = BRLATCH2 & ( ~ACR ^ BRFW );
 //Output signals 
 assign STOR = ~( ~X[97] | nMEMOP );
-assign FETCH = ~( nREADY | ~FETCHLATCH );
-assign Z_IR = ~( B_OUT & FETCH );
 assign WRPHI1 = nREADY2;
 assign T6 = ~T61;
 assign TRES2 = ~TRES2LATCH;
@@ -1300,7 +1260,7 @@ assign T0 = ~( T0LATCH | T1XLATCH ) | ~( T1 | ( COMPLATCH2 & ~TRES2 ));
 assign nT0 = ~T0;
 assign T1 = ~T1LATCH;
 assign nT1X = ~T1XLATCH;
-assign n1_PC = ~( IPC1 & ( IPC2 | IPC3 ));
+assign I_PC = IPC[0] & ( IPC[1] | IPC[2] );
 assign nREADYR = RDYDELAY1;
 // Logics
 always @(posedge Clk) begin
@@ -1311,13 +1271,11 @@ always @(posedge Clk) begin
        T7          <= ~T71;
        TRES2LATCH  <= nTRESX;
        nREADY2     <= ~( DORES | nREADY | WRLATCH );
-       STEPLATCH2  <= ~( i2 | STEPLATCH1 );
+       STEPLATCH2  <= ~( BRA | STEPLATCH1 );
        COMPLATCH2  <= nTWOCYCLE;
-       T1LATCH     <= ~( ENDS | ~( nREADY | ~( i2 | STEPLATCH1 )));
+       T1LATCH     <= ~( ENDS | ~( nREADY | ~( BRA | STEPLATCH1 )));
        T1XLATCH    <= ~( nREADY | T0LATCH );
-       IPC1        <= B_OUT;
-       IPC2        <= i2;
-       IPC3        <= ~( nREADY | BRLATCH1 | IMPLIED );
+       IPC[2:0]    <= { ~( nREADY | BRLATCH1 | IMPLIED ), BRA, B_OUT };
                  end
        if (PHI2) begin
        RDYDELAY2   <= RDYDELAY1;
@@ -1325,7 +1283,6 @@ always @(posedge Clk) begin
        T67         <= ~( nSHIFT | nMEMOP | nREADY );
        T62         <= T6;
        T71         <= ~( ~nREADY & T6 );
-       FETCHLATCH  <= T1;
        TRESXLATCH1 <= ~( X[91] | X[92] );
        TRESXLATCH2 <= ~( RESP | ENDS | ~( nREADY | ENDX ));
        nREADY      <= ~( RDY | nREADY2 );
@@ -1346,7 +1303,7 @@ endmodule
 //===============================================================================================
 module FLAGS(
 // Clocks
-input Clk,
+input Clk,           // Clock
 input PHI1,          // phase PHI1
 input PHI2,          // phase PHI2
 // Inputs
@@ -1376,15 +1333,14 @@ reg P_DBR, IR5_I, IR5_C, IR5_D, Z_V, ARC_CR;                    // Flag Control 
 reg DBZ_ZR, DB_CR, DB_NR, DB_VR, DB_VR2;                        // Flag Control Circuit Latches
 reg nN_OUT, nZ_OUT, nV_OUT, I_LATCH1;                           // First flag latch
 reg C_LATCH2, Z_LATCH2, I_LATCH2, D_LATCH2, V_LATCH2, N_LATCH2; // Second flag latch
-reg SO_LATCH1, SO_LATCH2, SO_LATCH3, VSET, AVR_LATCH;           // Edge Detector Latches
-reg BRFW2, BR2_LATCH; 
+reg [2:0]SO_LATCH;                                              // Edge Detector Latches
+reg VSET, AVR_LATCH, BRFW2, BR2_LATCH;
 // Combinatorics
 // Flag management
-wire DB_V, DB_P, DB_N;
+wire DB_V, DB_P, DB_N, nDBZ;
 assign DB_N = ~(( DBZ_ZR & DB_VR ) | DB_NR );
 assign DB_P = ~( DB_VR | nREADY );
 assign DB_V = ~( DB_VR & DB_VR2 );
-wire nDBZ;
 assign nDBZ = DB[7] | DB[6] | DB[5] | DB[4] | DB[3] | DB[2] | DB[1] | DB[0];
 // Branch flag multiplexer 
 wire FLAG_MUX;
@@ -1405,8 +1361,8 @@ always @(posedge Clk) begin
        nV_OUT   <= ( ~DB[6] & DB_V   ) | ( AVR & AVR_LATCH ) | ( ~( AVR_LATCH | DB_V | VSET ) & V_LATCH2 ) | Z_V;
        nN_OUT   <= ( ~DB[7] & DB_N   ) | ( ~DB_N & N_LATCH2 ); 
        // V flag latches
-       SO_LATCH1 <= SO;
-       SO_LATCH3 <= ~SO_LATCH2;
+       SO_LATCH[0] <= SO;
+       SO_LATCH[2] <= ~SO_LATCH[1];
        // Latch BRFW
        BRFW <= ( ~BR2_LATCH & BRFW2 ) | ( BR2_LATCH & DB[7] );
                   end
@@ -1416,7 +1372,7 @@ always @(posedge Clk) begin
        IR5_I  <= X[108];
        IR5_C  <= X[110];
        IR5_D  <= X[120];
-       Z_V  <= X[127];
+       Z_V    <= X[127];
        ARC_CR <= ~( X[112] | X[116] | X[117] | X[118] | X[119] | ( X[107] & T7 ));
        DBZ_ZR <= ~( ~ARC_CR | ZTST | X[109] );
        DB_NR  <= X[109];
@@ -1432,8 +1388,8 @@ always @(posedge Clk) begin
        N_LATCH2 <= nN_OUT;
        // V flag latches
        AVR_LATCH <= X[112];
-       SO_LATCH2 <= SO_LATCH1;
-       VSET <= ~( SO_LATCH1 | SO_LATCH3 );
+       SO_LATCH[1] <= SO_LATCH[0];
+       VSET <= ~( SO_LATCH[0] | SO_LATCH[2] );
        // BRANCH LOGIC latches
        BR2_LATCH <= X[80];
        BRFW2 <= BRFW;
@@ -1447,48 +1403,42 @@ endmodule
 //===============================================================================================
 module INT_RESET_CONTROL(
 // Clocks
-input Clk,
-input PHI1,          // phase PHI1
-input PHI2,          // phase PHI2
+input Clk,               // Clock
+input PHI1,              // phase PHI1
+input PHI2,              // phase PHI2
 // Inputs
-input [128:0]X,      // Instruction decoder bus
-input nREADY,        // "Processor not ready" signal
-input RESP,          //
-input nNMIP,         //
-input nI_OUT,        // Flag input I
-input nIRQP,         //
-input T0,            // Cycle 0
+input [128:0]X,          // Instruction decoder bus
+input nREADY,            // "Processor not ready" signal
+input RESP,              //
+input nNMIP,             //
+input nI_OUT,            // Flag input I
+input nIRQP,             //
+input T0,                // Cycle 0
 // Outputs
-output BRK6E,        // Break Cycle 6 End
-output Z_ADL0,       //
-output reg Z_ADL1,   //
-output reg Z_ADL2,   //
-output DORES,        //
-output B_OUT         // Flag B Output
+output BRK6E,            // Break Cycle 6 End
+output reg [2:0]Z_ADL,   // Clear bits 2:0 the ADL bus
+output DORES,            //
+output B_OUT             // Flag B Output
 );
 // Variables
-reg BRK5LATCH, BRK6LATCH1, BRK6LATCH2;
+reg BRK6LATCH1, BRK6LATCH2;
 reg RESLATCH1, RESLATCH2;
 reg BRK7LATCH, NMIPLATCH, FF2LATCH, DELAYLATCH2;
 reg DONMILATCH, FF1LATCH, BRK6ELATCH;
 reg BLATCH1, BLATCH2;
 // Combinatorics
+wire BRK7, a, b, nDONMI;
 assign BRK6E = ~( nREADY | ~BRK6LATCH2 );
-wire BRK7;
 assign BRK7 = ~(( X[22] & ~nREADY ) | ~BRK6LATCH1 );
-wire a;
 assign a =  ~( NMIPLATCH | ~( DELAYLATCH2 | FF2LATCH ));
-wire b;
 assign b =  ~(( nIRQP | ~nI_OUT ) & nDONMI ) & ( X[80] | T0 );
-wire nDONMI;
 assign nDONMI = ~( DONMILATCH | ~( BRK6ELATCH | FF1LATCH ));
 assign DORES = RESLATCH1 | RESLATCH2;
 assign B_OUT = ~( ~( BRK6E | BLATCH2 ) | DORES );
-assign Z_ADL0 = BRK5LATCH;
 // Logics
 always @(posedge Clk) begin
        if (PHI1) begin
-       BRK6LATCH1  <= ~( BRK5LATCH | ( nREADY & ~BRK6LATCH1 ));
+       BRK6LATCH1  <= ~( Z_ADL[0] | ( nREADY & ~BRK6LATCH1 ));
        RESLATCH2   <= ~( BRK6E | ~( RESLATCH1 | RESLATCH2 ));
        NMIPLATCH   <= nNMIP;
        DELAYLATCH2 <= ~FF1LATCH;
@@ -1497,15 +1447,13 @@ always @(posedge Clk) begin
        BLATCH1     <= ~( BRK6E | BLATCH2 );
                  end
        if (PHI2) begin
-       BRK5LATCH  <=  X[22] & ~nREADY;
-       BRK6LATCH2 <= ~BRK6LATCH1; 
+       BRK6LATCH2 <= ~BRK6LATCH1;
        RESLATCH1  <= RESP;
        BRK7LATCH  <= BRK7;
        FF2LATCH   <= a;
        FF1LATCH   <= nDONMI;
        BLATCH2    <= ~( b | BLATCH1 );
-       Z_ADL1     <= ~( BRK7 | ~DORES );
-       Z_ADL2     <= ~( BRK7 | DORES | nDONMI );
+       Z_ADL[2:0] <= { ~( BRK7 | DORES | nDONMI ), ~( BRK7 | ~DORES ), X[22] & ~nREADY };
                  end
                       end
 // End of module INT_RESET_CONTROL
@@ -1517,9 +1465,7 @@ endmodule
 module BUS_MUX(
 // Inputs
 // Constant generator control
-input Z_ADL0,       // Clear bit 0 of the ADL bus
-input Z_ADL1,       // Clear bit 1 of the ADL bus
-input Z_ADL2,       // Clear bit 2 of the ADL bus
+input [2:0]Z_ADL,   // Clear bits 2:0 the ADL bus
 input Z_ADH0,       // Clear bit 0 of the ADH bus
 input Z_ADH17,      // Clear bits 1-7 of the ADH bus
 // Bus multiplexer control
@@ -1561,14 +1507,13 @@ output [7:0]ADH     // ADH Bus
 );
 
 wire AC_SB2;
-assign AC_SB2 = ~AC_SB | SB_AC;
+assign AC_SB2 = ~AC_SB | SB_AC;  // AB Hack
 // Intermediate buses
-wire [7:0]SBT;
-wire [7:0]ADHT;
+wire [7:0]SBT, ADHT;
 // DB bus multiplexer
-assign DB[7:0]  = (~{8{SB_DB}}  | SBT[7:0] ) & (~{8{AC_DB}} | ACC[7:0] ) & (~{8{P_DB}} | FLAG[7:0] ) & (~{8{DL_DB}} | DL[7:0]   ) & (~{8{PCL_DB}} | PCL[7:0]) & (~{8{PCH_DB}} | PCH[7:0] );
+assign DB[7:0]   = (~{8{SB_DB}}  | SBT[7:0] ) & (~{8{AC_DB}} | ACC[7:0] ) & (~{8{P_DB}} | FLAG[7:0] ) & (~{8{DL_DB}} | DL[7:0]   ) & (~{8{PCL_DB}} | PCL[7:0]) & (~{8{PCH_DB}} | PCH[7:0] );
 // SBT bus multiplexer
-assign SBT[7:0] = (~{8{SB_ADH}} | ADHT[7:0]) & (~{8{X_SB}} | X_REG[7:0]) & (~{8{Y_SB}} | Y_REG[7:0]) & (~{8{S_SB}}  | S_REG[7:0]) & ( {8{AC_SB2}} | ACC[7:0]) & {~ADD_SB7 | ADD[7], ~{7{ADD_SB06}} | ADD[6:0]};
+assign SBT[7:0]  = (~{8{SB_ADH}} | ADHT[7:0]) & (~{8{X_SB}} | X_REG[7:0]) & (~{8{Y_SB}} | Y_REG[7:0]) & (~{8{S_SB}}  | S_REG[7:0]) & ( {8{AC_SB2}} | ACC[7:0]) & {~ADD_SB7 | ADD[7], ~{7{ADD_SB06}} | ADD[6:0]};
 // SB bus multiplexer
 assign SB[7:0]   =  SB_DB ? DB[7:0] : SBT[7:0];
 // ADHT bus multiplexer
@@ -1576,14 +1521,14 @@ assign ADHT[7:0] = ( ~{8{PCH_ADH}} | PCH[7:0] ) & ( ~{8{DL_ADH}} | DL[7:0] ) & {
 // ADH bus multiplexer
 assign ADH[7:0]  =  SB_ADH ? SBT[7:0] : ADHT[7:0];
 // ADL bus multiplexer
-assign ADL[7:0]  = ( ~{8{S_ADL}} | S_REG[7:0] ) & ( ~{8{ADD_ADL}} | ADD[7:0] ) & ( ~{8{PCL_ADL}} | PCL[7:0] ) & ( ~{8{DL_ADL}} | DL[7:0] ) & { 5'h1f, ~Z_ADL2, ~Z_ADL1, ~Z_ADL0 };
+assign ADL[7:0]  = ( ~{8{S_ADL}} | S_REG[7:0] ) & ( ~{8{ADD_ADL}} | ADD[7:0] ) & ( ~{8{PCL_ADL}} | PCL[7:0] ) & ( ~{8{DL_ADL}} | DL[7:0] ) & { 5'h1f, ~Z_ADL[2:0] };
 // End of module Buses
-endmodule   // Buses
+endmodule
 
 //===============================================================================================
 // ALU module
 //===============================================================================================
-module ALU(
+module ALU (
 // Clocks
 input Clk,             // Clock
 input PHI2,            // phase PHI2
@@ -1596,7 +1541,7 @@ input NDB_ADD,         // ~DB Bus to ALU input
 input DB_ADD,          //  DB Bus to ALU input
 input [7:0]ADL,        // ADL bus
 input ADL_ADD,         // ADL bus to ALU input
-input nACIN,           // ALU input carry
+input ACIN,            // ALU input carry
 input ANDS,            // Logical AND result
 input ORS,             // Logical OR result
 input EORS,            // Logical XOR result
@@ -1612,57 +1557,45 @@ output ACR,            // ALU carry output
 output reg AVR         // ALU overflow output
 );
 // Variables
-reg [7:0]AI;                    // AI input latch
-reg [7:0]BI;                    // BI input latch
+reg [7:0]AI, BI;                // ALU input latches
 reg LATCH_C7;                   // ALU overflow circuit latches
 reg LATCH_DC7;                  // ALU overflow circuit latches
 reg DAAL, DAAHR, DSAL, DSAHR;   // Decimal correction control latches
 // Combinatorics of logical operations
-wire [7:0]ANDo;                 // Logical AND
-wire [7:0]ORo;                  // Logical OR
-wire [7:0]XORo;                 // Logical XOR
-wire [7:0]SUMo;                 // Sum A + B
-assign ANDo[7:0] =   AI[7:0] &  BI[7:0];
-assign  ORo[7:0] =   AI[7:0] |  BI[7:0]; 
-assign XORo[7:0] =   AI[7:0] ^  BI[7:0];
-assign SUMo[7:0] = XORo[7:0] ^ CIN[7:0];
+wire [7:0]ANDo, ORo, XORo, SUMo;
+assign ANDo[7:0] =   AI[7:0] &  BI[7:0];  // Logical AND
+assign  ORo[7:0] =   AI[7:0] |  BI[7:0];  // Logical OR
+assign XORo[7:0] =   AI[7:0] ^  BI[7:0];  // Logical XOR
+assign SUMo[7:0] = XORo[7:0] ^ CIN[7:0];  // Sum A + B
 wire [7:0]RESULT;               // ALU result bus
-assign RESULT[7:0] = ({8{ANDS}} & ANDo[7:0]) | ({8{ORS}} & ORo [7:0]) | ({8{EORS}} & XORo[7:0]) | ({8{SRS}} & {1'b0 ,ANDo[7:1]}) | ({8{SUMS}} & SUMo[7:0]);
+assign RESULT[7:0] = ({8{ANDS}} & ANDo[7:0]) | ({8{ORS}} & ORo [7:0]) | ({8{EORS}} & XORo[7:0]) | ({8{SRS}} & {1'b0, ANDo[7:1]}) | ({8{SUMS}} & SUMo[7:0]);
 // Combinatorics of ALU overflow
-wire [7:0]CIN;
-assign CIN[7:0] = { COUT[6:4], DCOUT3, COUT[2:0], ~nACIN };
-wire [7:0]COUT;
-assign COUT[7:0] = ( CIN[7:0] & ORo[7:0] ) | ANDo[7:0] ;
+wire [7:0]CIN, COUT;
+assign CIN[7:0] = { COUT[6:4], DCOUT3, COUT[2:0], ACIN };
+assign COUT[7:0] = ( CIN[7:0] & XORo[7:0] ) | ANDo[7:0];
 wire DCOUT3;
 assign DCOUT3 = COUT[3] | DC3;
-assign ACR =  LATCH_C7 | LATCH_DC7;
+assign ACR = LATCH_C7 | LATCH_DC7;
 //BCD
 wire DAAH, DSAH;
 assign DAAH =    ACR & DAAHR;
 assign DSAH = ~( ACR | DSAHR );
-wire b0,b1,b2,b3,b4,b5; // intermediate signals BCD
-assign b0 = DAAL | DSAL;
-assign b1 = (( DAAL &  ~ADD[1] )           | ( DSAL & ADD[1] ));
-assign b2 = (( DAAL & ( ADD[1] | ADD[2] )) | ( DSAL & ~( ADD[1] & ADD[2] )));
-assign b3 = DAAH | DSAH;
-assign b4 = (( DAAH &  ~ADD[5] )           | ( DSAH & ADD[5] ));
-assign b5 = (( DAAH & ( ADD[5] | ADD[6] )) | ( DSAH & ~( ADD[5] & ADD[6] )));
+wire [5:0]bcd; // intermediate signals BCD
+assign bcd[0] = DAAL | DSAL;
+assign bcd[1] = (( DAAL &  ~ADD[1] )           | ( DSAL & ADD[1] ));
+assign bcd[2] = (( DAAL & ( ADD[1] | ADD[2] )) | ( DSAL & ~( ADD[1] & ADD[2] )));
+assign bcd[3] = DAAH | DSAH;
+assign bcd[4] = (( DAAH &  ~ADD[5] )           | ( DSAH & ADD[5] ));
+assign bcd[5] = (( DAAH & ( ADD[5] | ADD[6] )) | ( DSAH & ~( ADD[5] & ADD[6] )));
 wire [7:0]BCDRES;       // Decimal correction output
-assign BCDRES[0] =  SB[0];
-assign BCDRES[1] =  SB[1] ^ b0;
-assign BCDRES[2] =  SB[2] ^ b1;
-assign BCDRES[3] =  SB[3] ^ b2;
-assign BCDRES[4] =  SB[4];
-assign BCDRES[5] =  SB[5] ^ b3;
-assign BCDRES[6] =  SB[6] ^ b4;
-assign BCDRES[7] =  SB[7] ^ b5;
+assign BCDRES[7:0] = { SB[7:5] ^ bcd[5:3], SB[4], SB[3:1] ^ bcd[2:0], SB[0] };
 // BCD CARRY
-wire DC3,DC7; 
+wire DC3,DC7;
 wire a,b,c,d,e,f,g; // intermediate signals BCD CARRY
-assign a   = ~( ~ORo[0] | ( nACIN & ~ANDo[0] ));
+assign a   = ~( ~ORo[0] | ( ~ACIN & ~ANDo[0] ));
 assign b   = ~( a & ANDo[1] );
 assign c   = ~( ANDo[2] | XORo[3] );
-assign d   = ~( a | ~( ANDo[0] | ~ORo[2] ) | ANDo[1] | XORo[1] );
+assign d   = ~( a | ~( ANDo[2] | ~ORo[2] ) | ANDo[1] | XORo[1] );
 assign e   = ~( ANDo[5] & COUT[4] );
 assign f   = ~( ANDo[6] | XORo[7] );
 assign g   = ~( XORo[5] | XORo[6] | ANDo[5] | COUT[4] );
@@ -1695,7 +1628,7 @@ module PC(
 input Clk,             // Clock
 input PHI2,            // phase PHI2
 // Inputs
-input n1_PC,           // Input counter carry
+input I_PC,           // Input counter carry
 input PCL_PCL,         // PCL counter bit storage mode
 input ADL_PCL,         // Loading data from the ADL bus
 input [7:0]ADL,        // ADL Bus
@@ -1707,23 +1640,20 @@ output reg [7:0]PCL,   // Output of the LSB 8 bits of PC
 output reg [7:0]PCH    // Output of the MSB 8 bits of PC
 );
 // Variables
-reg [7:0]PCLS;         // PCL Counter Intermediate Register
-reg [7:0]PCHS;         // PCH Counter Intermediate Register
+reg [7:0]PCLS, PCHS;   // PC Counter Intermediate Registers
 // Combinatorics
-wire [7:0]ADL_COUT;
-assign ADL_COUT[7:0] =  PCLS[7:0] & {ADL_COUT[6:0], ~n1_PC};
-wire [7:0]ADH_COUT;
+wire [7:0]ADL_COUT, ADH_COUT;
+assign ADL_COUT[7:0] =  PCLS[7:0] & {ADL_COUT[6:0], I_PC};
 assign ADH_COUT[7:0] =  PCHS[7:0] & {ADH_COUT[6:4], PCH_03, ADH_COUT[2:0], PCH_IN};
-wire PCH_IN;
-assign PCH_IN = PCLS[7] & PCLS[6] & PCLS[5] & PCLS[4] & PCLS[3] & PCLS[2] & PCLS[1] & PCLS[0] & ~n1_PC;
-wire PCH_03;
-assign PCH_03 = PCHS[3] & PCHS[2] & PCHS[1] & PCHS[0] & ~n1_PC & PCH_IN;
+wire PCH_IN, PCH_03;
+assign PCH_IN = PCLS[7] & PCLS[6] & PCLS[5] & PCLS[4] & PCLS[3] & PCLS[2] & PCLS[1] & PCLS[0] & I_PC;
+assign PCH_03 = PCHS[3] & PCHS[2] & PCHS[1] & PCHS[0] & I_PC & PCH_IN;
 // Logics
 always @(posedge Clk) begin
        if ( PCL_PCL | ADL_PCL ) PCLS[7:0] <= ( {8{ PCL_PCL }} & PCL[7:0] )|( {8{ ADL_PCL }} & ADL[7:0] );
        if ( PCH_PCH | ADH_PCH ) PCHS[7:0] <= ( {8{ PCH_PCH }} & PCH[7:0] )|( {8{ ADH_PCH }} & ADH[7:0] );
        if (PHI2) begin
-       PCL[7:0] <= ( PCLS[7:0] ^ {ADL_COUT[6:0], ~n1_PC} ); 
+       PCL[7:0] <= ( PCLS[7:0] ^ {ADL_COUT[6:0], I_PC} );
        PCH[7:0] <= ( PCHS[7:0] ^ {ADH_COUT[6:4], PCH_03, ADH_COUT[2:0], PCH_IN} );
                  end
                       end
