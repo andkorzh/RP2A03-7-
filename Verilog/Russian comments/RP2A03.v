@@ -883,7 +883,7 @@ wire [2:0]DMCSBCNT, DMCSBCout;
 wire [14:0]DMC_A, DMCACout;
 wire [11:0]DMCSLCNT, DMCSLCout;
 wire [5:0]DMC_OUT, DMCOCout;
-assign BOUT = ~SHIFT_REG[0];
+assign BOUT = SHIFT_REG[0];
 // DPCM COUNTERS
 //                    Clk   F2    DIR           C_IN             Reset  LOAD    STEP                 DATA            CNT_OUT         C_OUT
 COUNTER SBCCNT[2:0]  (Clk, ACLK1, 1'b1, {DMCSBCout[1:0],  1'b1}, Reset, 1'b0,   DFLOAD, 3'b000,                      DMCSBCNT[2:0],  DMCSBCout[2:0]);
