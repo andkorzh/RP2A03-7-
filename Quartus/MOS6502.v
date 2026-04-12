@@ -276,10 +276,10 @@ SRS,
 EORS,
 SUMS,
 ACIN,
-nDAA,
 ADD_SB7,
 ADD_SB06,
 ADD_ADL,
+nDAA,
 nDSA,
 I_PC
 );
@@ -650,10 +650,10 @@ output SRS,         // Shift right
 output EORS,        // Exclusive OR
 output SUMS,        // the result of the sum A+B
 output ACIN,        // ALU input carry
-output nDAA,        // Perform correction after addition
 output ADD_SB7,     // ALU output bit 7 to SB bus
 output ADD_SB06,    // ALU output bits 0-6 per SB bus
 output ADD_ADL,     // ALU output to ADL bus
+output nDAA,        // Perform correction after addition
 output nDSA,        // Perform correction after subtraction
 output I_PC         // PC input carry
 );
