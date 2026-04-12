@@ -411,7 +411,7 @@ reg DET;
 // Комбинаторика
 wire LOCK;
 assign LOCK   = DIV[1] | ~DIV[0];
-assign PHI0   = ~( PAL | DENDY ) ? ~DIV[0] : SR_FF ? ~DIV0n : ~DIV[0];
+assign PHI0   = PAL & DENDY & SR_FF ? ~DIV0n : ~DIV[0];
 assign ACLK1  = ~( DIVACLK[1] | PHI2 );
 assign nACLK2 = ~( Reset | DIVACLK[1] ) | PHI2 ;
 assign M2     = PHI2 | ~DIVM2;
