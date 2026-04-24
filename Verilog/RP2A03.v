@@ -647,10 +647,10 @@ wire DO_SWEEP;
 assign DO_SWEEP = ~( ~SCO | NOSQx | nLFO2 | ~( | SR[2:0] ) | ~SWDIS | ~( | F[10:2] ) | ( ~DEC & ADDCARRY[10] ));  // Checking the conditions for SWEEP mode activation
 //Duty control
 wire [3:0]DUTY;
-assign DUTY[0] = ~( ~DUCNT[0] | ~( DUCNT[1] & DUCNT[2] ));
-assign DUTY[1] =     DUCNT[1] &    DUCNT[2] ;
-assign DUTY[2] =     DUCNT[2];
-assign DUTY[3] = ~(  DUCNT[1] &    DUCNT[2] );
+assign DUTY[0] =    DUCNT[0] & DUCNT[1] & DUCNT[2];
+assign DUTY[1] =    DUCNT[1] & DUCNT[2] ;
+assign DUTY[2] =    DUCNT[2] ;
+assign DUTY[3] = ~( DUCNT[1] & DUCNT[2] );
 wire DUTY_MUX;
 assign DUTY_MUX = ( DUTY[0] & ~DT[0] & ~DT[1] )|( DUTY[1] & DT[0] & ~DT[1] )|( DUTY[2] & ~DT[0] & DT[1] )|( DUTY[3] & DT[0] & DT[1] );
 // Managing frequency and period counters SWEEP
