@@ -1,6 +1,6 @@
 Analysis & Synthesis report for RP2A03
-Tue Apr 07 23:36:11 2026
-Quartus II 32-bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+Wed Nov 18 14:57:39 2026
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
 ---------------------
@@ -42,122 +42,120 @@ Quartus II 32-bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edit
  34. Port Connectivity Checks: "SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[2]"
  35. Port Connectivity Checks: "SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[1]"
  36. Port Connectivity Checks: "SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[0]"
- 37. Port Connectivity Checks: "SPRITE_DMA:MOD_SPRITE_DMA"
- 38. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[0]"
- 39. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[11]"
- 40. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[10]"
- 41. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[9]"
- 42. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[8]"
- 43. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[7]"
- 44. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[6]"
- 45. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[5]"
- 46. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[4]"
- 47. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[3]"
- 48. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[2]"
- 49. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[1]"
- 50. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[0]"
- 51. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[14]"
- 52. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[13]"
- 53. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[12]"
- 54. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[11]"
- 55. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[10]"
- 56. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[9]"
- 57. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[8]"
- 58. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[7]"
- 59. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[6]"
- 60. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[5]"
- 61. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[4]"
- 62. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[3]"
- 63. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[2]"
- 64. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[1]"
- 65. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[0]"
- 66. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[2]"
- 67. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[1]"
- 68. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[0]"
- 69. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[14]"
- 70. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[13]"
- 71. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[12]"
- 72. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[11]"
- 73. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[10]"
- 74. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[9]"
- 75. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[8]"
- 76. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[7]"
- 77. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[6]"
- 78. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[5]"
- 79. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[4]"
- 80. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[3]"
- 81. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[2]"
- 82. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[1]"
- 83. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[0]"
- 84. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[4]"
- 85. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[3]"
- 86. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[2]"
- 87. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[1]"
- 88. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[0]"
- 89. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[6]"
- 90. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[5]"
- 91. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[4]"
- 92. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[3]"
- 93. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[2]"
- 94. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[1]"
- 95. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[0]"
- 96. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[10]"
- 97. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[9]"
- 98. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[8]"
- 99. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[7]"
-100. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[6]"
-101. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[5]"
-102. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[4]"
-103. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[3]"
-104. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[2]"
-105. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[1]"
-106. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[0]"
-107. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B"
-108. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[3]"
-109. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[2]"
-110. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[1]"
-111. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[0]"
-112. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[3]"
-113. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[2]"
-114. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[1]"
-115. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[0]"
-116. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:SWPCNT[2]"
-117. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:SWPCNT[1]"
-118. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:SWPCNT[0]"
-119. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[2]"
-120. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[1]"
-121. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[0]"
-122. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[10]"
-123. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[9]"
-124. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[8]"
-125. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[7]"
-126. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[6]"
-127. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[5]"
-128. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[4]"
-129. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[3]"
-130. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[2]"
-131. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[1]"
-132. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[0]"
-133. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A"
-134. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[14]"
-135. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[13]"
-136. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[12]"
-137. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[11]"
-138. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[10]"
-139. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[9]"
-140. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[8]"
-141. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[7]"
-142. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[6]"
-143. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[5]"
-144. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[4]"
-145. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[3]"
-146. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[2]"
-147. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[1]"
-148. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[0]"
-149. Port Connectivity Checks: "MOS6502:MOD_MOS6502"
-150. Elapsed Time Per Partition
-151. Analysis & Synthesis Messages
-152. Analysis & Synthesis Suppressed Messages
+ 37. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[0]"
+ 38. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[11]"
+ 39. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[10]"
+ 40. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[9]"
+ 41. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[8]"
+ 42. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[7]"
+ 43. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[6]"
+ 44. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[5]"
+ 45. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[4]"
+ 46. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[3]"
+ 47. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[2]"
+ 48. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[1]"
+ 49. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[0]"
+ 50. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[14]"
+ 51. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[13]"
+ 52. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[12]"
+ 53. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[11]"
+ 54. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[10]"
+ 55. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[9]"
+ 56. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[8]"
+ 57. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[7]"
+ 58. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[6]"
+ 59. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[5]"
+ 60. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[4]"
+ 61. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[3]"
+ 62. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[2]"
+ 63. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[1]"
+ 64. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[0]"
+ 65. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[2]"
+ 66. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[1]"
+ 67. Port Connectivity Checks: "DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[0]"
+ 68. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[14]"
+ 69. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[13]"
+ 70. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[12]"
+ 71. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[11]"
+ 72. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[10]"
+ 73. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[9]"
+ 74. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[8]"
+ 75. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[7]"
+ 76. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[6]"
+ 77. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[5]"
+ 78. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[4]"
+ 79. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[3]"
+ 80. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[2]"
+ 81. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[1]"
+ 82. Port Connectivity Checks: "NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[0]"
+ 83. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[4]"
+ 84. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[3]"
+ 85. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[2]"
+ 86. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[1]"
+ 87. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[0]"
+ 88. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[6]"
+ 89. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[5]"
+ 90. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[4]"
+ 91. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[3]"
+ 92. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[2]"
+ 93. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[1]"
+ 94. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[0]"
+ 95. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[10]"
+ 96. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[9]"
+ 97. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[8]"
+ 98. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[7]"
+ 99. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[6]"
+100. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[5]"
+101. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[4]"
+102. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[3]"
+103. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[2]"
+104. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[1]"
+105. Port Connectivity Checks: "TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[0]"
+106. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B"
+107. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[3]"
+108. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[2]"
+109. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[1]"
+110. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[0]"
+111. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[3]"
+112. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[2]"
+113. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[1]"
+114. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[0]"
+115. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:SWPCNT[2]"
+116. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:SWPCNT[1]"
+117. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:SWPCNT[0]"
+118. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[2]"
+119. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[1]"
+120. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[0]"
+121. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[10]"
+122. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[9]"
+123. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[8]"
+124. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[7]"
+125. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[6]"
+126. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[5]"
+127. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[4]"
+128. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[3]"
+129. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[2]"
+130. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[1]"
+131. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[0]"
+132. Port Connectivity Checks: "SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A"
+133. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[14]"
+134. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[13]"
+135. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[12]"
+136. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[11]"
+137. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[10]"
+138. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[9]"
+139. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[8]"
+140. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[7]"
+141. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[6]"
+142. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[5]"
+143. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[4]"
+144. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[3]"
+145. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[2]"
+146. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[1]"
+147. Port Connectivity Checks: "LFO:MOD_LFO|SHIFTREG:LFSR[0]"
+148. Port Connectivity Checks: "MOS6502:MOD_MOS6502"
+149. Elapsed Time Per Partition
+150. Analysis & Synthesis Messages
 
 
 
@@ -183,15 +181,15 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue Apr 07 23:36:11 2026           ;
-; Quartus II 32-bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
+; Analysis & Synthesis Status        ; Successful - Wed Nov 18 14:57:39 2026           ;
+; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; RP2A03                                          ;
 ; Top-level Entity Name              ; RP2A03                                          ;
 ; Family                             ; Cyclone II                                      ;
-; Total logic elements               ; 1,694                                           ;
-;     Total combinational functions  ; 1,429                                           ;
-;     Dedicated logic registers      ; 944                                             ;
-; Total registers                    ; 944                                             ;
+; Total logic elements               ; 1,695                                           ;
+;     Total combinational functions  ; 1,423                                           ;
+;     Dedicated logic registers      ; 947                                             ;
+; Total registers                    ; 947                                             ;
 ; Total pins                         ; 52                                              ;
 ; Total virtual pins                 ; 0                                               ;
 ; Total memory bits                  ; 896                                             ;
@@ -285,43 +283,49 @@ applicable agreement for further details.
 +----------------------------------------------------------------------------+--------------------+--------------------+
 
 
-Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
-+-------------------------------------+
-; Parallel Compilation                ;
-+----------------------------+--------+
-; Processors                 ; Number ;
-+----------------------------+--------+
-; Number detected on machine ; 12     ;
-; Maximum allowed            ; 1      ;
-+----------------------------+--------+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processors 2-4         ;   0.0%      ;
++----------------------------+-------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                    ;
-+----------------------------------+-----------------+----------------------------------+-------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type                        ; File Name with Absolute Path                                            ; Library ;
-+----------------------------------+-----------------+----------------------------------+-------------------------------------------------------------------------+---------+
-; RP2A03.v                         ; yes             ; User Verilog HDL File            ; C:/altera/13.0sp1/2a03/RP2A03.v                                         ;         ;
-; NOISE_TABLE.v                    ; yes             ; User Wizard-Generated File       ; C:/altera/13.0sp1/2a03/NOISE_TABLE.v                                    ;         ;
-; NOISE_TABLE.mif                  ; yes             ; User Memory Initialization File  ; C:/altera/13.0sp1/2a03/NOISE_TABLE.mif                                  ;         ;
-; LENGTH_TABLE.v                   ; yes             ; User Wizard-Generated File       ; C:/altera/13.0sp1/2a03/LENGTH_TABLE.v                                   ;         ;
-; LENGTH_TABLE.mif                 ; yes             ; User Memory Initialization File  ; C:/altera/13.0sp1/2a03/LENGTH_TABLE.mif                                 ;         ;
-; DPCM_TABLE.v                     ; yes             ; User Wizard-Generated File       ; C:/altera/13.0sp1/2a03/DPCM_TABLE.v                                     ;         ;
-; DPCM_TABLE.mif                   ; yes             ; User Memory Initialization File  ; C:/altera/13.0sp1/2a03/DPCM_TABLE.mif                                   ;         ;
-; MOS6502.v                        ; yes             ; User Verilog HDL File            ; C:/altera/13.0sp1/2a03/MOS6502.v                                        ;         ;
-; altsyncram.tdf                   ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altsyncram.tdf        ;         ;
-; stratix_ram_block.inc            ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/stratix_ram_block.inc ;         ;
-; lpm_mux.inc                      ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/lpm_mux.inc           ;         ;
-; lpm_decode.inc                   ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/lpm_decode.inc        ;         ;
-; aglobal130.inc                   ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/aglobal130.inc        ;         ;
-; a_rdenreg.inc                    ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/a_rdenreg.inc         ;         ;
-; altrom.inc                       ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altrom.inc            ;         ;
-; altram.inc                       ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altram.inc            ;         ;
-; altdpram.inc                     ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altdpram.inc          ;         ;
-; db/altsyncram_aj71.tdf           ; yes             ; Auto-Generated Megafunction      ; C:/altera/13.0sp1/2a03/db/altsyncram_aj71.tdf                           ;         ;
-; db/altsyncram_7e71.tdf           ; yes             ; Auto-Generated Megafunction      ; C:/altera/13.0sp1/2a03/db/altsyncram_7e71.tdf                           ;         ;
-; db/altsyncram_4l71.tdf           ; yes             ; Auto-Generated Megafunction      ; C:/altera/13.0sp1/2a03/db/altsyncram_4l71.tdf                           ;         ;
-+----------------------------------+-----------------+----------------------------------+-------------------------------------------------------------------------+---------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                           ;
++----------------------------------+-----------------+----------------------------------+--------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                        ; File Name with Absolute Path                                                   ; Library ;
++----------------------------------+-----------------+----------------------------------+--------------------------------------------------------------------------------+---------+
+; RP2A03.v                         ; yes             ; User Verilog HDL File            ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/RP2A03.v               ;         ;
+; NOISE_TABLE.v                    ; yes             ; User Wizard-Generated File       ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/NOISE_TABLE.v          ;         ;
+; NOISE_TABLE.mif                  ; yes             ; User Memory Initialization File  ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/NOISE_TABLE.mif        ;         ;
+; LENGTH_TABLE.v                   ; yes             ; User Wizard-Generated File       ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/LENGTH_TABLE.v         ;         ;
+; LENGTH_TABLE.mif                 ; yes             ; User Memory Initialization File  ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/LENGTH_TABLE.mif       ;         ;
+; DPCM_TABLE.v                     ; yes             ; User Wizard-Generated File       ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/DPCM_TABLE.v           ;         ;
+; DPCM_TABLE.mif                   ; yes             ; User Memory Initialization File  ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/DPCM_TABLE.mif         ;         ;
+; MOS6502.v                        ; yes             ; User Verilog HDL File            ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/MOS6502.v              ;         ;
+; altsyncram.tdf                   ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altsyncram.tdf               ;         ;
+; stratix_ram_block.inc            ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/stratix_ram_block.inc        ;         ;
+; lpm_mux.inc                      ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/lpm_mux.inc                  ;         ;
+; lpm_decode.inc                   ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/lpm_decode.inc               ;         ;
+; aglobal130.inc                   ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/aglobal130.inc               ;         ;
+; a_rdenreg.inc                    ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/a_rdenreg.inc                ;         ;
+; altrom.inc                       ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altrom.inc                   ;         ;
+; altram.inc                       ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altram.inc                   ;         ;
+; altdpram.inc                     ; yes             ; Megafunction                     ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altdpram.inc                 ;         ;
+; db/altsyncram_aj71.tdf           ; yes             ; Auto-Generated Megafunction      ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/db/altsyncram_aj71.tdf ;         ;
+; db/altsyncram_7e71.tdf           ; yes             ; Auto-Generated Megafunction      ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/db/altsyncram_7e71.tdf ;         ;
+; db/altsyncram_4l71.tdf           ; yes             ; Auto-Generated Megafunction      ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/db/altsyncram_4l71.tdf ;         ;
++----------------------------------+-----------------+----------------------------------+--------------------------------------------------------------------------------+---------+
 
 
 +-----------------------------------------------------+
@@ -329,29 +333,29 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------------------------------------+-------+
 ; Resource                                    ; Usage ;
 +---------------------------------------------+-------+
-; Estimated Total logic elements              ; 1,694 ;
+; Estimated Total logic elements              ; 1,695 ;
 ;                                             ;       ;
-; Total combinational functions               ; 1429  ;
+; Total combinational functions               ; 1423  ;
 ; Logic element usage by number of LUT inputs ;       ;
-;     -- 4 input functions                    ; 797   ;
-;     -- 3 input functions                    ; 439   ;
-;     -- <=2 input functions                  ; 193   ;
+;     -- 4 input functions                    ; 762   ;
+;     -- 3 input functions                    ; 451   ;
+;     -- <=2 input functions                  ; 210   ;
 ;                                             ;       ;
 ; Logic elements by mode                      ;       ;
-;     -- normal mode                          ; 1416  ;
+;     -- normal mode                          ; 1410  ;
 ;     -- arithmetic mode                      ; 13    ;
 ;                                             ;       ;
-; Total registers                             ; 944   ;
-;     -- Dedicated logic registers            ; 944   ;
+; Total registers                             ; 947   ;
+;     -- Dedicated logic registers            ; 947   ;
 ;     -- I/O registers                        ; 0     ;
 ;                                             ;       ;
 ; I/O pins                                    ; 52    ;
 ; Total memory bits                           ; 896   ;
 ; Embedded Multiplier 9-bit elements          ; 0     ;
 ; Maximum fan-out node                        ; Clk   ;
-; Maximum fan-out                             ; 972   ;
-; Total fan-out                               ; 8032  ;
-; Average fan-out                             ; 3.27  ;
+; Maximum fan-out                             ; 975   ;
+; Total fan-out                               ; 7990  ;
+; Average fan-out                             ; 3.26  ;
 +---------------------------------------------+-------+
 
 
@@ -360,10 +364,10 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +----------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------+--------------+
 ; Compilation Hierarchy Node                         ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                ; Library Name ;
 +----------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; |RP2A03                                            ; 1429 (24)         ; 944 (6)      ; 896         ; 0            ; 0       ; 0         ; 52   ; 0            ; |RP2A03                                                                                                                            ; work         ;
-;    |CKDIV:MOD_CKDIV|                               ; 15 (15)           ; 13 (13)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|CKDIV:MOD_CKDIV                                                                                                            ; work         ;
+; |RP2A03                                            ; 1423 (24)         ; 947 (13)     ; 896         ; 0            ; 0       ; 0         ; 52   ; 0            ; |RP2A03                                                                                                                            ; work         ;
+;    |CKDIV:MOD_CKDIV|                               ; 14 (14)           ; 14 (14)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|CKDIV:MOD_CKDIV                                                                                                            ; work         ;
 ;    |DPCM_CHANNEL:MOD_DPCM_CHANNEL|                 ; 131 (31)          ; 152 (64)     ; 288         ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL                                                                                              ; work         ;
-;       |COUNTER:ADRCNT[0]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[0]                                                                            ; work         ;
+;       |COUNTER:ADRCNT[0]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[0]                                                                            ; work         ;
 ;       |COUNTER:ADRCNT[10]|                         ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[10]                                                                           ; work         ;
 ;       |COUNTER:ADRCNT[11]|                         ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[11]                                                                           ; work         ;
 ;       |COUNTER:ADRCNT[12]|                         ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[12]                                                                           ; work         ;
@@ -380,17 +384,17 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ;       |COUNTER:ADRCNT[9]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[9]                                                                            ; work         ;
 ;       |COUNTER:OUTCNT[0]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[0]                                                                            ; work         ;
 ;       |COUNTER:OUTCNT[1]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[1]                                                                            ; work         ;
-;       |COUNTER:OUTCNT[2]|                          ; 4 (4)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[2]                                                                            ; work         ;
+;       |COUNTER:OUTCNT[2]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[2]                                                                            ; work         ;
 ;       |COUNTER:OUTCNT[3]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[3]                                                                            ; work         ;
 ;       |COUNTER:OUTCNT[4]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[4]                                                                            ; work         ;
-;       |COUNTER:OUTCNT[5]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[5]                                                                            ; work         ;
+;       |COUNTER:OUTCNT[5]|                          ; 4 (4)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[5]                                                                            ; work         ;
 ;       |COUNTER:SBCCNT[0]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[0]                                                                            ; work         ;
 ;       |COUNTER:SBCCNT[1]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[1]                                                                            ; work         ;
 ;       |COUNTER:SBCCNT[2]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SBCCNT[2]                                                                            ; work         ;
 ;       |COUNTER:SLCNT[10]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[10]                                                                            ; work         ;
 ;       |COUNTER:SLCNT[11]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[11]                                                                            ; work         ;
 ;       |COUNTER:SLCNT[1]|                           ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[1]                                                                             ; work         ;
-;       |COUNTER:SLCNT[2]|                           ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[2]                                                                             ; work         ;
+;       |COUNTER:SLCNT[2]|                           ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[2]                                                                             ; work         ;
 ;       |COUNTER:SLCNT[3]|                           ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[3]                                                                             ; work         ;
 ;       |COUNTER:SLCNT[4]|                           ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[4]                                                                             ; work         ;
 ;       |COUNTER:SLCNT[5]|                           ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[5]                                                                             ; work         ;
@@ -412,25 +416,25 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ;       |SHIFTREG:DMC_FREQ_LFSR[8]|                  ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|SHIFTREG:DMC_FREQ_LFSR[8]                                                                    ; work         ;
 ;    |LENGTH_COUNTER:LENGTH_COUNTER_RND|             ; 26 (6)            ; 21 (5)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND                                                                                          ; work         ;
 ;       |COUNTER:LENCNT[0]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[0]                                                                        ; work         ;
-;       |COUNTER:LENCNT[1]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[1]                                                                        ; work         ;
+;       |COUNTER:LENCNT[1]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[1]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[2]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[2]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[3]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[3]                                                                        ; work         ;
-;       |COUNTER:LENCNT[4]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[4]                                                                        ; work         ;
+;       |COUNTER:LENCNT[4]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[4]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[5]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[5]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[6]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[6]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[7]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[7]                                                                        ; work         ;
 ;    |LENGTH_COUNTER:LENGTH_COUNTER_SQA|             ; 26 (6)            ; 21 (5)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA                                                                                          ; work         ;
 ;       |COUNTER:LENCNT[0]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[0]                                                                        ; work         ;
-;       |COUNTER:LENCNT[1]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[1]                                                                        ; work         ;
+;       |COUNTER:LENCNT[1]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[1]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[2]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[2]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[3]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[3]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[4]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[4]                                                                        ; work         ;
-;       |COUNTER:LENCNT[5]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[5]                                                                        ; work         ;
+;       |COUNTER:LENCNT[5]|                          ; 4 (4)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[5]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[6]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[6]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[7]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[7]                                                                        ; work         ;
 ;    |LENGTH_COUNTER:LENGTH_COUNTER_SQB|             ; 26 (6)            ; 21 (5)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB                                                                                          ; work         ;
-;       |COUNTER:LENCNT[0]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[0]                                                                        ; work         ;
-;       |COUNTER:LENCNT[1]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[1]                                                                        ; work         ;
+;       |COUNTER:LENCNT[0]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[0]                                                                        ; work         ;
+;       |COUNTER:LENCNT[1]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[1]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[2]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[2]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[3]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[3]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[4]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[4]                                                                        ; work         ;
@@ -438,19 +442,19 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ;       |COUNTER:LENCNT[6]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[6]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[7]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[7]                                                                        ; work         ;
 ;    |LENGTH_COUNTER:LENGTH_COUNTER_TRI|             ; 26 (6)            ; 21 (5)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI                                                                                          ; work         ;
-;       |COUNTER:LENCNT[0]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[0]                                                                        ; work         ;
+;       |COUNTER:LENCNT[0]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[0]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[1]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[1]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[2]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[2]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[3]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[3]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[4]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[4]                                                                        ; work         ;
-;       |COUNTER:LENCNT[5]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[5]                                                                        ; work         ;
+;       |COUNTER:LENCNT[5]|                          ; 4 (4)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[5]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[6]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[6]                                                                        ; work         ;
 ;       |COUNTER:LENCNT[7]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[7]                                                                        ; work         ;
 ;    |LENGTH_TABLE:MOD_LENGTH_TABLE|                 ; 0 (0)             ; 0 (0)        ; 256         ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_TABLE:MOD_LENGTH_TABLE                                                                                              ; work         ;
 ;       |altsyncram:altsyncram_component|            ; 0 (0)             ; 0 (0)        ; 256         ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_TABLE:MOD_LENGTH_TABLE|altsyncram:altsyncram_component                                                              ; work         ;
 ;          |altsyncram_4l71:auto_generated|          ; 0 (0)             ; 0 (0)        ; 256         ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LENGTH_TABLE:MOD_LENGTH_TABLE|altsyncram:altsyncram_component|altsyncram_4l71:auto_generated                               ; work         ;
-;    |LFO:MOD_LFO|                                   ; 64 (46)           ; 37 (7)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO                                                                                                                ; work         ;
-;       |SHIFTREG:LFSR[0]|                           ; 4 (4)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO|SHIFTREG:LFSR[0]                                                                                               ; work         ;
+;    |LFO:MOD_LFO|                                   ; 64 (45)           ; 37 (7)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO                                                                                                                ; work         ;
+;       |SHIFTREG:LFSR[0]|                           ; 5 (5)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO|SHIFTREG:LFSR[0]                                                                                               ; work         ;
 ;       |SHIFTREG:LFSR[10]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO|SHIFTREG:LFSR[10]                                                                                              ; work         ;
 ;       |SHIFTREG:LFSR[11]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO|SHIFTREG:LFSR[11]                                                                                              ; work         ;
 ;       |SHIFTREG:LFSR[12]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO|SHIFTREG:LFSR[12]                                                                                              ; work         ;
@@ -465,21 +469,21 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ;       |SHIFTREG:LFSR[7]|                           ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO|SHIFTREG:LFSR[7]                                                                                               ; work         ;
 ;       |SHIFTREG:LFSR[8]|                           ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO|SHIFTREG:LFSR[8]                                                                                               ; work         ;
 ;       |SHIFTREG:LFSR[9]|                           ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|LFO:MOD_LFO|SHIFTREG:LFSR[9]                                                                                               ; work         ;
-;    |MOS6502:MOD_MOS6502|                           ; 532 (13)          ; 276 (73)     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502                                                                                                        ; work         ;
-;       |ALU:MOD_ALU|                                ; 69 (69)           ; 34 (34)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|ALU:MOD_ALU                                                                                            ; work         ;
-;       |BUS_MUX:MOD_BUS_MUX|                        ; 121 (121)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|BUS_MUX:MOD_BUS_MUX                                                                                    ; work         ;
+;    |MOS6502:MOD_MOS6502|                           ; 558 (36)          ; 271 (71)     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502                                                                                                        ; work         ;
+;       |ALU:MOD_ALU|                                ; 70 (70)           ; 34 (34)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|ALU:MOD_ALU                                                                                            ; work         ;
+;       |BUS_MUX:MOD_BUS_MUX|                        ; 122 (122)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|BUS_MUX:MOD_BUS_MUX                                                                                    ; work         ;
 ;       |DECODER:MOD_DECODER|                        ; 40 (40)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|DECODER:MOD_DECODER                                                                                    ; work         ;
-;       |EXTRA_COUNTER:MOD_EXTRA_COUNTER|            ; 8 (8)             ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|EXTRA_COUNTER:MOD_EXTRA_COUNTER                                                                        ; work         ;
-;       |PC:MOD_PC|                                  ; 37 (37)           ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|PC:MOD_PC                                                                                              ; work         ;
-;       |PREDECODE_IR:MOD_PREDECODE_IR|              ; 13 (13)           ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|PREDECODE_IR:MOD_PREDECODE_IR                                                                          ; work         ;
-;       |RANDOM_LOGIC:MOD_RANDOM_LOGIC|              ; 231 (0)           ; 121 (0)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC                                                                          ; work         ;
-;          |ALU_SETUP:MOD_ALU_SETUP|                 ; 47 (47)           ; 25 (25)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|ALU_SETUP:MOD_ALU_SETUP                                                  ; work         ;
+;       |EXTENDED_COUNTER:MOD_EXTENDED_COUNTER|      ; 9 (9)             ; 9 (9)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|EXTENDED_COUNTER:MOD_EXTENDED_COUNTER                                                                  ; work         ;
+;       |PC:MOD_PC|                                  ; 39 (39)           ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|PC:MOD_PC                                                                                              ; work         ;
+;       |PREDECODE_IR:MOD_PREDECODE_IR|              ; 14 (14)           ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|PREDECODE_IR:MOD_PREDECODE_IR                                                                          ; work         ;
+;       |RANDOM_LOGIC:MOD_RANDOM_LOGIC|              ; 228 (0)           ; 117 (0)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC                                                                          ; work         ;
+;          |ALU_SETUP:MOD_ALU_SETUP|                 ; 47 (47)           ; 22 (22)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|ALU_SETUP:MOD_ALU_SETUP                                                  ; work         ;
 ;          |BUS_CONTROL:MOD_BUS_CONTROL|             ; 34 (34)           ; 11 (11)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|BUS_CONTROL:MOD_BUS_CONTROL                                              ; work         ;
-;          |DISPATCH:MOD_DISPATCH|                   ; 47 (47)           ; 28 (28)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|DISPATCH:MOD_DISPATCH                                                    ; work         ;
+;          |DISPATCH:MOD_DISPATCH|                   ; 45 (45)           ; 27 (27)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|DISPATCH:MOD_DISPATCH                                                    ; work         ;
 ;          |FLAGS:MOD_FLAGS|                         ; 32 (32)           ; 27 (27)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS                                                          ; work         ;
 ;          |INT_RESET_CONTROL:MOD_INT_RESET_CONTROL| ; 17 (17)           ; 16 (16)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|INT_RESET_CONTROL:MOD_INT_RESET_CONTROL                                  ; work         ;
 ;          |PC_SETUP:MOD_PC_SETUP|                   ; 17 (17)           ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|PC_SETUP:MOD_PC_SETUP                                                    ; work         ;
-;          |REGS_CONTROL:MOD_REGS_CONTROL|           ; 37 (37)           ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|REGS_CONTROL:MOD_REGS_CONTROL                                            ; work         ;
+;          |REGS_CONTROL:MOD_REGS_CONTROL|           ; 36 (36)           ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|REGS_CONTROL:MOD_REGS_CONTROL                                            ; work         ;
 ;    |NOISE_CHANNEL:MOD_NOISE_CHANNEL|               ; 61 (9)            ; 83 (5)       ; 352         ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL                                                                                            ; work         ;
 ;       |ENVELOPE_GEN:MOD_ENVELOPE_GEN|              ; 28 (11)           ; 26 (10)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|ENVELOPE_GEN:MOD_ENVELOPE_GEN                                                              ; work         ;
 ;          |COUNTER:DECAYCNT[0]|                     ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[0]                                          ; work         ;
@@ -519,17 +523,17 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ;       |SHIFTREG:RAND_LFSR[7]|                      ; 0 (0)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[7]                                                                      ; work         ;
 ;       |SHIFTREG:RAND_LFSR[8]|                      ; 0 (0)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[8]                                                                      ; work         ;
 ;       |SHIFTREG:RAND_LFSR[9]|                      ; 0 (0)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|SHIFTREG:RAND_LFSR[9]                                                                      ; work         ;
-;    |REG_SEL:MOD_REG_SEL|                           ; 39 (39)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|REG_SEL:MOD_REG_SEL                                                                                                        ; work         ;
+;    |REG_SEL:MOD_REG_SEL|                           ; 38 (38)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|REG_SEL:MOD_REG_SEL                                                                                                        ; work         ;
 ;    |SPRITE_DMA:MOD_SPRITE_DMA|                     ; 65 (45)           ; 30 (14)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA                                                                                                  ; work         ;
-;       |COUNTER:SPRCNT[0]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[0]                                                                                ; work         ;
+;       |COUNTER:SPRCNT[0]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[0]                                                                                ; work         ;
 ;       |COUNTER:SPRCNT[1]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[1]                                                                                ; work         ;
 ;       |COUNTER:SPRCNT[2]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[2]                                                                                ; work         ;
 ;       |COUNTER:SPRCNT[3]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[3]                                                                                ; work         ;
-;       |COUNTER:SPRCNT[4]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[4]                                                                                ; work         ;
+;       |COUNTER:SPRCNT[4]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[4]                                                                                ; work         ;
 ;       |COUNTER:SPRCNT[5]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[5]                                                                                ; work         ;
 ;       |COUNTER:SPRCNT[6]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[6]                                                                                ; work         ;
 ;       |COUNTER:SPRCNT[7]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[7]                                                                                ; work         ;
-;    |SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|           ; 168 (105)         ; 97 (37)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A                                                                                        ; work         ;
+;    |SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|           ; 152 (89)          ; 97 (37)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A                                                                                        ; work         ;
 ;       |COUNTER:DUTCNT[0]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[0]                                                                      ; work         ;
 ;       |COUNTER:DUTCNT[1]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[1]                                                                      ; work         ;
 ;       |COUNTER:DUTCNT[2]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:DUTCNT[2]                                                                      ; work         ;
@@ -556,7 +560,7 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ;          |COUNTER:ENVELCNT[1]|                     ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[1]                                      ; work         ;
 ;          |COUNTER:ENVELCNT[2]|                     ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[2]                                      ; work         ;
 ;          |COUNTER:ENVELCNT[3]|                     ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[3]                                      ; work         ;
-;    |SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|           ; 170 (107)         ; 97 (37)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B                                                                                        ; work         ;
+;    |SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|           ; 156 (93)          ; 97 (37)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B                                                                                        ; work         ;
 ;       |COUNTER:DUTCNT[0]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|COUNTER:DUTCNT[0]                                                                      ; work         ;
 ;       |COUNTER:DUTCNT[1]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|COUNTER:DUTCNT[1]                                                                      ; work         ;
 ;       |COUNTER:DUTCNT[2]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|COUNTER:DUTCNT[2]                                                                      ; work         ;
@@ -595,11 +599,11 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ;       |COUNTER:FRQCNT[7]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[7]                                                                    ; work         ;
 ;       |COUNTER:FRQCNT[8]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[8]                                                                    ; work         ;
 ;       |COUNTER:FRQCNT[9]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[9]                                                                    ; work         ;
-;       |COUNTER:LINCNT[0]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[0]                                                                    ; work         ;
+;       |COUNTER:LINCNT[0]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[0]                                                                    ; work         ;
 ;       |COUNTER:LINCNT[1]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[1]                                                                    ; work         ;
 ;       |COUNTER:LINCNT[2]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[2]                                                                    ; work         ;
 ;       |COUNTER:LINCNT[3]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[3]                                                                    ; work         ;
-;       |COUNTER:LINCNT[4]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[4]                                                                    ; work         ;
+;       |COUNTER:LINCNT[4]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[4]                                                                    ; work         ;
 ;       |COUNTER:LINCNT[5]|                          ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[5]                                                                    ; work         ;
 ;       |COUNTER:LINCNT[6]|                          ; 3 (3)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[6]                                                                    ; work         ;
 ;       |COUNTER:OUTCNT[0]|                          ; 1 (1)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:OUTCNT[0]                                                                    ; work         ;
@@ -622,15 +626,15 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +---------------------------------------------------------------------------------------------------------------------------------------+------+------+--------------+--------------+--------------+--------------+------+------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis IP Cores Summary                                                                                                                                       ;
-+--------+--------------+---------+--------------+--------------+---------------------------------------------------------------------+---------------------------------------+
-; Vendor ; IP Core Name ; Version ; Release Date ; License Type ; Entity Instance                                                     ; IP Include File                       ;
-+--------+--------------+---------+--------------+--------------+---------------------------------------------------------------------+---------------------------------------+
-; Altera ; ROM: 1-PORT  ; 13.0    ; N/A          ; N/A          ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|DPCM_TABLE:MOD_DPCM_TABLE     ; C:/altera/13.0sp1/2a03/DPCM_TABLE.v   ;
-; Altera ; ROM: 1-PORT  ; 13.0    ; N/A          ; N/A          ; |RP2A03|LENGTH_TABLE:MOD_LENGTH_TABLE                               ; C:/altera/13.0sp1/2a03/LENGTH_TABLE.v ;
-; Altera ; ROM: 1-PORT  ; 13.0    ; N/A          ; N/A          ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|NOISE_TABLE:MOD_NOISE_TABLE ; C:/altera/13.0sp1/2a03/NOISE_TABLE.v  ;
-+--------+--------------+---------+--------------+--------------+---------------------------------------------------------------------+---------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis IP Cores Summary                                                                                                                                                                        ;
++--------+--------------+---------+--------------+--------------+---------------------------------------------------------------------+------------------------------------------------------------------------+
+; Vendor ; IP Core Name ; Version ; Release Date ; License Type ; Entity Instance                                                     ; IP Include File                                                        ;
++--------+--------------+---------+--------------+--------------+---------------------------------------------------------------------+------------------------------------------------------------------------+
+; Altera ; ROM: 1-PORT  ; 13.0    ; N/A          ; N/A          ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|DPCM_TABLE:MOD_DPCM_TABLE     ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/DPCM_TABLE.v   ;
+; Altera ; ROM: 1-PORT  ; 13.0    ; N/A          ; N/A          ; |RP2A03|LENGTH_TABLE:MOD_LENGTH_TABLE                               ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/LENGTH_TABLE.v ;
+; Altera ; ROM: 1-PORT  ; 13.0    ; N/A          ; N/A          ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|NOISE_TABLE:MOD_NOISE_TABLE ; C:/altera/13.0sp1/RP2A03-7--main/RP2A03-7--main/Quartus/NOISE_TABLE.v  ;
++--------+--------------+---------+--------------+--------------+---------------------------------------------------------------------+------------------------------------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -647,17 +651,15 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; MOS6502:MOD_MOS6502|ALU:MOD_ALU|DAAHR                                                ; Stuck at GND due to stuck port data_in                                                                          ;
 ; MOS6502:MOD_MOS6502|ALU:MOD_ALU|DAAL                                                 ; Stuck at GND due to stuck port data_in                                                                          ;
 ; MOS6502:MOD_MOS6502|ALU:MOD_ALU|LATCH_DC7                                            ; Stuck at GND due to stuck port data_in                                                                          ;
-; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH1          ; Stuck at VCC due to stuck port data_in                                                                          ;
-; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH3          ; Lost fanout                                                                                                     ;
-; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH2          ; Lost fanout                                                                                                     ;
+; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH[0,1]      ; Stuck at VCC due to stuck port data_in                                                                          ;
+; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH[2]        ; Stuck at GND due to stuck port data_in                                                                          ;
 ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|VSET               ; Stuck at GND due to stuck port data_in                                                                          ;
-; CKDIV:MOD_CKDIV|DET                                                                  ; Merged with MOS6502:MOD_MOS6502|PHI2_DELAY[0]                                                                   ;
 ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|DISPATCH:MOD_DISPATCH|ENDS2LATCH   ; Merged with MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|INT_RESET_CONTROL:MOD_INT_RESET_CONTROL|RESLATCH1 ;
 ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|ALU_SETUP:MOD_ALU_SETUP|COUT_LATCH ; Merged with MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|C_LATCH2                          ;
-; MOS6502:MOD_MOS6502|EXTRA_COUNTER:MOD_EXTRA_COUNTER|T1_LATCH                         ; Merged with MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|DISPATCH:MOD_DISPATCH|FETCHLATCH                  ;
 ; DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[0]|CNT                                   ; Merged with DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[0]|CNT                                                 ;
 ; DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[0]|CNT1                                  ; Merged with DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[0]|CNT1                                                ;
-; Total Number of Removed Registers = 19                                               ;                                                                                                                 ;
+; SPRBUF[5]                                                                            ; Merged with MOS6502:MOD_MOS6502|DL_LATCH[5]                                                                     ;
+; Total Number of Removed Registers = 18                                               ;                                                                                                                 ;
 +--------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
 
 
@@ -666,8 +668,8 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------------------------------------------------------------------+---------------------------+---------------------------------------------------------------------------------+
 ; Register name                                                                  ; Reason for Removal        ; Registers Removed due to This Register                                          ;
 +--------------------------------------------------------------------------------+---------------------------+---------------------------------------------------------------------------------+
-; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH1    ; Stuck at VCC              ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH3,    ;
-;                                                                                ; due to stuck port data_in ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH2,    ;
+; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH[0]  ; Stuck at VCC              ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH[1],  ;
+;                                                                                ; due to stuck port data_in ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|SO_LATCH[2],  ;
 ;                                                                                ;                           ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS|VSET          ;
 ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|ALU_SETUP:MOD_ALU_SETUP|nDAA ; Lost Fanouts              ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|ALU_SETUP:MOD_ALU_SETUP|nDAA1 ;
 ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|ALU_SETUP:MOD_ALU_SETUP|nDSA ; Lost Fanouts              ; MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|ALU_SETUP:MOD_ALU_SETUP|nDSA1 ;
@@ -679,12 +681,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 944   ;
+; Total registers                              ; 947   ;
 ; Number of registers using Synchronous Clear  ; 9     ;
 ; Number of registers using Synchronous Load   ; 18    ;
 ; Number of registers using Asynchronous Clear ; 156   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 890   ;
+; Number of registers using Clock Enable       ; 912   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -694,32 +696,36 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                        ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------+
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[4]|CNT                                           ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[2]|CNT                                        ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:SLCNT[8]|CNT                                        ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[2]|CNT                                       ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[4]|CNT                                   ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[0]|CNT     ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[1]|CNT ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[3]|CNT ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[0]|CNT                               ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[0]|CNT                                   ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[1]|CNT                                   ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[1]|CNT                                   ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|COUNTER:SPRCNT[0]|CNT                                           ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[0]|CNT                                       ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:ADRCNT[11]|CNT                                      ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|COUNTER:OUTCNT[5]|CNT                                       ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_RND|COUNTER:LENCNT[1]|CNT                                   ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[3]|CNT     ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[3]|CNT ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:ENVELCNT[1]|CNT ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:LINCNT[4]|CNT                               ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_TRI|COUNTER:LENCNT[5]|CNT                                   ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQB|COUNTER:LENCNT[0]|CNT                                   ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |RP2A03|LENGTH_COUNTER:LENGTH_COUNTER_SQA|COUNTER:LENCNT[5]|CNT                                   ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |RP2A03|MOS6502:MOD_MOS6502|ALU:MOD_ALU|BI[3]                                                     ;
 ; 3:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |RP2A03|DPCM_CHANNEL:MOD_DPCM_CHANNEL|SHIFT_REG[0]                                                ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|F[1]                                                      ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|COUNTER:FRQCNT[8]|CNT                                 ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[2]|CNT                                 ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[5]|CNT                               ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|COUNTER:SWPCNT[2]|CNT                                 ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:SWPCNT[1]|CNT                                 ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[2]|CNT     ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|RMODE                                                     ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|COUNTER:FRQCNT[9]|CNT                                 ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:FRQCNT[10]|CNT                                ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |RP2A03|TRIANGLE_CHANNEL:MOD_TRIANGLE_CHANNEL|COUNTER:FRQCNT[2]|CNT                               ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|COUNTER:SWPCNT[0]|CNT                                 ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|COUNTER:SWPCNT[2]|CNT                                 ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|NOISE_CHANNEL:MOD_NOISE_CHANNEL|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[1]|CNT     ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[3]|CNT ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[0]|CNT ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|ENVELOPE_GEN:MOD_ENVELOPE_GEN|COUNTER:DECAYCNT[2]|CNT ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|F[2]                                                  ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|F[8]                                                  ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|F[6]                                                  ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|F[9]                                                  ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_B|S[3]                                                  ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|S[2]                                                  ;
-; 4:1                ; 15 bits   ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; No         ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|ADR[2]                                                          ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |RP2A03|SQUARE_CHANNEL:MOD_SQUARE_CHANNEL_A|S[3]                                                  ;
+; 4:1                ; 15 bits   ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; No         ; |RP2A03|SPRITE_DMA:MOD_SPRITE_DMA|ADR[11]                                                         ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------+
 
 
@@ -1134,15 +1140,6 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; C_IN ; Input ; Info     ; Stuck at VCC                                  ;
 ; DATA ; Input ; Info     ; Stuck at GND                                  ;
 +------+-------+----------+-----------------------------------------------+
-
-
-+-------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "SPRITE_DMA:MOD_SPRITE_DMA"                                                             ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
-; Port    ; Type   ; Severity ; Details                                                                             ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
-; SPR_PPU ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +-----------------------------------------------------------------------------+
@@ -2280,10 +2277,11 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Analysis & Synthesis Messages ;
 +-------------------------------+
 Info: *******************************************************************
-Info: Running Quartus II 32-bit Analysis & Synthesis
+Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Tue Apr 07 23:36:04 2026
+    Info: Processing started: Wed Nov 18 14:57:33 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off RP2A03 -c RP2A03
+Info (11104): Parallel Compilation has detected 4 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 2 of the 2 physical processors detected instead.
 Info (12021): Found 13 design units, including 13 entities, in source file rp2a03.v
     Info (12023): Found entity 1: RP2A03
     Info (12023): Found entity 2: CKDIV
@@ -2307,7 +2305,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file dpcm_ta
 Info (12021): Found 15 design units, including 15 entities, in source file mos6502.v
     Info (12023): Found entity 1: MOS6502
     Info (12023): Found entity 2: PREDECODE_IR
-    Info (12023): Found entity 3: EXTRA_COUNTER
+    Info (12023): Found entity 3: EXTENDED_COUNTER
     Info (12023): Found entity 4: DECODER
     Info (12023): Found entity 5: RANDOM_LOGIC
     Info (12023): Found entity 6: REGS_CONTROL
@@ -2324,7 +2322,7 @@ Info (12127): Elaborating entity "RP2A03" for the top level hierarchy
 Info (12128): Elaborating entity "CKDIV" for hierarchy "CKDIV:MOD_CKDIV"
 Info (12128): Elaborating entity "MOS6502" for hierarchy "MOS6502:MOD_MOS6502"
 Info (12128): Elaborating entity "PREDECODE_IR" for hierarchy "MOS6502:MOD_MOS6502|PREDECODE_IR:MOD_PREDECODE_IR"
-Info (12128): Elaborating entity "EXTRA_COUNTER" for hierarchy "MOS6502:MOD_MOS6502|EXTRA_COUNTER:MOD_EXTRA_COUNTER"
+Info (12128): Elaborating entity "EXTENDED_COUNTER" for hierarchy "MOS6502:MOD_MOS6502|EXTENDED_COUNTER:MOD_EXTENDED_COUNTER"
 Info (12128): Elaborating entity "DECODER" for hierarchy "MOS6502:MOD_MOS6502|DECODER:MOD_DECODER"
 Info (12128): Elaborating entity "RANDOM_LOGIC" for hierarchy "MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC"
 Info (12128): Elaborating entity "REGS_CONTROL" for hierarchy "MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|REGS_CONTROL:MOD_REGS_CONTROL"
@@ -2334,8 +2332,8 @@ Info (12128): Elaborating entity "ALU_SETUP" for hierarchy "MOS6502:MOD_MOS6502|
 Info (12128): Elaborating entity "DISPATCH" for hierarchy "MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|DISPATCH:MOD_DISPATCH"
 Info (12128): Elaborating entity "FLAGS" for hierarchy "MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|FLAGS:MOD_FLAGS"
 Info (12128): Elaborating entity "INT_RESET_CONTROL" for hierarchy "MOS6502:MOD_MOS6502|RANDOM_LOGIC:MOD_RANDOM_LOGIC|INT_RESET_CONTROL:MOD_INT_RESET_CONTROL"
-Info (12128): Elaborating entity "ALU" for hierarchy "MOS6502:MOD_MOS6502|ALU:MOD_ALU"
 Info (12128): Elaborating entity "BUS_MUX" for hierarchy "MOS6502:MOD_MOS6502|BUS_MUX:MOD_BUS_MUX"
+Info (12128): Elaborating entity "ALU" for hierarchy "MOS6502:MOD_MOS6502|ALU:MOD_ALU"
 Info (12128): Elaborating entity "PC" for hierarchy "MOS6502:MOD_MOS6502|PC:MOD_PC"
 Info (12128): Elaborating entity "REG_SEL" for hierarchy "REG_SEL:MOD_REG_SEL"
 Info (12128): Elaborating entity "LFO" for hierarchy "LFO:MOD_LFO"
@@ -2408,26 +2406,19 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alts
     Info (12023): Found entity 1: altsyncram_4l71
 Info (12128): Elaborating entity "altsyncram_4l71" for hierarchy "LENGTH_TABLE:MOD_LENGTH_TABLE|altsyncram:altsyncram_component|altsyncram_4l71:auto_generated"
 Info (12128): Elaborating entity "LENGTH_COUNTER" for hierarchy "LENGTH_COUNTER:LENGTH_COUNTER_SQA"
-Info (17049): 6 registers lost all their fanouts during netlist optimizations.
-Info (144001): Generated suppressed messages file C:/altera/13.0sp1/2a03/output_files/RP2A03.map.smsg
+Info (17049): 4 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 1848 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 1846 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 6 input pins
     Info (21059): Implemented 38 output pins
     Info (21060): Implemented 8 bidirectional pins
-    Info (21061): Implemented 1768 logic cells
+    Info (21061): Implemented 1766 logic cells
     Info (21064): Implemented 28 RAM segments
-Info: Quartus II 32-bit Analysis & Synthesis was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 392 megabytes
-    Info: Processing ended: Tue Apr 07 23:36:11 2026
-    Info: Elapsed time: 00:00:07
-    Info: Total CPU time (on all processors): 00:00:07
-
-
-+------------------------------------------+
-; Analysis & Synthesis Suppressed Messages ;
-+------------------------------------------+
-The suppressed messages can be found in C:/altera/13.0sp1/2a03/output_files/RP2A03.map.smsg.
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 486 megabytes
+    Info: Processing ended: Wed Nov 18 14:57:39 2026
+    Info: Elapsed time: 00:00:06
+    Info: Total CPU time (on all processors): 00:00:06
 
 

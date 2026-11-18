@@ -556,7 +556,7 @@ wire [4:0]PAL_PLA;
 wire [4:0]NTSC_PLA;
 // PLA mode multiplexer
 assign PLA[4:0] = PAL ? PAL_PLA[4:0] : NTSC_PLA[4:0];
-assign PLA[5] = ~( | SOUT[14:0]) ;                   // NOR from all LFSR outputs, LFSR null protection
+assign PLA[5] = ~( | SOUT[14:0]);                   // NOR from all LFSR outputs, LFSR null protection
 // NTSC PLA
 assign NTSC_PLA[4] = ~(~SOUT[0]|  SOUT[1]| ~SOUT[2]|  SOUT[3]|  SOUT[4]|  SOUT[5]|  SOUT[6]| ~SOUT[7]| ~SOUT[8]|  SOUT[9]|  SOUT[10]|  SOUT[11]| ~SOUT[12]| ~SOUT[13]| ~SOUT[14]);
 assign NTSC_PLA[3] = ~(~SOUT[0]| ~SOUT[1]| ~SOUT[2]| ~SOUT[3]| ~SOUT[4]|  SOUT[5]|  SOUT[6]|  SOUT[7]|  SOUT[8]| ~SOUT[9]|  SOUT[10]| ~SOUT[11]|  SOUT[12]|  SOUT[13]|  SOUT[14] | ~MODE_LATCH );
