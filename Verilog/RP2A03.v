@@ -680,8 +680,8 @@ always @(posedge Clk) begin
            SUMR[10:0]     <= SUM[10:0];
            SQR            <= ~( ~DUTY_MUX | ( ~DEC & ADDCARRY[10] ) | NOSQx | ~( | F[10:2] ));
                          end
-           if ( W4002_6 | DO_SWEEP ) F[7:0]  <= (( {8{ DO_SWEEP }} & SUMR[7:0]  ) | ( {8{ W4002_6 }} & DB[7:0] ));
-           if ( W4003_7 | DO_SWEEP ) F[10:8] <= (( {3{ DO_SWEEP }} & SUMR[10:8] ) | ( {3{ W4003_7 }} & DB[2:0] ));
+           if ( W4002_6 | DO_SWEEP ) F[7:0]  <= DO_SWEEP ? SUMR[7:0]  : {8{ W4002_6 }} & DB[7:0];
+           if ( W4003_7 | DO_SWEEP ) F[10:8] <= DO_SWEEP ? SUMR[10:8] : {3{ W4003_7 }} & DB[2:0];
            if ( W4001_5 ) { SWDIS, P[2:0], DEC, SR[2:0] } <= DB[7:0];
            if ( W4000_4 ) DT[1:0] <= DB[7:6];
                       end
